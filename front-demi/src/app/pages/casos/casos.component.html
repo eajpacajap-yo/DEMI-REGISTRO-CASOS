@@ -1,0 +1,670 @@
+<div class="dashboard-container">
+  <!-- Barra superior -->
+  <header class="navbar">
+    <div class="brand">
+      <h2>DEMI - Totonicapán</h2>
+      <span>Control de Expedientes y Gestión Institucional</span>
+    </div>
+    <div class="user-info">
+      <p>Bienvenida, <strong>{{ usuario?.nombreCompleto }}</strong> ({{ usuario?.rol }})</p>
+    <button (click)="abrirModalPassword()" class="btn-password" title="Cambiar mi contraseña">
+         Mi Contraseña
+      </button>
+      <button (click)="cerrarSesion()" class="btn-logout">Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="content">
+    <div class="header-actions">
+      <div>
+        <h3>Expedientes de Atención</h3>
+        <p class="subtitle-text">Registro, seguimiento integral y bitácora de actuaciones</p>
+      </div>
+      <div class="header-buttons-group">
+        <!--  Botón visible ÚNICAMENTE para Administradora -->
+        <button *ngIf="esAdmin" (click)="abrirGestionUsuarios()" class="btn-secondary-action">
+           Administrar Usuarias
+        </button>
+        <button (click)="abrirModalCrear()" class="btn-primary">
+          Nuevo Expediente
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de Filtros -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Buscar:</label>
+        <input 
+          type="text" 
+          placeholder="Código o localidad..." 
+          [(ngModel)]="filtroTexto" 
+          (input)="aplicarFiltros()"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label>Municipio:</label>
+        <select [(ngModel)]="filtroMunicipio" (change)="aplicarFiltros()">
+          <option value="">Todos los municipios</option>
+          <option *ngFor="let m of municipios" [value]="m.nombre">{{ m.nombre }}</option>
+        </select>
+      </div>
+
+      <button *ngIf="filtroTexto || filtroMunicipio" (click)="limpiarFiltros()" class="btn-clear">
+        Limpiar
+      </button>
+    </div>
+
+    <!-- Estados de carga / lista vacía -->
+    <div *ngIf="cargando" class="loading">Cargando expedientes...</div>
+
+    <div *ngIf="!cargando && casosFiltrados.length === 0" class="empty">
+      No se encontraron expedientes con los filtros seleccionados.
+    </div>
+
+    <!-- Tabla -->
+    <div *ngIf="!cargando && casosFiltrados.length > 0" class="table-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Municipio</th>
+            <th>Localidad</th>
+            <th>Tipo Violencia</th>
+            <th>Estado</th>
+            <th>Fecha Registro</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let caso of casosFiltrados">
+            <td class="code">{{ caso.codigoExpediente }}</td>
+            <td>{{ caso.municipio?.nombre }}</td>
+            <td>{{ caso.localidad }}</td>
+            <td>{{ caso.tipoViolencia?.nombre }}</td>
+            <td>
+              <span class="badge" [ngClass]="'badge-' + (caso.estado?.id || 1)">
+                {{ caso.estado?.nombre }}
+              </span>
+            </td>
+            <td>{{ caso.fechaRegistro }}</td>
+            <td class="text-center">
+              <div class="action-buttons">
+                <button (click)="abrirSeguimientos(caso)" class="btn-action btn-seguimiento" title="Bitácora de Seguimientos">
+                   Bitácora
+                </button>
+                <button (click)="verDetalle(caso)" class="btn-action btn-view" title="Ver Detalle">
+                  Ver
+                </button>
+                <button (click)="abrirModalEditar(caso)" class="btn-action btn-edit" title="Editar">
+                  Editar
+                </button>
+                <button (click)="confirmarBorrar(caso)" class="btn-action btn-delete" title="Eliminar">
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- MODAL: CREAR EXPEDIENTE                   -->
+ 
+  <div *ngIf="mostrarModalCrear" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4>Registrar Nuevo Expediente</h4>
+        <button (click)="cerrarModalCrear()" class="btn-close">&times;</button>
+      </div>
+      <form (ngSubmit)="guardarNuevoCaso()">
+        <div class="modal-body">
+          <div *ngIf="errorFormulario" class="alert-error">{{ errorFormulario }}</div>
+          <div *ngIf="mensajeExito" class="alert-success">{{ mensajeExito }}</div>
+          
+          <div class="form-group">
+            <label>Código de Expediente</label>
+            <input type="text" name="codigoExpediente" [(ngModel)]="nuevoCaso.codigoExpediente" required />
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Municipio</label>
+              <select name="municipioId" [(ngModel)]="nuevoCaso.municipioId">
+                <option *ngFor="let m of municipios" [value]="m.id">{{ m.nombre }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tipo de Violencia</label>
+              <select name="tipoViolenciaId" [(ngModel)]="nuevoCaso.tipoViolenciaId">
+                <option *ngFor="let tv of tiposViolencia" [value]="tv.id">{{ tv.nombre }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Localidad </label>
+            <input type="text" name="localidad" [(ngModel)]="nuevoCaso.localidad" placeholder="Ej. Cantón Chiyax" required />
+          </div>
+
+          <div class="form-group">
+            <label>Estado Inicial</label>
+            <select name="estadoId" [(ngModel)]="nuevoCaso.estadoId">
+              <option *ngFor="let e of estados" [value]="e.id">{{ e.nombre }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="cerrarModalCrear()" class="btn-secondary">Cancelar</button>
+          <button type="submit" [disabled]="guardando" class="btn-primary">
+            {{ guardando ? 'Guardando...' : 'Guardar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- MODAL: EDITAR EXPEDIENTE                  -->
+ 
+  <div *ngIf="mostrarModalEditar" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4>Actualizar Expediente ({{ casoEdicion.codigoExpediente }})</h4>
+        <button (click)="cerrarModalEditar()" class="btn-close" [disabled]="guardando">&times;</button>
+      </div>
+      <form (ngSubmit)="guardarEdicionCaso()">
+        <div class="modal-body">
+          <div *ngIf="errorFormulario" class="alert-error">{{ errorFormulario }}</div>
+          <div *ngIf="mensajeExito" class="alert-success">{{ mensajeExito }}</div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Municipio</label>
+              <select name="editMunicipioId" [(ngModel)]="casoEdicion.municipioId">
+                <option *ngFor="let m of municipios" [value]="m.id">{{ m.nombre }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tipo de Violencia</label>
+              <select name="editTipoViolenciaId" [(ngModel)]="casoEdicion.tipoViolenciaId">
+                <option *ngFor="let tv of tiposViolencia" [value]="tv.id">{{ tv.nombre }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Localidad</label>
+            <input type="text" name="editLocalidad" [(ngModel)]="casoEdicion.localidad" required />
+          </div>
+
+          <div class="form-group">
+            <label>Estado del Expediente</label>
+            <select name="editEstadoId" [(ngModel)]="casoEdicion.estadoId">
+              <option *ngFor="let e of estados" [value]="e.id">{{ e.nombre }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="cerrarModalEditar()" class="btn-secondary" [disabled]="guardando">Cancelar</button>
+          <button type="submit" [disabled]="guardando || !!mensajeExito" class="btn-primary" [ngClass]="{'btn-success': mensajeExito}">
+            <span *ngIf="!guardando && !mensajeExito">Guardar Cambios</span>
+            <span *ngIf="guardando">Actualizando...</span>
+            <span *ngIf="mensajeExito">¡Actualizado! </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- MODAL: VER DETALLE                        -->
+
+  <div *ngIf="mostrarModalDetalle && casoSeleccionado" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4>Expediente: {{ casoSeleccionado.codigoExpediente }}</h4>
+        <button (click)="cerrarModalDetalle()" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body detail-grid">
+        <div class="detail-item">
+          <strong>Municipio:</strong>
+          <span>{{ casoSeleccionado.municipio?.nombre }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Localidad:</strong>
+          <span>{{ casoSeleccionado.localidad }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Tipo de Violencia:</strong>
+          <span>{{ casoSeleccionado.tipoViolencia?.nombre }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Estado Actual:</strong>
+          <span class="badge" [ngClass]="'badge-' + (casoSeleccionado.estado?.id || 1)">{{ casoSeleccionado.estado?.nombre }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Fecha de Registro:</strong>
+          <span>{{ casoSeleccionado.fechaRegistro }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Registrado Por:</strong>
+          <span>
+            {{ casoSeleccionado.usuarioRegistro?.primerNombre }} 
+            {{ casoSeleccionado.usuarioRegistro?.primerApellido }}
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarModalDetalle()" class="btn-secondary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- MODAL: CONFIRMAR ELIMINACIÓN DE CASO       -->
+
+  <div *ngIf="mostrarModalBorrar && casoAEliminar" class="modal-backdrop">
+    <div class="modal-card modal-delete-card">
+      <div class="modal-header">
+        <h4>¿Eliminar Expediente?</h4>
+        <button (click)="cerrarModalBorrar()" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que deseas eliminar permanentemente el expediente <strong>{{ casoAEliminar.codigoExpediente }}</strong>?</p>
+        <p class="delete-warning">Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarModalBorrar()" class="btn-secondary">Cancelar</button>
+        <button type="button" (click)="ejecutarBorrado()" [disabled]="guardando" class="btn-danger">
+          {{ guardando ? 'Eliminando...' : 'Sí, Eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+ 
+  <!-- MODAL: REGISTRAR USUARIA (SOLO ADMIN)      -->
+  
+  <div *ngIf="mostrarModalUsuario && esAdmin" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4>Registrar Nueva Usuaria</h4>
+        <button (click)="cerrarModalUsuario()" class="btn-close" [disabled]="guardandoUsuario">&times;</button>
+      </div>
+      <form (ngSubmit)="guardarNuevoUsuario()">
+        <div class="modal-body">
+          <div *ngIf="errorUsuario" class="alert-error">{{ errorUsuario }}</div>
+          <div *ngIf="mensajeExitoUsuario" class="alert-success">{{ mensajeExitoUsuario }}</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Primer Nombre</label>
+              <input type="text" name="primerNombre" [(ngModel)]="nuevoUsuario.primerNombre" required />
+            </div>
+            <div class="form-group">
+              <label>Segundo Nombre</label>
+              <input type="text" name="segundoNombre" [(ngModel)]="nuevoUsuario.segundoNombre" />
+            </div>
+            <div class="form-group">
+              <label>Tercer Nombre</label>
+              <input type="text" name="tercerNombre" [(ngModel)]="nuevoUsuario.tercerNombre" />
+            </div>
+            <div class="form-group">
+              <label>Primer Apellido</label>
+              <input type="text" name="primerApellido" [(ngModel)]="nuevoUsuario.primerApellido" required />
+            </div>
+            <div class="form-group">
+              <label>Segundo Apellido</label>
+              <input type="text" name="segundoApellido" [(ngModel)]="nuevoUsuario.segundoApellido" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Correo Electrónico Institucional</label>
+            <input type="email" name="correo" [(ngModel)]="nuevoUsuario.correo" placeholder="ejemplo@demi.gob.gt" required />
+          </div>
+
+          <div class="form-group">
+            <label>Contraseña Temporal</label>
+            <input type="password" name="password" [(ngModel)]="nuevoUsuario.password" required />
+          </div>
+
+          <div class="form-group">
+            <label>Rol Asignado</label>
+            <select name="rolId" [(ngModel)]="nuevoUsuario.rolId">
+              <option *ngFor="let r of rolesDisponibles" [value]="r.id">{{ r.nombre }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" (click)="cerrarModalUsuario()" class="btn-secondary" [disabled]="guardandoUsuario">Cancelar</button>
+          <button type="submit" [disabled]="guardandoUsuario || !!mensajeExitoUsuario" class="btn-primary" [ngClass]="{'btn-success': mensajeExitoUsuario}">
+            <span *ngIf="!guardandoUsuario && !mensajeExitoUsuario">Crear Cuenta</span>
+            <span *ngIf="guardandoUsuario">Guardando...</span>
+            <span *ngIf="mensajeExitoUsuario">¡Listo! </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <!-- MODAL: BITÁCORA DE SEGUIMIENTOS (TIMELINE)              -->
+ 
+  <div *ngIf="mostrarModalSeguimientos && casoSeleccionado" class="modal-backdrop">
+    <div class="modal-card modal-seguimientos-card">
+      <div class="modal-header header-seguimiento">
+        <div>
+          <h4>Bitácora de Actuaciones</h4>
+          <p class="sub-expediente">Expediente: <strong>{{ casoSeleccionado.codigoExpediente }}</strong> | {{ casoSeleccionado.localidad }}</p>
+        </div>
+        <button (click)="cerrarSeguimientos()" class="btn-close">&times;</button>
+      </div>
+
+      <div class="modal-body modal-body-scroll">
+        <!-- Barra de búsqueda y nuevo registro -->
+        <div class="seguimiento-actions">
+          <input 
+            type="text" 
+            placeholder="Buscar en actuaciones..." 
+            [(ngModel)]="filtroSeguimiento" 
+            class="input-search-seg"
+          />
+          <button *ngIf="!mostrarFormSeguimiento" (click)="iniciarNuevoSeguimiento()" class="btn-primary btn-sm">
+             Agregar Actuación
+          </button>
+        </div>
+
+        <!-- FORMULARIO REDACTAR / EDITAR ACTUACIÓN -->
+        <div *ngIf="mostrarFormSeguimiento" class="card-form-seguimiento">
+          <h5>{{ editandoSeguimiento ? ' Editar Actuación' : ' Nueva Actuación Procesal' }}</h5>
+          
+          <div class="form-group">
+            <label>Etapa Procesal / Área</label>
+            <select [(ngModel)]="seguimientoForm.etapaProcesal">
+              <option *ngFor="let ep of etapasProcesales" [value]="ep">{{ ep }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Descripción del Avance u Observación</label>
+            <textarea 
+              rows="4" 
+              [(ngModel)]="seguimientoForm.descripcionAvance" 
+              placeholder="Describa los hechos, acuerdos o resoluciones..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-buttons-inline">
+            <button (click)="cancelarFormSeguimiento()" class="btn-secondary btn-sm" [disabled]="guardando">Cancelar</button>
+            <button (click)="guardarSeguimiento()" class="btn-primary btn-sm" [disabled]="guardando || !seguimientoForm.descripcionAvance.trim()">
+              {{ guardando ? 'Guardando...' : (editandoSeguimiento ? 'Actualizar' : 'Guardar Actuación') }}
+            </button>
+          </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div *ngIf="cargandoSeguimientos" class="loading">Cargando actuaciones...</div>
+
+        <div *ngIf="!cargandoSeguimientos && seguimientosFiltrados.length === 0" class="empty">
+          No hay actuaciones registradas en esta bitácora.
+        </div>
+
+        <div *ngIf="!cargandoSeguimientos && seguimientosFiltrados.length > 0" class="timeline">
+          <div *ngFor="let seg of seguimientosFiltrados" class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <span class="timeline-badge">{{ seg.etapaProcesal }}</span>
+                <div class="timeline-tools">
+                  <span class="timeline-date">{{ seg.fechaAtencion }}</span>
+                  <button (click)="iniciarEdicionSeguimiento(seg)" class="btn-mini btn-edit-mini" title="Editar">Editar</button>
+                  <button (click)="confirmarBorrarSeguimiento(seg)" class="btn-mini btn-delete-mini" title="Eliminar">Eliminar</button>
+                </div>
+              </div>
+              <p class="timeline-body">{{ seg.descripcionAvance }}</p>
+              <div class="timeline-author">
+                 Atendido por: <strong>{{ seg.usuario?.primerNombre }} {{ seg.usuario?.primerApellido }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarSeguimientos()" class="btn-secondary">Cerrar Bitácora</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: BORRAR SEGUIMIENTO -->
+  <div *ngIf="mostrarModalBorrarSeg && seguimientoAEliminar" class="modal-backdrop">
+    <div class="modal-card modal-delete-card">
+      <div class="modal-header">
+        <h4>¿Eliminar Actuación?</h4>
+        <button (click)="cerrarModalBorrarSeg()" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que deseas eliminar esta entrada de la bitácora ({{ seguimientoAEliminar.etapaProcesal }})?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarModalBorrarSeg()" class="btn-secondary">Cancelar</button>
+        <button type="button" (click)="ejecutarBorradoSeguimiento()" [disabled]="guardando" class="btn-danger">
+          {{ guardando ? 'Eliminando...' : 'Sí, Eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PRINCIPAL: GESTIÓN DE USUARIAS (CRUD ADMIN)       -->
+  <div *ngIf="mostrarModalGestionUsuarios && esAdmin" class="modal-backdrop">
+    <div class="modal-card modal-usuarios-card">
+      <div class="modal-header header-usuarios">
+        <div>
+          <h4>Administración de Usuarias</h4>
+          <p class="sub-expediente">Control de acceso y asignación de roles institucionales</p>
+        </div>
+        <button (click)="cerrarGestionUsuarios()" class="btn-close">&times;</button>
+      </div>
+
+      <div class="modal-body modal-body-scroll">
+        <!-- Acciones y Filtro -->
+        <div class="seguimiento-actions">
+          <input 
+            type="text" 
+            placeholder="Buscar por nombre, correo o rol..." 
+            [(ngModel)]="filtroUsuario" 
+            class="input-search-seg"
+          />
+          <button *ngIf="!mostrarFormUsuario" (click)="iniciarNuevoUsuario()" class="btn-primary btn-sm">
+             Registrar Nueva Usuaria
+          </button>
+        </div>
+
+        <!-- FORMULARIO CREAR / EDITAR USUARIA -->
+        <div *ngIf="mostrarFormUsuario" class="card-form-usuario">
+          <h5>{{ editandoUsuario ? ' Modificar Datos de la Usuaria' : ' Registrar Nueva Usuaria' }}</h5>
+
+          <div *ngIf="errorUsuario" class="alert-error">{{ errorUsuario }}</div>
+          <div *ngIf="mensajeExitoUsuario" class="alert-success">{{ mensajeExitoUsuario }}</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Primer Nombre</label>
+              <input type="text" [(ngModel)]="usuarioForm.primerNombre"  required />
+            </div>
+            <div class="form-group">
+              <label>Segundo Nombre</label>
+              <input type="text" [(ngModel)]="usuarioForm.segundoNombre"  />
+            </div>
+            <div class="form-group">
+              <label>Tercer Nombre</label>
+              <input type="text" [(ngModel)]="usuarioForm.tercerNombre"  />
+            </div>
+            <div class="form-group">
+              <label>Primer Apellido</label>
+              <input type="text" [(ngModel)]="usuarioForm.primerApellido"  required />
+            </div>
+            <div class="form-group">
+              <label>Segundo Apellido</label>
+              <input type="text" [(ngModel)]="usuarioForm.segundoApellido"  />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Correo Institucional</label>
+              <input type="email" [(ngModel)]="usuarioForm.correo" placeholder="correo@demi.gob.gt" required />
+            </div>
+            <div class="form-group">
+              <label>Rol Asignado</label>
+              <select [(ngModel)]="usuarioForm.rolId">
+                <option *ngFor="let r of rolesDisponibles" [value]="r.id">{{ r.nombre }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>{{ editandoUsuario ? 'Nueva Contraseña (Opcional)' : 'Contraseña Temporal' }}</label>
+              <input type="password" [(ngModel)]="usuarioForm.password" placeholder="{{ editandoUsuario ? 'Dejar en blanco para no cambiar' : 'Contraseña' }}" />
+            </div>
+            <div *ngIf="editandoUsuario" class="form-group">
+              <label>Estado de Cuenta</label>
+              <select [(ngModel)]="usuarioForm.activo">
+                <option [ngValue]="true">Activa</option>
+                <option [ngValue]="false">Inactiva (Acceso bloqueado)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-buttons-inline">
+            <button (click)="cancelarFormUsuario()" class="btn-secondary btn-sm" [disabled]="guardando">Cancelar</button>
+            <button (click)="guardarUsuario()" class="btn-primary btn-sm" [disabled]="guardando">
+              {{ guardando ? 'Guardando...' : (editandoUsuario ? 'Guardar Cambios' : 'Crear Cuenta') }}
+            </button>
+          </div>
+        </div>
+
+        <!-- TABLA DE USUARIAS -->
+        <div *ngIf="cargandoUsuarios" class="loading">Cargando usuarias...</div>
+
+        <div *ngIf="!cargandoUsuarios && usuariosFiltrados.length === 0" class="empty">
+          No se encontraron usuarias con los criterios de búsqueda.
+        </div>
+
+        <div *ngIf="!cargandoUsuarios && usuariosFiltrados.length > 0" class="table-card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let u of usuariosFiltrados">
+                <td><strong>{{ u.primerNombre }} {{ u.segundoNombre }} {{ u.tercerNombre }} {{ u.primerApellido }} {{ u.segundoApellido}}</strong></td>
+                <td>{{ u.correo }}</td>
+                <td>
+                  <span class="badge" [ngClass]="u.rol?.nombre === 'ROLE_ADMIN' ? 'badge-admin' : 'badge-user'">
+                    {{ u.rol?.nombre === 'ROLE_ADMIN' ? 'Administradora' : 'Profesional' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="status-indicator" [ngClass]="u.activo ? 'status-active' : 'status-inactive'">
+                    {{ u.activo ? '● Activa' : '○ Inactiva' }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <div class="action-buttons">
+                    <button (click)="iniciarEdicionUsuario(u)" class="btn-action btn-edit" title="Editar Usuaria">
+                      Editar
+                    </button>
+                    <!-- Evitar que la administradora se desactive a sí misma -->
+                    <button *ngIf="u.id !== usuario?.id" (click)="confirmarBorrarUsuario(u)" class="btn-action btn-delete" title="Desactivar Usuaria">
+                      Dar de baja
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarGestionUsuarios()" class="btn-secondary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRMAR DESACTIVACIÓN DE USUARIA -->
+  <div *ngIf="mostrarModalBorrarUsu && usuarioAEliminar" class="modal-backdrop">
+    <div class="modal-card modal-delete-card">
+      <div class="modal-header">
+        <h4>¿Desactivar Usuaria?</h4>
+        <button (click)="cerrarModalBorrarUsu()" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás segura de desactivar la cuenta de <strong>{{ usuarioAEliminar.primerNombre }} {{ usuarioAEliminar.primerApellido }}</strong> ({{ usuarioAEliminar.correo }})?</p>
+        <p class="delete-warning">La usuaria no podrá iniciar sesión en el sistema hasta que se reactive.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarModalBorrarUsu()" class="btn-secondary">Cancelar</button>
+        <button type="button" (click)="ejecutarBorradoUsuario()" [disabled]="guardando" class="btn-danger">
+          {{ guardando ? 'Desactivando...' : 'Sí, Desactivar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: CAMBIAR CONTRASEÑA PROPIA           -->
+  <div *ngIf="mostrarModalPassword" class="modal-backdrop">
+    <div class="modal-card modal-delete-card">
+      <div class="modal-header">
+        <h4>Cambiar Mi Contraseña</h4>
+        <button (click)="cerrarModalPassword()" class="btn-close" [disabled]="guardandoPassword">&times;</button>
+      </div>
+      <form (ngSubmit)="ejecutarCambioPassword()">
+        <div class="modal-body">
+          <div *ngIf="errorPassword" class="alert-error">{{ errorPassword }}</div>
+          <div *ngIf="mensajeExitoPassword" class="alert-success">{{ mensajeExitoPassword }}</div>
+
+          <div class="form-group">
+            <label>Contraseña Actual</label>
+            <input type="password" name="passwordActual" [(ngModel)]="passwordForm.passwordActual" placeholder="Ingresa tu clave actual" required />
+          </div>
+
+          <div class="form-group">
+            <label>Nueva Contraseña</label>
+            <input type="password" name="nuevoPassword" [(ngModel)]="passwordForm.nuevoPassword" placeholder="Mínimo 12 caracteres" required />
+          </div>
+
+          <div class="form-group">
+            <label>Confirmar Nueva Contraseña</label>
+            <input type="password" name="confirmarPassword" [(ngModel)]="passwordForm.confirmarPassword" placeholder="Repite la nueva clave" required />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" (click)="cerrarModalPassword()" class="btn-secondary" [disabled]="guardandoPassword">Cancelar</button>
+          <button type="submit" [disabled]="guardandoPassword || !!mensajeExitoPassword" class="btn-primary" [ngClass]="{'btn-success': mensajeExitoPassword}">
+            <span *ngIf="!guardandoPassword && !mensajeExitoPassword">Actualizar Clave</span>
+            <span *ngIf="guardandoPassword">Verificando...</span>
+            <span *ngIf="mensajeExitoPassword">¡Listo! </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

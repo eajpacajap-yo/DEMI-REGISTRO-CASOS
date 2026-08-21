@@ -1,0 +1,152 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="header">
+      <h2>DEMI Totonicapán</h2>
+      <p>Sistema de Control y Gestión de Expedientes</p>
+    </div>
+
+    <form (ngSubmit)="iniciarSesion()">
+      <div *ngIf="errorLogin" class="alert-error">
+        {{ errorLogin }}
+      </div>
+
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input 
+          type="email" 
+          name="correo" 
+          [(ngModel)]="correo" 
+          placeholder="ejemplo@demi.gob.gt" 
+          required 
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input 
+          type="password" 
+          name="password" 
+          [(ngModel)]="password" 
+          placeholder="••••••••" 
+          required 
+        />
+      </div>
+
+      <!-- Enlace para Recuperar Contraseña -->
+      <div class="forgot-password-link">
+        <a href="javascript:void(0)" (click)="abrirModalRecuperar()">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" [disabled]="cargando" class="btn-submit">
+        {{ cargando ? 'Iniciando Sesión...' : 'Ingresar al Sistema' }}
+      </button>
+    </form>
+  </div>
+
+
+  <!-- MODAL: RECUPERACIÓN DE CONTRASEÑA POR PIN               -->
+
+  <div *ngIf="mostrarModalRecuperar" class="modal-backdrop">
+    <div class="modal-card modal-recuperar-card">
+      <div class="modal-header">
+        <h4> Recuperar Contraseña</h4>
+        <button (click)="cerrarModalRecuperar()" class="btn-close" [disabled]="cargandoRecuperacion">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div *ngIf="errorRecuperacion" class="alert-error">{{ errorRecuperacion }}</div>
+        <div *ngIf="mensajeExitoRecuperacion" class="alert-success">{{ mensajeExitoRecuperacion }}</div>
+
+        <!-- PASO 1: Ingreso de correo -->
+        <div *ngIf="pasoRecuperacion === 1">
+          <p class="instruction-text">
+            Ingresa tu correo institucional registrado. El sistema generará un <strong>código de seguridad PIN</strong> válido por 10 minutos.
+          </p>
+          <div class="form-group">
+            <label>Correo Institucional</label>
+            <input 
+              type="email" 
+              name="correoRecuperar" 
+              [(ngModel)]="correoRecuperacion" 
+              placeholder="ejemplo@demi.gob.gt" 
+              required 
+            />
+          </div>
+        </div>
+
+        <!-- PASO 2: Ingreso de PIN y Nueva Contraseña -->
+        <div *ngIf="pasoRecuperacion === 2">
+          <!-- Banner con el PIN para demostración -->
+          <div *ngIf="codigoSugeridoDemostracion" class="alert-pin">
+            <span>Código de Seguridad generado:</span>
+            <h3>{{ codigoSugeridoDemostracion }}</h3>
+            <small>Válido por 10 minutos</small>
+          </div>
+
+          <div class="form-group">
+            <label>Código PIN (6 dígitos)</label>
+            <input 
+              type="text" 
+              name="codigoPin" 
+              [(ngModel)]="codigoPin" 
+              placeholder="Ej. 123456" 
+              maxlength="6" 
+              required 
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Nueva Contraseña</label>
+            <input 
+              type="password" 
+              name="nuevoPasswordRecuperar" 
+              [(ngModel)]="nuevoPasswordRecuperar" 
+              placeholder="Mínimo 4 caracteres" 
+              required 
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Confirmar Nueva Contraseña</label>
+            <input 
+              type="password" 
+              name="confirmarPasswordRecuperar" 
+              [(ngModel)]="confirmarPasswordRecuperar" 
+              placeholder="Repite la contraseña" 
+              required 
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarModalRecuperar()" class="btn-secondary" [disabled]="cargandoRecuperacion">
+          Cancelar
+        </button>
+
+        <button 
+          *ngIf="pasoRecuperacion === 1" 
+          type="button" 
+          (click)="solicitarPin()" 
+          [disabled]="cargandoRecuperacion" 
+          class="btn-primary"
+        >
+          {{ cargandoRecuperacion ? 'Verificando...' : 'Generar Código' }}
+        </button>
+
+        <button 
+          *ngIf="pasoRecuperacion === 2" 
+          type="button" 
+          (click)="confirmarRestablecimiento()" 
+          [disabled]="cargandoRecuperacion || !!mensajeExitoRecuperacion" 
+          class="btn-primary" 
+          [ngClass]="{'btn-success': mensajeExitoRecuperacion}"
+        >
+          <span *ngIf="!cargandoRecuperacion && !mensajeExitoRecuperacion">Restablecer Contraseña</span>
+          <span *ngIf="cargandoRecuperacion">Validando PIN...</span>
+          <span *ngIf="mensajeExitoRecuperacion">¡Listo! </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

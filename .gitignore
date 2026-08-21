@@ -1,0 +1,24 @@
+# Archivos de sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# Java / Spring Boot / Maven
+**/target/
+**/.mvn/
+**/mvnw
+**/mvnw.cmd
+*.class
+*.jar
+*.war
+
+# Angular / Node
+**/node_modules/
+**/.angular/
+**/dist/
+**/.cache/
+
+# Variables de entorno
+*.env
