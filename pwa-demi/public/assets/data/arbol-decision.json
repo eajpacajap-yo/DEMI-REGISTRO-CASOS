@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "nodoInicial": "inicio",
+
+  "nodos": [
+    {
+      "id": "inicio",
+      "tipo": "pregunta",
+
+      "pregunta": {
+        "es": "¿Consideras que necesitas orientación inmediata?",
+        "quc": "Traducción K'iche' pendiente de validación"
+      },
+
+      "descripcion": {
+        "es": "Responde las siguientes preguntas para recibir orientación inicial.",
+        "quc": "Traducción pendiente"
+      },
+
+      "si": "necesita_apoyo_inmediato",
+      "no": "desea_informacion"
+    },
+
+    {
+      "id": "necesita_apoyo_inmediato",
+      "tipo": "pregunta",
+
+      "pregunta": {
+        "es": "¿Deseas conocer instituciones que pueden brindarte orientación o apoyo?",
+        "quc": "Traducción pendiente"
+      },
+
+      "descripcion": {
+        "es": "La aplicación puede mostrar instituciones relacionadas con orientación y atención.",
+        "quc": "Traducción pendiente"
+      },
+
+      "si": "resultado_instituciones",
+      "no": "resultado_ruta"
+    },
+
+    {
+      "id": "desea_informacion",
+      "tipo": "pregunta",
+
+      "pregunta": {
+        "es": "¿Deseas conocer información sobre señales de riesgo y prevención?",
+        "quc": "Traducción pendiente"
+      },
+
+      "descripcion": {
+        "es": "Puedes consultar contenido preventivo disponible dentro de la aplicación.",
+        "quc": "Traducción pendiente"
+      },
+
+      "si": "resultado_prevencion",
+      "no": "desea_ruta"
+    },
+
+    {
+      "id": "desea_ruta",
+      "tipo": "pregunta",
+
+      "pregunta": {
+        "es": "¿Deseas conocer la ruta de orientación y denuncia?",
+        "quc": "Traducción pendiente"
+      },
+
+      "descripcion": {
+        "es": "La ruta crítica presenta de forma sencilla las etapas e instituciones relacionadas.",
+        "quc": "Traducción pendiente"
+      },
+
+      "si": "resultado_ruta",
+      "no": "resultado_informacion"
+    },
+
+    {
+      "id": "resultado_instituciones",
+      "tipo": "resultado",
+
+      "titulo": {
+        "es": "Consultar instituciones de apoyo",
+        "quc": "Traducción pendiente"
+      },
+
+      "recomendacion": {
+        "es": "Puedes consultar las instituciones disponibles dentro de la aplicación para conocer opciones de orientación y acompañamiento.",
+        "quc": "Traducción pendiente"
+      },
+
+      "accion": "instituciones",
+
+      "instituciones": [
+        "DEMI",
+        "MP",
+        "PNC"
+      ],
+
+      "nivelUrgencia": "orientacion"
+    },
+
+    {
+      "id": "resultado_ruta",
+      "tipo": "resultado",
+
+      "titulo": {
+        "es": "Consultar la ruta crítica",
+        "quc": "Traducción pendiente"
+      },
+
+      "recomendacion": {
+        "es": "Puedes revisar la ruta crítica para conocer las etapas generales de orientación y las instituciones relacionadas.",
+        "quc": "Traducción pendiente"
+      },
+
+      "accion": "ruta-denuncia",
+
+      "instituciones": [
+        "DEMI"
+      ],
+
+      "nivelUrgencia": "informativo"
+    },
+
+    {
+      "id": "resultado_prevencion",
+      "tipo": "resultado",
+
+      "titulo": {
+        "es": "Consultar información preventiva",
+        "quc": "Traducción pendiente"
+      },
+
+      "recomendacion": {
+        "es": "Puedes revisar el módulo de prevención para conocer señales de riesgo y contenido informativo.",
+        "quc": "Traducción pendiente"
+      },
+
+      "accion": "prevencion",
+
+      "instituciones": [],
+
+      "nivelUrgencia": "informativo"
+    },
+
+    {
+      "id": "resultado_informacion",
+      "tipo": "resultado",
+
+      "titulo": {
+        "es": "Información disponible",
+        "quc": "Traducción pendiente"
+      },
+
+      "recomendacion": {
+        "es": "Puedes explorar los módulos de prevención, ruta crítica e instituciones cuando lo necesites.",
+        "quc": "Traducción pendiente"
+      },
+
+      "accion": "inicio",
+
+      "instituciones": [],
+
+      "nivelUrgencia": "informativo"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "titulo": {
+    "es": "Ruta crítica de denuncia",
+    "quc": "Traducción K'iche' pendiente de validación"
+  },
+  "descripcion": {
+    "es": "Conoce de manera sencilla las etapas de orientación y las instituciones que pueden brindar apoyo.",
+    "quc": "Contenido K'iche' pendiente de validación lingüística."
+  },
+  "pasos": [
+    {
+      "id": 1,
+      "orden": 1,
+      "titulo": {
+        "es": "Buscar orientación",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "Puedes solicitar orientación para conocer tus derechos, recibir información y comprender las opciones disponibles.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "orientacion",
+      "instituciones": ["DEMI"]
+    },
+    {
+      "id": 2,
+      "orden": 2,
+      "titulo": {
+        "es": "Conocer dónde presentar una denuncia",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "Consulta qué instituciones pueden recibir o apoyar el proceso de denuncia según la situación.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "denuncia",
+      "instituciones": ["MP", "PNC"]
+    },
+    {
+      "id": 3,
+      "orden": 3,
+      "titulo": {
+        "es": "Evaluación y atención",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "Dependiendo del caso, pueden intervenir instituciones encargadas de realizar evaluaciones o brindar atención especializada.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "evaluacion",
+      "instituciones": ["INACIF"]
+    },
+    {
+      "id": 4,
+      "orden": 4,
+      "titulo": {
+        "es": "Medidas de protección",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "Las autoridades competentes pueden establecer medidas de protección de acuerdo con el caso y el procedimiento correspondiente.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "proteccion",
+      "instituciones": ["OJ"]
+    },
+    {
+      "id": 5,
+      "orden": 5,
+      "titulo": {
+        "es": "Seguimiento y acompañamiento",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "El acompañamiento institucional puede continuar durante las distintas etapas del proceso.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "seguimiento",
+      "instituciones": ["DEMI"]
+    }
+  ],
+  "instituciones": [
+    {
+      "codigo": "DEMI",
+      "nombre": "Defensoría de la Mujer Indígena",
+      "descripcion": {
+        "es": "Institución orientada a la promoción y defensa de los derechos de las mujeres indígenas.",
+        "quc": "Traducción pendiente"
+      }
+    },
+    {
+      "codigo": "MP",
+      "nombre": "Ministerio Público",
+      "descripcion": {
+        "es": "Institución relacionada con la investigación y persecución de hechos que puedan constituir delito.",
+        "quc": "Traducción pendiente"
+      }
+    },
+    {
+      "codigo": "PNC",
+      "nombre": "Policía Nacional Civil",
+      "descripcion": {
+        "es": "Institución de seguridad pública que puede brindar atención y apoyo dentro de sus competencias.",
+        "quc": "Traducción pendiente"
+      }
+    },
+    {
+      "codigo": "INACIF",
+      "nombre": "Instituto Nacional de Ciencias Forenses",
+      "descripcion": {
+        "es": "Institución encargada de evaluaciones periciales y científicas cuando corresponda.",
+        "quc": "Traducción pendiente"
+      }
+    },
+    {
+      "codigo": "OJ",
+      "nombre": "Organismo Judicial",
+      "descripcion": {
+        "es": "Órgano encargado de administrar justicia mediante los tribunales correspondientes.",
+        "quc": "Traducción pendiente"
+      }
+    }
+    
+  ]
+  
+}

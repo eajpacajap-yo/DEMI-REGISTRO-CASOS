@@ -1,0 +1,293 @@
+<section class="asesoria">
+
+  @if (cargando) {
+
+    <div class="estado-carga">
+
+      Cargando herramienta
+      de orientación...
+
+    </div>
+
+  }
+
+
+  @if (error) {
+
+    <div class="mensaje-error">
+
+      No fue posible cargar
+      la herramienta de orientación.
+
+    </div>
+
+  }
+
+
+  @if (
+    nodoActual;
+    as nodo
+  ) {
+
+    <header class="encabezado">
+
+      <span class="etiqueta">
+        Orientación inicial
+      </span>
+
+      <h2>
+        Asesoría
+      </h2>
+
+      <p>
+        Responde preguntas sencillas
+        para recibir una orientación
+        inicial.
+      </p>
+
+    </header>
+
+
+    <div class="aviso">
+
+      <strong>
+        Importante
+      </strong>
+
+      <p>
+
+        Esta herramienta proporciona
+        orientación general y no sustituye
+        la asesoría legal, psicológica
+        ni institucional profesional.
+
+      </p>
+
+    </div>
+
+
+    @if (
+      esPregunta(nodo)
+    ) {
+
+      <div class="progreso">
+
+        <div class="progreso-info">
+
+          <span>
+            Pregunta
+          </span>
+
+          <span>
+            {{
+              historial.length + 1
+            }}
+          </span>
+
+        </div>
+
+        <div class="barra">
+
+          <div
+            class="barra-activa"
+            [style.width.%]="
+              (historial.length + 1) * 20
+            "
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <article class="tarjeta-pregunta">
+
+        <div class="icono-pregunta">
+          ?
+        </div>
+
+
+        <h3>
+
+          {{
+            texto(
+              nodo.pregunta
+            )
+          }}
+
+        </h3>
+
+
+        @if (
+          nodo.descripcion
+        ) {
+
+          <p class="descripcion">
+
+            {{
+              texto(
+                nodo.descripcion
+              )
+            }}
+
+          </p>
+
+        }
+
+
+        <div class="respuestas">
+
+          <button
+            type="button"
+            class="respuesta si"
+            (click)="responder(true)"
+          >
+
+            <span class="respuesta-icono">
+              ✓
+            </span>
+
+            Sí
+
+          </button>
+
+
+          <button
+            type="button"
+            class="respuesta no"
+            (click)="responder(false)"
+          >
+
+            <span class="respuesta-icono">
+              ×
+            </span>
+
+            No
+
+          </button>
+
+        </div>
+
+
+        @if (
+          historial.length > 0
+        ) {
+
+          <button
+            type="button"
+            class="regresar"
+            (click)="regresar()"
+          >
+
+            ← Pregunta anterior
+
+          </button>
+
+        }
+
+      </article>
+
+    }
+
+
+    @if (
+      esResultado(nodo)
+    ) {
+
+      <article class="resultado">
+
+        <div class="resultado-icono">
+          ✓
+        </div>
+
+
+        <span class="resultado-etiqueta">
+
+          Orientación obtenida
+
+        </span>
+
+
+        <h3>
+
+          {{
+            texto(
+              nodo.titulo
+            )
+          }}
+
+        </h3>
+
+
+        <p>
+
+          {{
+            texto(
+              nodo.recomendacion
+            )
+          }}
+
+        </p>
+
+
+        @if (
+          nodo.instituciones.length > 0
+        ) {
+
+          <div class="instituciones">
+
+            <strong>
+              Instituciones relacionadas
+            </strong>
+
+            <div class="chips">
+
+              @for (
+                institucion
+                of nodo.instituciones;
+                track institucion
+              ) {
+
+                <span class="chip">
+
+                  {{ institucion }}
+
+                </span>
+
+              }
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <button
+          type="button"
+          class="accion-principal"
+          (click)="irAResultado(nodo)"
+        >
+
+          Ver información relacionada
+
+        </button>
+
+
+        <button
+          type="button"
+          class="reiniciar"
+          (click)="reiniciar()"
+        >
+
+          Comenzar de nuevo
+
+        </button>
+
+      </article>
+
+    }
+
+  }
+
+</section>

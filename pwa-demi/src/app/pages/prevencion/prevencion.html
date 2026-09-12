@@ -1,0 +1,220 @@
+<section class="prevencion">
+
+  @if (cargando) {
+
+    <div class="estado-carga">
+      Cargando información...
+    </div>
+
+  }
+
+
+  @if (error) {
+
+    <div class="mensaje-error">
+
+      No fue posible cargar el contenido
+      preventivo.
+
+    </div>
+
+  }
+
+
+  @if (datos) {
+
+    <header class="encabezado">
+
+      <span class="etiqueta">
+        Información preventiva
+      </span>
+
+      <h2>
+        {{ texto(datos.titulo) }}
+      </h2>
+
+      <p>
+        {{ texto(datos.descripcion) }}
+      </p>
+
+    </header>
+
+
+    <div class="aviso">
+
+      <strong>
+        Recuerda
+      </strong>
+
+      <p>
+        Puedes consultar esta información
+        incluso cuando no tengas conexión
+        a internet.
+      </p>
+
+    </div>
+
+
+    <div class="categorias">
+
+      @for (
+        categoria of datos.categorias;
+        track categoria.id
+      ) {
+
+        <article
+          class="categoria"
+          [class.abierta]="
+            categoriaSeleccionada?.id ===
+            categoria.id
+          "
+        >
+
+          <button
+            type="button"
+            class="categoria-boton"
+            (click)="
+              seleccionarCategoria(categoria)
+            "
+          >
+
+            <div
+              class="icono"
+              [attr.data-tipo]="
+                categoria.icono
+              "
+            >
+
+              @switch (categoria.icono) {
+
+                @case ('alerta') {
+                  !
+                }
+
+                @case ('escudo') {
+                  ✓
+                }
+
+                @case ('informacion') {
+                  i
+                }
+
+                @default {
+                  •
+                }
+
+              }
+
+            </div>
+
+
+            <div class="categoria-info">
+
+              <h3>
+                {{ texto(categoria.titulo) }}
+              </h3>
+
+              <p>
+                {{
+                  texto(
+                    categoria.descripcion
+                  )
+                }}
+              </p>
+
+            </div>
+
+
+            <div class="abrir">
+
+              {{
+                categoriaSeleccionada?.id ===
+                categoria.id
+                  ? '−'
+                  : '+'
+              }}
+
+            </div>
+
+          </button>
+
+
+          @if (
+            categoriaSeleccionada?.id ===
+            categoria.id
+          ) {
+
+            <div class="contenido-categoria">
+
+              @for (
+                contenido of
+                  categoria.contenidos;
+                track contenido.id
+              ) {
+
+                <div class="contenido-item">
+
+                  <div class="marca">
+                    ✓
+                  </div>
+
+                  <div>
+
+                    <h4>
+                      {{
+                        texto(
+                          contenido.titulo
+                        )
+                      }}
+                    </h4>
+
+                    <p>
+                      {{
+                        texto(
+                          contenido.texto
+                        )
+                      }}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+
+          }
+
+        </article>
+
+      }
+
+    </div>
+
+
+    <div class="orientacion">
+
+      <div class="orientacion-icono">
+        ?
+      </div>
+
+      <div>
+
+        <strong>
+          ¿Necesitas más orientación?
+        </strong>
+
+        <p>
+          Consulta la Ruta crítica de denuncia
+          o las instituciones de apoyo
+          disponibles en la aplicación.
+        </p>
+
+      </div>
+
+    </div>
+
+  }
+
+</section>

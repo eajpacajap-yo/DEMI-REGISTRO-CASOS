@@ -1,0 +1,132 @@
+<section class="ruta">
+
+  @if (cargando) {
+    <div class="estado-carga">
+      Cargando información...
+    </div>
+  }
+
+  @if (error) {
+    <div class="mensaje-error">
+      No fue posible cargar la información de la ruta.
+    </div>
+  }
+
+  @if (datos) {
+    <header class="encabezado-ruta">
+      <span class="etiqueta">
+        Orientación
+      </span>
+
+      <h2>
+        {{ texto(datos.titulo) }}
+      </h2>
+
+      <p>
+        {{ texto(datos.descripcion) }}
+      </p>
+    </header>
+
+    <div class="nota">
+      <strong>
+        Importante
+      </strong>
+
+      <p>
+        Esta información proporciona orientación inicial y no sustituye
+        la atención profesional ni las instrucciones de las autoridades competentes.
+      </p>
+    </div>
+
+    <div class="timeline">
+      @for (
+        paso of datos.pasos;
+        track paso.id;
+        let ultimo = $last
+      ) {
+        <article class="paso">
+          <div class="columna-linea">
+            <div class="numero">
+              {{ paso.orden }}
+            </div>
+
+            @if (!ultimo) {
+              <div class="linea"></div>
+            }
+          </div>
+
+          <div
+            class="tarjeta-paso"
+            [class.abierto]="pasoSeleccionado?.id === paso.id"
+          >
+            <button
+              type="button"
+              class="boton-paso"
+              (click)="seleccionarPaso(paso)"
+            >
+              <div class="contenido-paso">
+                <span class="numero-movil">
+                  Paso {{ paso.orden }}
+                </span>
+
+                <h3>
+                  {{ texto(paso.titulo) }}
+                </h3>
+
+                <p>
+                  {{ texto(paso.descripcion) }}
+                </p>
+              </div>
+
+              <span class="flecha">
+                {{
+                  pasoSeleccionado?.id === paso.id
+                    ? '−'
+                    : '+'
+                }}
+              </span>
+            </button>
+
+            @if (pasoSeleccionado?.id === paso.id) {
+              <div class="detalle">
+                <h4>
+                  Instituciones relacionadas
+                </h4>
+
+                <div class="instituciones">
+                  @for (
+                    codigo of paso.instituciones;
+                    track codigo
+                  ) {
+                    
+                    @if (
+                      obtenerInstitucion(codigo);
+                      as institucion
+                    ) {
+                      <div class="institucion">
+                        <div class="siglas">
+                          {{ institucion.codigo }}
+                        </div>
+
+                        <div>
+                          <strong>
+                            {{ institucion.nombre }}
+                          </strong>
+
+                          <p>
+                            {{ texto(institucion.descripcion) }}
+                          </p>
+                        </div>
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </article> 
+      }
+    </div>
+  } 
+
+</section>

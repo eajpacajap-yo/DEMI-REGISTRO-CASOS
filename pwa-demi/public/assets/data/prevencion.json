@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "titulo": {
+    "es": "Prevención y orientación",
+    "quc": "Traducción K'iche' pendiente de validación"
+  },
+  "descripcion": {
+    "es": "Consulta información para reconocer situaciones de riesgo, conocer medidas preventivas y saber dónde buscar orientación.",
+    "quc": "Contenido K'iche' pendiente de validación lingüística."
+  },
+  "categorias": [
+    {
+      "id": 1,
+      "codigo": "senales",
+      "titulo": {
+        "es": "Señales de riesgo",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "Algunas conductas pueden indicar una situación que requiere atención u orientación.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "alerta",
+      "contenidos": [
+        {
+          "id": 1,
+          "titulo": {
+            "es": "Control excesivo",
+            "quc": "Traducción pendiente"
+          },
+          "texto": {
+            "es": "Controlar constantemente con quién habla una persona, dónde se encuentra o limitar sus actividades puede ser una señal de una relación dañina.",
+            "quc": "Traducción pendiente"
+          }
+        },
+        {
+          "id": 2,
+          "titulo": {
+            "es": "Aislamiento",
+            "quc": "Traducción pendiente"
+          },
+          "texto": {
+            "es": "Impedir o dificultar el contacto con familiares, amistades o personas de confianza puede aumentar la vulnerabilidad.",
+            "quc": "Traducción pendiente"
+          }
+        },
+        {
+          "id": 3,
+          "titulo": {
+            "es": "Amenazas o intimidación",
+            "quc": "Traducción pendiente"
+          },
+          "texto": {
+            "es": "Las amenazas, intimidaciones o acciones destinadas a provocar miedo requieren atención y pueden justificar la búsqueda de apoyo institucional.",
+            "quc": "Traducción pendiente"
+          }
+        }
+      ]
+    },
+
+    {
+      "id": 2,
+      "codigo": "prevencion",
+      "titulo": {
+        "es": "Medidas preventivas",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "Acciones sencillas que pueden ayudar a estar mejor informada y preparada.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "escudo",
+      "contenidos": [
+        {
+          "id": 4,
+          "titulo": {
+            "es": "Identificar personas de confianza",
+            "quc": "Traducción pendiente"
+          },
+          "texto": {
+            "es": "Reconocer previamente familiares, amistades o instituciones con quienes pueda comunicarse para solicitar orientación puede facilitar la búsqueda de apoyo.",
+            "quc": "Traducción pendiente"
+          }
+        },
+        {
+          "id": 5,
+          "titulo": {
+            "es": "Conocer instituciones",
+            "quc": "Traducción pendiente"
+          },
+          "texto": {
+            "es": "Conocer las instituciones disponibles en su municipio puede facilitar el acceso oportuno a orientación y acompañamiento.",
+            "quc": "Traducción pendiente"
+          }
+        }
+      ]
+    },
+
+    {
+      "id": 3,
+      "codigo": "orientacion",
+      "titulo": {
+        "es": "Buscar orientación",
+        "quc": "Traducción pendiente"
+      },
+      "descripcion": {
+        "es": "Si necesita información, puede consultar las instituciones y la ruta crítica disponibles en esta aplicación.",
+        "quc": "Traducción pendiente"
+      },
+      "icono": "informacion",
+      "contenidos": [
+        {
+          "id": 6,
+          "titulo": {
+            "es": "Solicitar apoyo institucional",
+            "quc": "Traducción pendiente"
+          },
+          "texto": {
+            "es": "La DEMI y otras instituciones pueden brindar orientación de acuerdo con sus competencias.",
+            "quc": "Traducción pendiente"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+<section class="bienvenida">
+
+  <h2>
+    {{
+      idiomaService.esEspanol()
+        ? '¿Cómo podemos orientarte?'
+        : "K'iche': ¿Cómo podemos orientarte?"
+    }}
+  </h2>
+
+  <p class="descripcion">
+    {{
+      idiomaService.esEspanol()
+        ? 'Aquí puedes encontrar información sobre prevención, mecanismos de denuncia e instituciones que pueden brindarte orientación.'
+        : "Contenido en K'iche' pendiente de validación lingüística."
+    }}
+  </p>
+
+
+  <div class="modulos">
+
+    <a
+      routerLink="/ruta-denuncia"
+      class="tarjeta"
+    >
+
+      <div class="icono">
+        ➜
+      </div>
+
+      <div>
+        <h3>
+          Ruta de denuncia
+        </h3>
+
+        <p>
+          Conoce los pasos y las instituciones a las que puedes acudir.
+        </p>
+      </div>
+
+    </a>
+
+
+    <a
+      routerLink="/prevencion"
+      class="tarjeta"
+    >
+
+      <div class="icono">
+        ✓
+      </div>
+
+      <div>
+        <h3>
+          Prevención
+        </h3>
+
+        <p>
+          Identifica señales de riesgo y consulta información preventiva.
+        </p>
+      </div>
+
+    </a>
+
+
+    <a
+      routerLink="/asesoria"
+      class="tarjeta"
+    >
+
+      <div class="icono">
+        ?
+      </div>
+
+      <div>
+        <h3>
+          Asesoría
+        </h3>
+
+        <p>
+          Responde preguntas sencillas para recibir orientación inicial.
+        </p>
+      </div>
+
+    </a>
+
+
+    <a
+      routerLink="/instituciones"
+      class="tarjeta"
+    >
+
+      <div class="icono">
+        i
+      </div>
+
+      <div>
+        <h3>
+          Instituciones de apoyo
+        </h3>
+
+        <p>
+          Consulta instituciones y servicios disponibles.
+        </p>
+      </div>
+
+    </a>
+
+  </div>
+
+
+  <div class="aviso">
+
+    <strong>Importante</strong>
+
+    <p>
+      Esta aplicación proporciona información y orientación
+      inicial. No sustituye la atención profesional, legal,
+      psicológica o institucional.
+    </p>
+
+  </div>
+
+</section>
