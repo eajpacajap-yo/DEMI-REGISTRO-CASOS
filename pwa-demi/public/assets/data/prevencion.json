@@ -1,126 +1,101 @@
 {
-  "version": 1,
   "titulo": {
-    "es": "Prevención y orientación",
-    "quc": "Traducción K'iche' pendiente de validación"
+    "es": "Prevención y Señales de Violencia",
+    "quc": "Chajtalik xuquje' Retal ri K'axk'olil"
   },
   "descripcion": {
-    "es": "Consulta información para reconocer situaciones de riesgo, conocer medidas preventivas y saber dónde buscar orientación.",
-    "quc": "Contenido K'iche' pendiente de validación lingüística."
+    "es": "Identifica los tipos de agresión, señales de alerta y recursos formativos comunitarios.",
+    "quc": "Chaweta'maj uwach tak ri k'ax, retal k'axk'olil xuquje' reta'maxik chrij achomanik."
   },
-  "categorias": [
+  "tiposViolencia": [
     {
-      "id": 1,
-      "codigo": "senales",
+      "id": "fisica",
       "titulo": {
-        "es": "Señales de riesgo",
-        "quc": "Traducción pendiente"
+        "es": "Violencia Física",
+        "quc": "K'axk'olil rech Ch'akulal"
       },
       "descripcion": {
-        "es": "Algunas conductas pueden indicar una situación que requiere atención u orientación.",
-        "quc": "Traducción pendiente"
+        "es": "Cualquier acto que cause daño no accidental en tu cuerpo mediante golpes, empujones, heridas o quemaduras.",
+        "quc": "Ronojel b'anow k'ax che ri achakulal: ch'ayik, yuqik, socotajik on k'atinik."
       },
-      "icono": "alerta",
-      "contenidos": [
+      "senales": [
         {
-          "id": 1,
-          "titulo": {
-            "es": "Control excesivo",
-            "quc": "Traducción pendiente"
-          },
-          "texto": {
-            "es": "Controlar constantemente con quién habla una persona, dónde se encuentra o limitar sus actividades puede ser una señal de una relación dañina.",
-            "quc": "Traducción pendiente"
-          }
+          "es": "Empujones, jalones de cabello, bofetadas o golpes.",
+          "quc": "Yuqik, ch'ayik pa palaj, chapoj wi'aj on tak ch'ayik."
         },
         {
-          "id": 2,
-          "titulo": {
-            "es": "Aislamiento",
-            "quc": "Traducción pendiente"
-          },
-          "texto": {
-            "es": "Impedir o dificultar el contacto con familiares, amistades o personas de confianza puede aumentar la vulnerabilidad.",
-            "quc": "Traducción pendiente"
-          }
+          "es": "Uso de objetos o armas para amenazar o lastimar.",
+          "quc": "Ukojik ch'ich', che' on k'aqb'al rech kaxib'ixik on kasocotajik."
         },
         {
-          "id": 3,
-          "titulo": {
-            "es": "Amenazas o intimidación",
-            "quc": "Traducción pendiente"
-          },
-          "texto": {
-            "es": "Las amenazas, intimidaciones o acciones destinadas a provocar miedo requieren atención y pueden justificar la búsqueda de apoyo institucional.",
-            "quc": "Traducción pendiente"
-          }
+          "es": "Obligar a realizar trabajos físicos exhaustivos en contra de tu salud.",
+          "quc": "Taqik chi chak nimalaj k'ax che ri achakulal."
         }
       ]
     },
-
     {
-      "id": 2,
-      "codigo": "prevencion",
+      "id": "psicologica",
       "titulo": {
-        "es": "Medidas preventivas",
-        "quc": "Traducción pendiente"
+        "es": "Violencia Psicológica y Emocional",
+        "quc": "K'axk'olil rech No'jib'al xuquje' K'uxla'm"
       },
       "descripcion": {
-        "es": "Acciones sencillas que pueden ayudar a estar mejor informada y preparada.",
-        "quc": "Traducción pendiente"
+        "es": "Acciones que dañan tu autoestima y estabilidad: insultos, amenazas, humillaciones, celos excesivos o aislamiento.",
+        "quc": "B'anow tzij rech yoq'onik, xib'inïk, meq'ijil, k'ayew k'u'x xuquje' uq'atexik rech katch'aw kuk' rachalal."
       },
-      "icono": "escudo",
-      "contenidos": [
+      "senales": [
         {
-          "id": 4,
-          "titulo": {
-            "es": "Identificar personas de confianza",
-            "quc": "Traducción pendiente"
-          },
-          "texto": {
-            "es": "Reconocer previamente familiares, amistades o instituciones con quienes pueda comunicarse para solicitar orientación puede facilitar la búsqueda de apoyo.",
-            "quc": "Traducción pendiente"
-          }
+          "es": "Gritos, burlas o humillaciones constantes en público o privado.",
+          "quc": "Siq'inïk, yoq'onik xuquje' yajonik chuwach ri winaq."
         },
         {
-          "id": 5,
-          "titulo": {
-            "es": "Conocer instituciones",
-            "quc": "Traducción pendiente"
-          },
-          "texto": {
-            "es": "Conocer las instituciones disponibles en su municipio puede facilitar el acceso oportuno a orientación y acompañamiento.",
-            "quc": "Traducción pendiente"
-          }
+          "es": "Prohibirte visitar a tu familia, amistades o participar en la comunidad.",
+          "quc": "Kuq'ato rech man katb'e ta kuk' awachalal on pa ri komon."
+        },
+        {
+          "es": "Controlar tu vestimenta, celular o salidas de la casa.",
+          "quc": "Uchajixik ri atz'yaq, ach'ab'al on elb'al pa ja."
         }
       ]
     },
-
     {
-      "id": 3,
-      "codigo": "orientacion",
+      "id": "economica",
       "titulo": {
-        "es": "Buscar orientación",
-        "quc": "Traducción pendiente"
+        "es": "Violencia Económica y Patrimonial",
+        "quc": "K'axk'olil rech Pwaq xuquje' Jastaq"
       },
       "descripcion": {
-        "es": "Si necesita información, puede consultar las instituciones y la ruta crítica disponibles en esta aplicación.",
-        "quc": "Traducción pendiente"
+        "es": "Control, retención o despojo injustificado de dinero, bienes, terrenos, animales o documentos personales.",
+        "quc": "Umajixik ri apwaq, awulew, awikatz on uwujil ak'aslemal rumal jun chi winaq."
       },
-      "icono": "informacion",
-      "contenidos": [
+      "senales": [
         {
-          "id": 6,
-          "titulo": {
-            "es": "Solicitar apoyo institucional",
-            "quc": "Traducción pendiente"
-          },
-          "texto": {
-            "es": "La DEMI y otras instituciones pueden brindar orientación de acuerdo con sus competencias.",
-            "quc": "Traducción pendiente"
-          }
+          "es": "Quitarte el dinero de tu trabajo, ventas o tejido.",
+          "quc": "Kresaj ri pwaq chawach rech achemom on ak'ayib'al."
+        },
+        {
+          "es": "Negar el sustento o alimentación para ti y tus hijos/as.",
+          "quc": "Man kuya ta ri echb'al xuquje' waib' che ri ak'alk'al."
+        },
+        {
+          "es": "Apropiarse o amenazar con vender tus tierras y herencia.",
+          "quc": "Umajixik awulew on reta'maxik uk'ayixik ri awechb'al."
         }
       ]
+    }
+  ],
+  "checklist_derechos": [
+    {
+      "es": "Tienes derecho a vivir sin violencia, miedo ni humillaciones.",
+      "quc": "K'o awechb'al rech katk'asi' pa ja'maril, maj xib'inïk on yoq'onik."
+    },
+    {
+      "es": "Tienes derecho a recibir atención pública en tu propio idioma Maya K'iche'.",
+      "quc": "K'o awechb'al rech katch'aw pa ri ach'ab'al Maya K'iche' pa ronojel q'atb'altzij."
+    },
+    {
+      "es": "Tienes derecho a conservar tus bienes propios y administrar tu trabajo.",
+      "quc": "K'o awechb'al chrij ri ajastaq, awulew xuquje' ri apwaq kach'ako."
     }
   ]
 }

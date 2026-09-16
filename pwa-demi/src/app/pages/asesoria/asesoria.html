@@ -1,292 +1,89 @@
 <section class="asesoria">
 
   @if (cargando) {
-
     <div class="estado-carga">
-
-      Cargando herramienta
-      de orientación...
-
+      <p>{{ idiomaService.esEspanol() ? 'Cargando herramienta de orientación...' : 'Tajin kesax uwach ri pixb\'anïk...' }}</p>
     </div>
-
   }
-
 
   @if (error) {
-
     <div class="mensaje-error">
-
-      No fue posible cargar
-      la herramienta de orientación.
-
+      <p>{{ idiomaService.esEspanol() ? 'No fue posible cargar el módulo de asesoría.' : 'Man xkowin taj xresaj uwach ri tob\'anïk.' }}</p>
     </div>
-
   }
 
-
-  @if (
-    nodoActual;
-    as nodo
-  ) {
-
-    <header class="encabezado">
-
-      <span class="etiqueta">
-        Orientación inicial
-      </span>
-
-      <h2>
-        Asesoría
-      </h2>
-
-      <p>
-        Responde preguntas sencillas
-        para recibir una orientación
-        inicial.
-      </p>
-
-    </header>
-
-
-    <div class="aviso">
-
-      <strong>
-        Importante
-      </strong>
-
-      <p>
-
-        Esta herramienta proporciona
-        orientación general y no sustituye
-        la asesoría legal, psicológica
-        ni institucional profesional.
-
-      </p>
-
-    </div>
-
-
-    @if (
-      esPregunta(nodo)
-    ) {
-
-      <div class="progreso">
-
-        <div class="progreso-info">
-
-          <span>
-            Pregunta
-          </span>
-
-          <span>
-            {{
-              historial.length + 1
-            }}
-          </span>
-
-        </div>
-
-        <div class="barra">
-
-          <div
-            class="barra-activa"
-            [style.width.%]="
-              (historial.length + 1) * 20
-            "
-          ></div>
-
-        </div>
-
+  @if (!cargando && !error && nodoActual) {
+    
+    <!-- DESCARGO LEGAL / DISCLAIMER -->
+    @if (datos?.disclaimer) {
+      <div class="disclaimer-caja">
+        <p>{{ texto(datos?.disclaimer) }}</p>
       </div>
-
-
-      <article class="tarjeta-pregunta">
-
-        <div class="icono-pregunta">
-          ?
-        </div>
-
-
-        <h3>
-
-          {{
-            texto(
-              nodo.pregunta
-            )
-          }}
-
-        </h3>
-
-
-        @if (
-          nodo.descripcion
-        ) {
-
-          <p class="descripcion">
-
-            {{
-              texto(
-                nodo.descripcion
-              )
-            }}
-
-          </p>
-
-        }
-
-
-        <div class="respuestas">
-
-          <button
-            type="button"
-            class="respuesta si"
-            (click)="responder(true)"
-          >
-
-            <span class="respuesta-icono">
-              ✓
-            </span>
-
-            Sí
-
-          </button>
-
-
-          <button
-            type="button"
-            class="respuesta no"
-            (click)="responder(false)"
-          >
-
-            <span class="respuesta-icono">
-              ×
-            </span>
-
-            No
-
-          </button>
-
-        </div>
-
-
-        @if (
-          historial.length > 0
-        ) {
-
-          <button
-            type="button"
-            class="regresar"
-            (click)="regresar()"
-          >
-
-            ← Pregunta anterior
-
-          </button>
-
-        }
-
-      </article>
-
     }
 
+    <!-- NODO TIPO PREGUNTA -->
+    @if (nodoActual.tipo === 'pregunta' || (nodoActual.opciones && nodoActual.opciones.length > 0)) {
+      <div class="tarjeta-pregunta">
+        <h2>{{ texto(nodoActual.pregunta) }}</h2>
 
-    @if (
-      esResultado(nodo)
-    ) {
-
-      <article class="resultado">
-
-        <div class="resultado-icono">
-          ✓
+        <div class="opciones-lista">
+          @for (opcion of nodoActual.opciones; track $index) {
+            <button 
+              class="btn-opcion" 
+              [ngClass]="opcion.color || 'default'"
+              (click)="seleccionarOpcion(opcion)"
+            >
+              {{ texto(opcion.texto) }}
+            </button>
+          }
         </div>
+      </div>
+    }
 
+    <!-- NODO TIPO CONCLUSIÓN / RECOMENDACIÓN -->
+    @if (nodoActual.tipo === 'conclusion' || (!nodoActual.opciones || nodoActual.opciones.length === 0)) {
+      <div class="tarjeta-conclusion" [ngClass]="nodoActual.urgencia || 'media'">
+        <div class="insignia-urgencia">
+          {{ nodoActual.urgencia === 'alta' ? '🚨 URGENCIA ALTA' : 'ℹ️ RECOMENDACIÓN' }}
+        </div>
+        
+        <p class="recomendacion-texto">{{ texto(nodoActual.recomendacion) }}</p>
 
-        <span class="resultado-etiqueta">
-
-          Orientación obtenida
-
-        </span>
-
-
-        <h3>
-
-          {{
-            texto(
-              nodo.titulo
-            )
-          }}
-
-        </h3>
-
-
-        <p>
-
-          {{
-            texto(
-              nodo.recomendacion
-            )
-          }}
-
-        </p>
-
-
-        @if (
-          nodo.instituciones.length > 0
-        ) {
-
-          <div class="instituciones">
-
-            <strong>
-              Instituciones relacionadas
-            </strong>
-
-            <div class="chips">
-
-              @for (
-                institucion
-                of nodo.instituciones;
-                track institucion
-              ) {
-
-                <span class="chip">
-
-                  {{ institucion }}
-
-                </span>
-
+        @if (nodoActual.acciones && nodoActual.acciones.length > 0) {
+          <div class="caja-acciones">
+            <h4>{{ idiomaService.esEspanol() ? 'Pasos inmediatos:' : 'Nab\'e b\'anowik:' }}</h4>
+            <ul>
+              @for (accion of nodoActual.acciones; track $index) {
+                <li>{{ texto(accion) }}</li>
               }
-
-            </div>
-
+            </ul>
           </div>
-
         }
 
-
-        <button
-          type="button"
-          class="accion-principal"
-          (click)="irAResultado(nodo)"
-        >
-
-          Ver información relacionada
-
-        </button>
-
-
-        <button
-          type="button"
-          class="reiniciar"
-          (click)="reiniciar()"
-        >
-
-          Comenzar de nuevo
-
-        </button>
-
-      </article>
-
+        <div class="acciones-finales">
+          @if (nodoActual.urgencia === 'alta') {
+            <a href="tel:110" class="btn-emergencia">
+              📞 {{ idiomaService.esEspanol() ? 'Llamar al 110 (PNC)' : 'Chawixim ri 110 (PNC)' }}
+            </a>
+          }
+          <a routerLink="/ruta-denuncia" class="btn-enlace">
+            ➜ {{ idiomaService.esEspanol() ? 'Ver Ruta de Denuncia' : 'Chawila\' Ub\'e Tzujunïk' }}
+          </a>
+        </div>
+      </div>
     }
+
+    <!-- BOTONES DE REGRESO Y REINICIO -->
+    <div class="controles-navegacion">
+      @if (historial.length > 0) {
+        <button class="btn-regresar" (click)="regresarPaso()">
+          ⬅ {{ idiomaService.esEspanol() ? 'Regresar' : 'Tzalijik' }}
+        </button>
+      }
+      <button class="btn-reiniciar" (click)="iniciarArbol()">
+        🔄 {{ idiomaService.esEspanol() ? 'Reiniciar cuestionario' : 'Majb\'al chik' }}
+      </button>
+    </div>
 
   }
 

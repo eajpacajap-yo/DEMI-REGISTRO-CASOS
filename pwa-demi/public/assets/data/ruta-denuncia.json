@@ -1,127 +1,129 @@
 {
-  "version": 1,
   "titulo": {
-    "es": "Ruta crítica de denuncia",
-    "quc": "Traducción K'iche' pendiente de validación"
+    "es": "Ruta de Denuncia y Atención",
+    "quc": "Ub'e Tzujunïk xuquje' Tob'anïk"
   },
   "descripcion": {
-    "es": "Conoce de manera sencilla las etapas de orientación y las instituciones que pueden brindar apoyo.",
-    "quc": "Contenido K'iche' pendiente de validación lingüística."
+    "es": "Conoce los pasos legales e institucionales para solicitar auxilio y protección en Totonicapán.",
+    "quc": "Chaweta'maj ri cholajil rech q'atb'altzij rech katz'onoj tob'anïk pa Chuwi' Meq'enya'."
   },
-  "pasos": [
-    {
-      "id": 1,
-      "orden": 1,
-      "titulo": {
-        "es": "Buscar orientación",
-        "quc": "Traducción pendiente"
-      },
-      "descripcion": {
-        "es": "Puedes solicitar orientación para conocer tus derechos, recibir información y comprender las opciones disponibles.",
-        "quc": "Traducción pendiente"
-      },
-      "icono": "orientacion",
-      "instituciones": ["DEMI"]
-    },
-    {
-      "id": 2,
-      "orden": 2,
-      "titulo": {
-        "es": "Conocer dónde presentar una denuncia",
-        "quc": "Traducción pendiente"
-      },
-      "descripcion": {
-        "es": "Consulta qué instituciones pueden recibir o apoyar el proceso de denuncia según la situación.",
-        "quc": "Traducción pendiente"
-      },
-      "icono": "denuncia",
-      "instituciones": ["MP", "PNC"]
-    },
-    {
-      "id": 3,
-      "orden": 3,
-      "titulo": {
-        "es": "Evaluación y atención",
-        "quc": "Traducción pendiente"
-      },
-      "descripcion": {
-        "es": "Dependiendo del caso, pueden intervenir instituciones encargadas de realizar evaluaciones o brindar atención especializada.",
-        "quc": "Traducción pendiente"
-      },
-      "icono": "evaluacion",
-      "instituciones": ["INACIF"]
-    },
-    {
-      "id": 4,
-      "orden": 4,
-      "titulo": {
-        "es": "Medidas de protección",
-        "quc": "Traducción pendiente"
-      },
-      "descripcion": {
-        "es": "Las autoridades competentes pueden establecer medidas de protección de acuerdo con el caso y el procedimiento correspondiente.",
-        "quc": "Traducción pendiente"
-      },
-      "icono": "proteccion",
-      "instituciones": ["OJ"]
-    },
-    {
-      "id": 5,
-      "orden": 5,
-      "titulo": {
-        "es": "Seguimiento y acompañamiento",
-        "quc": "Traducción pendiente"
-      },
-      "descripcion": {
-        "es": "El acompañamiento institucional puede continuar durante las distintas etapas del proceso.",
-        "quc": "Traducción pendiente"
-      },
-      "icono": "seguimiento",
-      "instituciones": ["DEMI"]
-    }
-  ],
   "instituciones": [
     {
-      "codigo": "DEMI",
-      "nombre": "Defensoría de la Mujer Indígena",
-      "descripcion": {
-        "es": "Institución orientada a la promoción y defensa de los derechos de las mujeres indígenas.",
-        "quc": "Traducción pendiente"
-      }
+      "codigo": "PNC",
+      "nombre": "Policía Nacional Civil",
+      "telefono": "110",
+      "direccion": "Comisaría departamental y subestaciones municipales"
     },
     {
       "codigo": "MP",
       "nombre": "Ministerio Público",
-      "descripcion": {
-        "es": "Institución relacionada con la investigación y persecución de hechos que puedan constituir delito.",
-        "quc": "Traducción pendiente"
-      }
+      "telefono": "77664789",
+      "direccion": "Sede Departamental de Totonicapán"
     },
     {
-      "codigo": "PNC",
-      "nombre": "Policía Nacional Civil",
-      "descripcion": {
-        "es": "Institución de seguridad pública que puede brindar atención y apoyo dentro de sus competencias.",
-        "quc": "Traducción pendiente"
-      }
+      "codigo": "OJ",
+      "nombre": "Juzgados de Paz / Femicidio",
+      "telefono": "22904444",
+      "direccion": "Cabecera  departamental"
+    },
+    {
+      "codigo": "DEMI",
+      "nombre": "Defensoría de la Mujer Indígena",
+      "telefono": "7766 1113",
+      "direccion": "Sede Regional de Totonicapán"
     },
     {
       "codigo": "INACIF",
       "nombre": "Instituto Nacional de Ciencias Forenses",
-      "descripcion": {
-        "es": "Institución encargada de evaluaciones periciales y científicas cuando corresponda.",
-        "quc": "Traducción pendiente"
-      }
+      "telefono": "2297-9811",
+      "direccion": "Unidad de peritajes forenses"
+    }
+  ],
+  "pasos": [
+    {
+      "id": 1,
+      "paso": 1,
+      "titulo": {
+        "es": "1. Petición de Auxilio Inmediato",
+        "quc": "1. Utz'onoxik Tob'anïk Chanim"
+      },
+      "resumen": {
+        "es": "Comunícate a las líneas de emergencia en caso de agresión flagrante.",
+        "quc": "Chawixim ri ch'ab'al rech tob'anïk we k'o k'axk'olil tajin kak'ulmatajik."
+      },
+      "detalle": {
+        "es": "Si estás en riesgo inmediato, llama a la PNC (110) o acude a la subestación policial más cercana para resguardar tu integridad física.",
+        "quc": "We k'o nimalaj k'ax chawa'ij, chawixim ri PNC (110) on jat pa ri rachoch chajinela' k'o naqaj chawech rech kachajij awib'."
+      },
+      "instituciones": ["PNC"]
     },
     {
-      "codigo": "OJ",
-      "nombre": "Organismo Judicial",
-      "descripcion": {
-        "es": "Órgano encargado de administrar justicia mediante los tribunales correspondientes.",
-        "quc": "Traducción pendiente"
-      }
+      "id": 2,
+      "paso": 2,
+      "titulo": {
+        "es": "2. Evaluación Médica o Forense",
+        "quc": "2. Rilik rumal Ajkunanel"
+      },
+      "resumen": {
+        "es": "Atención médica urgente y certificación forense de lesiones.",
+        "quc": "Kunanïk aninaq xuquje' rilik ri socotajik rumal INACIF."
+      },
+      "detalle": {
+        "es": "Si tienes golpes o heridas visibles, acude a los servicios de salud o al INACIF para certificar las lesiones físicas antes de que transcurran 72 horas.",
+        "quc": "We k'o socotajik chawij, jat pa kunab'al on pa INACIF rech katz'ib'axik chuwach maxtoq kaq'ax oxib' q'ij (72 horas)."
+      },
+      "instituciones": ["INACIF"]
+    },
+    {
+      "id": 3,
+      "paso": 3,
+      "titulo": {
+        "es": "3. Interposición de la Denuncia",
+        "quc": "3. Uya'ik ri Tzujunïk"
+      },
+      "resumen": {
+        "es": "Presenta el relato de los hechos ante el MP, Juzgado de Paz o PNC.",
+        "quc": "Chatzujun ri k'ax xb'an chawech chuwach ri MP, Q'atb'altzij on PNC."
+      },
+      "detalle": {
+        "es": "Describe lo sucedido con el mayor detalle posible. Tienes derecho a asistencia legal gratuita y a un intérprete en idioma Maya K'iche'.",
+        "quc": "Chatzijoj ronojel ri xb'antajik. K'o awechbalil rech katz'onoj jun q'axol tzij we katch'aw pa K'iche' xuquje' man ktoj taj."
+      },
+      "instituciones": ["MP", "OJ", "PNC"]
+    },
+    {
+      "id": 4,
+      "paso": 4,
+      "titulo": {
+        "es": "4. Solicitud de Medidas de Seguridad",
+        "quc": "4. Utz'onoxik Chajinïk"
+      },
+      "resumen": {
+        "es": "El Juez ordenará restricción de acercamiento del agresor.",
+        "quc": "Ri Ajq'atb'altzij kuq'at chi man kape ta ri b'anow k'ax naqaj chawech."
+      },
+      "detalle": {
+        "es": "El Juzgado de Paz o el MP pueden emitir órdenes de alejamiento inmediatas para salvaguardar tu hogar, trabajo y familia.",
+        "quc": "Ri Q'atb'altzij kuya jun wuj rech uq'atexik ri achi rech man kape ta pa awachoch, achak on k'o ak'alk'al."
+      },
+      "instituciones": ["OJ", "MP"]
+    },
+    {
+      "id": 5,
+      "paso": 5,
+      "titulo": {
+        "es": "5. Acompañamiento Integral en DEMI",
+        "quc": "5. Tob'anïk pa DEMI"
+      },
+      "resumen": {
+        "es": "Orientación legal, psicológica y social continua en tu idioma.",
+        "quc": "Tob'anïk rech q'atb'altzij, utoq'oxik no'jil xuquje' man ktoj taj."
+      },
+      "detalle": {
+        "es": "Acude a la sede regional de la DEMI en Totonicapán para recibir asesoría jurídica, peritajes culturales y seguimiento a tu expediente.",
+        "quc": "Jat pa ri rachoch DEMI pa Chuwi' Meq'enya' rech kato'ik rumal jun ajpixb'anij xuquje' utoq'oxik ano'jib'al pa K'iche'."
+      },
+      "instituciones": ["DEMI"]
     }
-    
   ]
-  
 }

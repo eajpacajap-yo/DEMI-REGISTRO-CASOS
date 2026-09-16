@@ -1,168 +1,265 @@
 {
-  "version": 1,
-  "nodoInicial": "inicio",
-
-  "nodos": [
-    {
-      "id": "inicio",
+  "nodo_raiz": "N0",
+  "disclaimer": {
+    "es": "Esta herramienta proporciona orientación inicial y no sustituye la asesoría legal o psicológica profesional.",
+    "quc": "We chakub'al kuya nab'e pixb'anïk, man kuq'at taj ri upixb'anïk jun ajq'atb'altzij on ajno'jib'al."
+  },
+  "nodos": {
+    "N0": {
+      "id": "N0",
       "tipo": "pregunta",
-
       "pregunta": {
-        "es": "¿Consideras que necesitas orientación inmediata?",
-        "quc": "Traducción K'iche' pendiente de validación"
+        "es": "¿Qué situación estás viviendo en este momento?",
+        "quc": "¿Jas k'axk'olil tajin kariq pa lak'aslemal chanim?"
       },
-
-      "descripcion": {
-        "es": "Responde las siguientes preguntas para recibir orientación inicial.",
-        "quc": "Traducción pendiente"
-      },
-
-      "si": "necesita_apoyo_inmediato",
-      "no": "desea_informacion"
+      "opciones": [
+        {
+          "texto": {
+            "es": "Estoy en peligro inmediato",
+            "quc": "Tajin kinriq jun nimalaj k'ax chanim"
+          },
+          "color": "rojo",
+          "siguiente": "N_ROJO_1"
+        },
+        {
+          "texto": {
+            "es": "He sufrido violencia o agresión",
+            "quc": "Xb'an k'ax chwe / Xb'an k'ax chike wetal"
+          },
+          "color": "naranja",
+          "siguiente": "N_NARANJA_1"
+        },
+        {
+          "texto": {
+            "es": "Deseo información preventiva y derechos",
+            "quc": "Kwaj reta'maxik chrij chajtalik xuquje' wechb'al"
+          },
+          "color": "verde",
+          "siguiente": "N_VERDE_1"
+        }
+      ]
     },
 
-    {
-      "id": "necesita_apoyo_inmediato",
+    "N_ROJO_1": {
+      "id": "N_ROJO_1",
       "tipo": "pregunta",
-
       "pregunta": {
-        "es": "¿Deseas conocer instituciones que pueden brindarte orientación o apoyo?",
-        "quc": "Traducción pendiente"
+        "es": "¿Tienes lesiones o heridas que requieren atención médica urgente?",
+        "quc": "¿La k'o socotajik chawij k'o rajawaxik kunanïk aninaq?"
       },
-
-      "descripcion": {
-        "es": "La aplicación puede mostrar instituciones relacionadas con orientación y atención.",
-        "quc": "Traducción pendiente"
+      "opciones": [
+        {
+          "texto": { "es": "Sí", "quc": "Je'" },
+          "siguiente": "H_ROJO_MEDICO"
+        },
+        {
+          "texto": { "es": "No", "quc": "Man je' taj" },
+          "siguiente": "H_ROJO_PNC"
+        }
+      ]
+    },
+    "H_ROJO_MEDICO": {
+      "id": "H_ROJO_MEDICO",
+      "tipo": "conclusion",
+      "urgencia": "alta",
+      "recomendacion": {
+        "es": "EMERGENCIA: Llama de inmediato al 110 (PNC) o acude al Centro de Salud / Hospital más cercano. Solicita auxilio y resguardo físico.",
+        "quc": "ANINAQ: Chawixim ri 110 (PNC) on jat pa ri Ja Kunanb'al k'o naqaj chawech. Chatz'onoj chajtalik xuquje' kunanïk."
       },
-
-      "si": "resultado_instituciones",
-      "no": "resultado_ruta"
+      "institucion_contacto": {
+        "nombre": "Policía Nacional Civil",
+        "telefono": "110"
+      },
+      "acciones": [
+        { "es": "Llama al 110 de la PNC", "quc": "Chawixim ri 110 rech PNC" },
+        { "es": "Dirígete a un lugar seguro", "quc": "Jat pa jun k'olib'al jik" }
+      ]
+    },
+    "H_ROJO_PNC": {
+      "id": "H_ROJO_PNC",
+      "tipo": "conclusion",
+      "urgencia": "alta",
+      "recomendacion": {
+        "es": "Acude de inmediato a la subestación de la PNC o a la sede de la DEMI más cercana. No te quedes en el lugar donde esté el agresor.",
+        "quc": "Jat aninaq pa ri rachoch PNC on DEMI k'o naqaj chawech. Mat kanaj kan pa ri ja jawi' k'o wi ri b'anow k'ax."
+      },
+      "institucion_contacto": {
+        "nombre": "PNC / DEMI Totonicapán",
+        "telefono": "110"
+      },
+      "acciones": [
+        { "es": "Busca resguardo con personas de confianza", "quc": "Jat kuk' awachalal e jik" },
+        { "es": "Pide auxilio a la autoridad comunitaria o PNC", "quc": "Tz'onoj tob'anïk che ri q'atb'altzij rech komon on PNC" }
+      ]
     },
 
-    {
-      "id": "desea_informacion",
+    "N_NARANJA_1": {
+      "id": "N_NARANJA_1",
       "tipo": "pregunta",
-
       "pregunta": {
-        "es": "¿Deseas conocer información sobre señales de riesgo y prevención?",
-        "quc": "Traducción pendiente"
+        "es": "¿Hace cuánto tiempo ocurrió el hecho de violencia?",
+        "quc": "¿Jampa' xk'ulmataj ri k'ax chawij?"
       },
-
-      "descripcion": {
-        "es": "Puedes consultar contenido preventivo disponible dentro de la aplicación.",
-        "quc": "Traducción pendiente"
-      },
-
-      "si": "resultado_prevencion",
-      "no": "desea_ruta"
+      "opciones": [
+        {
+          "texto": {
+            "es": "Menos de 72 horas (reciente)",
+            "quc": "Maxtoq kaq'ax oxib' q'ij (72 horas)"
+          },
+          "siguiente": "N_NARANJA_2"
+        },
+        {
+          "texto": {
+            "es": "Más de 72 horas o es constante",
+            "quc": "Xq'ax chi oxib' q'ij on q'ij q'ij kak'ulmatajik"
+          },
+          "siguiente": "N_NARANJA_3"
+        }
+      ]
     },
-
-    {
-      "id": "desea_ruta",
+    "N_NARANJA_2": {
+      "id": "N_NARANJA_2",
       "tipo": "pregunta",
-
       "pregunta": {
-        "es": "¿Deseas conocer la ruta de orientación y denuncia?",
-        "quc": "Traducción pendiente"
+        "es": "¿Tienes marcas, moretones o lesiones físicas visibles?",
+        "quc": "¿La k'o q'eqmuk, socotajik on etal kilitaj chawij?"
       },
-
-      "descripcion": {
-        "es": "La ruta crítica presenta de forma sencilla las etapas e instituciones relacionadas.",
-        "quc": "Traducción pendiente"
+      "opciones": [
+        {
+          "texto": { "es": "Sí", "quc": "Je'" },
+          "siguiente": "H_NARANJA_INACIF"
+        },
+        {
+          "texto": { "es": "No", "quc": "Man je' taj" },
+          "siguiente": "H_NARANJA_MP_DEMI"
+        }
+      ]
+    },
+    "H_NARANJA_INACIF": {
+      "id": "H_NARANJA_INACIF",
+      "tipo": "conclusion",
+      "urgencia": "media",
+      "recomendacion": {
+        "es": "Acude al Ministerio Público o al INACIF para evaluación médico-forense. El certificado médico servirá como prueba para solicitar medidas de protección.",
+        "quc": "Jat pa Ministerio Público on INACIF rech kawilixik. We wuj re kuya uchuq'ab' ri atzujunïk rech katz'onoj chajtalik."
       },
-
-      "si": "resultado_ruta",
-      "no": "resultado_informacion"
+      "institucion_contacto": {
+        "nombre": "Ministerio Público / INACIF",
+        "telefono": "77664789 "
+      },
+      "acciones": [
+        { "es": "No te bañes ni cambies de ropa si hubo agresión sexual", "quc": "Mat atinik we xb'an k'ax che ri achakulal" },
+        { "es": "Presenta tu DPI si lo tienes disponible", "quc": "K'ama b'ik ri a-DPI we k'olik" }
+      ]
+    },
+    "N_NARANJA_3": {
+      "id": "N_NARANJA_3",
+      "tipo": "pregunta",
+      "pregunta": {
+        "es": "¿Deseas solicitar medidas de protección legales contra el agresor?",
+        "quc": "¿La kawaj katz'onoj wuj rech uq'atexik ri b'anow k'ax?"
+      },
+      "opciones": [
+        {
+          "texto": { "es": "Sí", "quc": "Je'" },
+          "siguiente": "H_NARANJA_JUZGADO"
+        },
+        {
+          "texto": { "es": "No / Deseo orientación primero", "quc": "Man je' taj / Kwaj nab'e pixb'anïk" },
+          "siguiente": "H_NARANJA_MP_DEMI"
+        }
+      ]
+    },
+    "H_NARANJA_JUZGADO": {
+      "id": "H_NARANJA_JUZGADO",
+      "tipo": "conclusion",
+      "urgencia": "media",
+      "recomendacion": {
+        "es": "Acude al Juzgado de Paz de tu municipio o al Juzgado de Femicidio. Tienen la obligación de otorgarte medidas de seguridad inmediatas.",
+        "quc": "Jat pa ri Q'atb'altzij rech Ja'maril pa ri akomon. Rajawaxik kuya wuj rech kachajixik aninaq."
+      },
+      "institucion_contacto": {
+        "nombre": "Juzgado de Paz / DEMI",
+        "telefono": "2290-4444"
+      },
+      "acciones": [
+        { "es": "Solicita orden de alejamiento", "quc": "Tz'onoj chi man kape ta naqaj chawech" },
+        { "es": "Pide acompañamiento legal a la DEMI", "quc": "Tz'onoj jun ajpixb'anij pa DEMI" }
+      ]
+    },
+    "H_NARANJA_MP_DEMI": {
+      "id": "H_NARANJA_MP_DEMI",
+      "tipo": "conclusion",
+      "urgencia": "media",
+      "recomendacion": {
+        "es": "Acude a la DEMI en Totonicapán o a la Oficina de Atención a la Víctima del MP. Recibirás asesoría jurídica y psicológica confidencial.",
+        "quc": "Jat pa DEMI pa Chuwi' Meq'enya' on pa MP. Kariq pixb'anïk rech q'atb'altzij xuquje' no'jib'al pa awikatz."
+      },
+      "institucion_contacto": {
+        "nombre": "DEMI Totonicapán",
+        "telefono": "7766 1113"
+      },
+      "acciones": [
+        { "es": "Guarda mensajes o evidencias", "quc": "K'olo ri tz'ib'am on retal ri k'ax" },
+        { "es": "Asiste en compañía de una persona de confianza", "quc": "Katchilb'ex rumal jun achalal jik" }
+      ]
     },
 
-    {
-      "id": "resultado_instituciones",
-      "tipo": "resultado",
-
-      "titulo": {
-        "es": "Consultar instituciones de apoyo",
-        "quc": "Traducción pendiente"
+    "N_VERDE_1": {
+      "id": "N_VERDE_1",
+      "tipo": "pregunta",
+      "pregunta": {
+        "es": "¿Qué tipo de información deseas consultar?",
+        "quc": "¿Jas uwach reta'maxik kawaj kawilo?"
       },
-
-      "recomendacion": {
-        "es": "Puedes consultar las instituciones disponibles dentro de la aplicación para conocer opciones de orientación y acompañamiento.",
-        "quc": "Traducción pendiente"
-      },
-
-      "accion": "instituciones",
-
-      "instituciones": [
-        "DEMI",
-        "MP",
-        "PNC"
-      ],
-
-      "nivelUrgencia": "orientacion"
+      "opciones": [
+        {
+          "texto": {
+            "es": "Conocer mis derechos como mujer",
+            "quc": "Reta'maxik ri wechb'al in ixoq"
+          },
+          "siguiente": "H_VERDE_DERECHOS"
+        },
+        {
+          "texto": {
+            "es": "Identificar señales de violencia en mi hogar",
+            "quc": "Rilik retal k'axk'olil pa ja"
+          },
+          "siguiente": "H_VERDE_SENALES"
+        }
+      ]
     },
-
-    {
-      "id": "resultado_ruta",
-      "tipo": "resultado",
-
-      "titulo": {
-        "es": "Consultar la ruta crítica",
-        "quc": "Traducción pendiente"
-      },
-
+    "H_VERDE_DERECHOS": {
+      "id": "H_VERDE_DERECHOS",
+      "tipo": "conclusion",
+      "urgencia": "baja",
       "recomendacion": {
-        "es": "Puedes revisar la ruta crítica para conocer las etapas generales de orientación y las instituciones relacionadas.",
-        "quc": "Traducción pendiente"
+        "es": "Consulta la sección de Prevención para conocer tus derechos a una vida libre de violencia y acudir a la DEMI para un mejor acompañamiento.",
+        "quc": "Chawila' ri Chajtalik rech kaweta'maj ri awechb'al rech katk'asi' pa ja'maril xuquje' jat pa DEMI rech tijonïk."
       },
-
-      "accion": "ruta-denuncia",
-
-      "instituciones": [
-        "DEMI"
-      ],
-
-      "nivelUrgencia": "informativo"
+      "institucion_contacto": {
+        "nombre": "DEMI Regional Totonicapán",
+        "telefono": "7766-1113"
+      },
+      "acciones": [
+        { "es": "Explora el módulo de Prevención", "quc": "Chawila' ri peraj rech Chajtalik" }
+      ]
     },
-
-    {
-      "id": "resultado_prevencion",
-      "tipo": "resultado",
-
-      "titulo": {
-        "es": "Consultar información preventiva",
-        "quc": "Traducción pendiente"
-      },
-
+    "H_VERDE_SENALES": {
+      "id": "H_VERDE_SENALES",
+      "tipo": "conclusion",
+      "urgencia": "baja",
       "recomendacion": {
-        "es": "Puedes revisar el módulo de prevención para conocer señales de riesgo y contenido informativo.",
-        "quc": "Traducción pendiente"
+        "es": "Revisa el catálogo de tipos de violencia (física, psicológica y económica) para identificar factores de riesgo antes de que se agraven.",
+        "quc": "Chawila' ri tak k'ax (ch'akulal, no'jib'al xuquje' pwaq) rech kaweta'maj maxtoq kanimar ri k'axk'olil."
       },
-
-      "accion": "prevencion",
-
-      "instituciones": [],
-
-      "nivelUrgencia": "informativo"
-    },
-
-    {
-      "id": "resultado_informacion",
-      "tipo": "resultado",
-
-      "titulo": {
-        "es": "Información disponible",
-        "quc": "Traducción pendiente"
+      "institucion_contacto": {
+        "nombre": "DEMI Totonicapán",
+        "telefono": "7766-1113"
       },
-
-      "recomendacion": {
-        "es": "Puedes explorar los módulos de prevención, ruta crítica e instituciones cuando lo necesites.",
-        "quc": "Traducción pendiente"
-      },
-
-      "accion": "inicio",
-
-      "instituciones": [],
-
-      "nivelUrgencia": "informativo"
+      "acciones": [
+        { "es": "Compara las señales en tu entorno", "quc": "Chajunaj ri retal pa ak'aslemal" }
+      ]
     }
-  ]
+  }
 }

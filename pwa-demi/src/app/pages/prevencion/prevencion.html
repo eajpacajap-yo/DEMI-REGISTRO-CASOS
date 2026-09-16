@@ -1,220 +1,67 @@
 <section class="prevencion">
 
   @if (cargando) {
-
     <div class="estado-carga">
-      Cargando información...
+      <p>{{ idiomaService.esEspanol() ? 'Cargando información...' : 'Tajin kesax uwach ri reta\'maxik...' }}</p>
     </div>
-
   }
-
 
   @if (error) {
-
     <div class="mensaje-error">
-
-      No fue posible cargar el contenido
-      preventivo.
-
+      <p>{{ idiomaService.esEspanol() ? 'No fue posible cargar el contenido preventivo.' : 'Man xkowin taj xresaj uwach ri chajtalik.' }}</p>
     </div>
-
   }
 
-
-  @if (datos) {
-
-    <header class="encabezado">
-
-      <span class="etiqueta">
-        Información preventiva
-      </span>
-
-      <h2>
-        {{ texto(datos.titulo) }}
-      </h2>
-
-      <p>
-        {{ texto(datos.descripcion) }}
-      </p>
-
-    </header>
-
-
-    <div class="aviso">
-
-      <strong>
-        Recuerda
-      </strong>
-
-      <p>
-        Puedes consultar esta información
-        incluso cuando no tengas conexión
-        a internet.
-      </p>
-
+  @if (!cargando && !error && datos) {
+    <div class="encabezado-prevencion">
+      <span class="badge-tema">{{ idiomaService.esEspanol() ? 'Información preventiva' : 'Chajinïk reta\'maxik' }}</span>
+      <h2>{{ texto(datos.titulo) }}</h2>
+      <p class="descripcion">{{ texto(datos.descripcion) }}</p>
     </div>
 
+    <!-- TARJETA AVISO OFFLINE -->
+    <div class="caja-recuerda">
+      <strong>{{ idiomaService.esEspanol() ? 'Recuerda' : 'Chana\'taj chawech' }}</strong>
+      <p>{{ idiomaService.esEspanol() ? 'Puedes consultar esta información incluso cuando no tengas conexión a internet.' : 'Kaxlan tzij xuquje\' K\'iche\' kachakun we maj k\'amab\'ey.' }}</p>
+    </div>
 
-    <div class="categorias">
-
-      @for (
-        categoria of datos.categorias;
-        track categoria.id
-      ) {
-
-        <article
-          class="categoria"
-          [class.abierta]="
-            categoriaSeleccionada?.id ===
-            categoria.id
-          "
+    <!-- LISTADO DE TARJETAS DESPLEGABLES -->
+    <div class="lista-tarjetas">
+      @for (tipo of datos.tiposViolencia; track tipo.id) {
+        <div 
+          class="tarjeta-tipo" 
+          [class.expandida]="tipoSeleccionado === tipo.id"
+          (click)="toggleTipo(tipo.id)"
         >
+          <div class="tipo-header">
+            <h3>{{ texto(tipo.titulo)  }}</h3>
+            <span class="icono-toggle">{{ tipoSeleccionado === tipo.id ? '▲' : '▼' }}</span>
+          </div>
 
-          <button
-            type="button"
-            class="categoria-boton"
-            (click)="
-              seleccionarCategoria(categoria)
-            "
-          >
+          <p class="tipo-desc">{{ texto(tipo.descripcion) }}</p>
 
-            <div
-              class="icono"
-              [attr.data-tipo]="
-                categoria.icono
-              "
-            >
-
-              @switch (categoria.icono) {
-
-                @case ('alerta') {
-                  !
+          @if (tipoSeleccionado === tipo.id) {
+            <div class="senales-box">
+              <h4>{{ idiomaService.esEspanol() ? 'Señales de alerta:' : 'Retal k\'axk\'olil:' }}</h4>
+              <ul>
+                @for (senal of tipo.senales; track $index) {
+                  <li>{{ texto(senal) }}</li>
                 }
-
-                @case ('escudo') {
-                  ✓
-                }
-
-                @case ('informacion') {
-                  i
-                }
-
-                @default {
-                  •
-                }
-
-              }
-
+              </ul>
             </div>
-
-
-            <div class="categoria-info">
-
-              <h3>
-                {{ texto(categoria.titulo) }}
-              </h3>
-
-              <p>
-                {{
-                  texto(
-                    categoria.descripcion
-                  )
-                }}
-              </p>
-
-            </div>
-
-
-            <div class="abrir">
-
-              {{
-                categoriaSeleccionada?.id ===
-                categoria.id
-                  ? '−'
-                  : '+'
-              }}
-
-            </div>
-
-          </button>
-
-
-          @if (
-            categoriaSeleccionada?.id ===
-            categoria.id
-          ) {
-
-            <div class="contenido-categoria">
-
-              @for (
-                contenido of
-                  categoria.contenidos;
-                track contenido.id
-              ) {
-
-                <div class="contenido-item">
-
-                  <div class="marca">
-                    ✓
-                  </div>
-
-                  <div>
-
-                    <h4>
-                      {{
-                        texto(
-                          contenido.titulo
-                        )
-                      }}
-                    </h4>
-
-                    <p>
-                      {{
-                        texto(
-                          contenido.texto
-                        )
-                      }}
-                    </p>
-
-                  </div>
-
-                </div>
-
-              }
-
-            </div>
-
           }
-
-        </article>
-
+        </div>
       }
-
     </div>
 
-
-    <div class="orientacion">
-
-      <div class="orientacion-icono">
-        ?
-      </div>
-
+    <!-- CAJA DE ORIENTACIÓN EXTRA -->
+    <div class="caja-orientacion">
+      <div class="icono-pregunta">?</div>
       <div>
-
-        <strong>
-          ¿Necesitas más orientación?
-        </strong>
-
-        <p>
-          Consulta la Ruta crítica de denuncia
-          o las instituciones de apoyo
-          disponibles en la aplicación.
-        </p>
-
+        <strong>{{ idiomaService.esEspanol() ? '¿Necesitas más orientación?' : '¿La kawaj chi tob\'anïk?' }}</strong>
+        <p>{{ idiomaService.esEspanol() ? 'Consulta la Ruta crítica de denuncia o las instituciones de apoyo disponibles en la aplicación.' : 'Chawila\' ri Ub\'e Tzujunïk on ri q\'atb\'altzij k\'o waral.' }}</p>
       </div>
-
     </div>
-
   }
 
 </section>

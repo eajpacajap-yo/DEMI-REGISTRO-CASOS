@@ -21,7 +21,7 @@ export class App {
 
   cambiarIdioma(event: Event): void {
     const select = event.target as HTMLSelectElement;
-    this.idiomaService.cambiarIdioma(select.value as Idioma);
+    this.idiomaService.cambiarIdioma(select.value as 'es' | 'quc');
   }
 
   salidaRapida(): void {

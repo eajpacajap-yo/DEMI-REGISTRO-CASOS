@@ -1,132 +1,89 @@
-<section class="ruta">
+<section class="ruta-denuncia">
 
   @if (cargando) {
     <div class="estado-carga">
-      Cargando información...
+      <p>{{ idiomaService.esEspanol() ? 'Cargando información...' : 'Tajin kesax uwach ri reta\'maxik...' }}</p>
     </div>
   }
 
   @if (error) {
     <div class="mensaje-error">
-      No fue posible cargar la información de la ruta.
+      <p>
+        {{
+          idiomaService.esEspanol()
+            ? 'No fue posible cargar la ruta de denuncia. Intente de nuevo.'
+            : 'Man xkowin taj xresaj uwach ri ub\'e tzujunïk. Chatzijoj chi junmul.'
+        }}
+      </p>
     </div>
   }
 
-  @if (datos) {
-    <header class="encabezado-ruta">
-      <span class="etiqueta">
-        Orientación
-      </span>
+  @if (!cargando && !error && datos) {
+    <div class="encabezado-ruta">
+      <h2>{{ texto(datos.titulo) }}</h2>
+      <p class="descripcion">{{ texto(datos.descripcion) }}</p>
+    </div>
 
-      <h2>
-        {{ texto(datos.titulo) }}
-      </h2>
-
+    <!-- AVISO LEGAL Y PROCESAL -->
+    <div class="aviso-ruta">
+      <strong>{{ idiomaService.esEspanol() ? 'Importante' : 'Nim ub\'anik' }}</strong>
       <p>
-        {{ texto(datos.descripcion) }}
-      </p>
-    </header>
-
-    <div class="nota">
-      <strong>
-        Importante
-      </strong>
-
-      <p>
-        Esta información proporciona orientación inicial y no sustituye
-        la atención profesional ni las instrucciones de las autoridades competentes.
+        {{
+          idiomaService.esEspanol()
+            ? 'Esta información proporciona orientación inicial y no sustituye la atención profesional ni las instrucciones de las autoridades competentes.'
+            : 'We reta\'maxik kuya nab\'e pixb\'anïk xuquje\' man kuq\'at taj ri utoq\'oxik jun ajq\'atb\'altzij.'
+        }}
       </p>
     </div>
 
-    <div class="timeline">
-      @for (
-        paso of datos.pasos;
-        track paso.id;
-        let ultimo = $last
-      ) {
-        <article class="paso">
-          <div class="columna-linea">
-            <div class="numero">
-              {{ paso.orden }}
+    <!-- LISTA DE PASOS INTERACTIVOS (ACORDEÓN) -->
+    <div class="lista-pasos">
+      @for (paso of datos.pasos; track paso.id) {
+        <div 
+          class="tarjeta-paso" 
+          [class.seleccionado]="pasoSeleccionado?.id === paso.id"
+          (click)="seleccionarPaso(paso)"
+        >
+          <div class="paso-cabecera">
+            <div class="numero-paso">{{ paso.paso }}</div>
+            <div class="info-paso">
+              <h3>{{ texto(paso.titulo) }}</h3>
+              <p>{{ texto(paso.resumen) }}</p>
             </div>
-
-            @if (!ultimo) {
-              <div class="linea"></div>
-            }
+            <span class="icono-despliegue">
+              {{ pasoSeleccionado?.id === paso.id ? '▲' : '▼' }}
+            </span>
           </div>
 
-          <div
-            class="tarjeta-paso"
-            [class.abierto]="pasoSeleccionado?.id === paso.id"
-          >
-            <button
-              type="button"
-              class="boton-paso"
-              (click)="seleccionarPaso(paso)"
-            >
-              <div class="contenido-paso">
-                <span class="numero-movil">
-                  Paso {{ paso.orden }}
-                </span>
+          <!-- DETALLE DESPLEGABLE -->
+          @if (pasoSeleccionado?.id === paso.id) {
+            <div class="paso-detalle">
+              <p class="detalle-texto">{{ texto(paso.detalle) }}</p>
 
-                <h3>
-                  {{ texto(paso.titulo) }}
-                </h3>
-
-                <p>
-                  {{ texto(paso.descripcion) }}
-                </p>
-              </div>
-
-              <span class="flecha">
-                {{
-                  pasoSeleccionado?.id === paso.id
-                    ? '−'
-                    : '+'
-                }}
-              </span>
-            </button>
-
-            @if (pasoSeleccionado?.id === paso.id) {
-              <div class="detalle">
-                <h4>
-                  Instituciones relacionadas
-                </h4>
-
-                <div class="instituciones">
-                  @for (
-                    codigo of paso.instituciones;
-                    track codigo
-                  ) {
-                    
-                    @if (
-                      obtenerInstitucion(codigo);
-                      as institucion
-                    ) {
-                      <div class="institucion">
-                        <div class="siglas">
-                          {{ institucion.codigo }}
+              @if (paso.instituciones && paso.instituciones.length > 0) {
+                <div class="seccion-instituciones">
+                  <h4>{{ idiomaService.esEspanol() ? 'Instituciones competentes:' : 'Ja q\'atb\'altzij rajawaxik:' }}</h4>
+                  <div class="chips-instituciones">
+                    @for (cod of paso.instituciones; track cod) {
+                      @if (obtenerInstitucion(cod); as inst) {
+                        <div class="chip">
+                          <span class="chip-nombre">{{ inst.nombre }}</span>
+                          @if (inst.telefono) {
+                            <a [href]="'tel:' + inst.telefono" class="btn-tel" (click)="$event.stopPropagation()">
+                              📞 {{ inst.telefono }}
+                            </a>
+                          }
                         </div>
-
-                        <div>
-                          <strong>
-                            {{ institucion.nombre }}
-                          </strong>
-
-                          <p>
-                            {{ texto(institucion.descripcion) }}
-                          </p>
-                        </div>
-                      </div>
+                      }
                     }
-                  }
+                  </div>
                 </div>
-              </div>
-            }
-          </div>
-        </article> 
+              }
+            </div>
+          }
+        </div>
       }
     </div>
-  } 
+  }
 
 </section>

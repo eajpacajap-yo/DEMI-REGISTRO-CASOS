@@ -2,125 +2,105 @@
 
   <!-- ENCABEZADO -->
   <header class="header">
-
     <div class="brand">
-      <div class="logo">
-        DEMI
-      </div>
-
+      <div class="logo">DEMI</div>
       <div>
         <h1>
           {{
             idiomaService.esEspanol()
               ? 'Información y orientación'
-              : "K'iche' - Información y orientación"
+              : 'Reta\'maxik xuquje\' pixb\'anïk'
           }}
         </h1>
-
         <p>
-          Defensoría de la Mujer Indígena
+          {{
+            idiomaService.esEspanol()
+              ? 'Defensoría de la Mujer Indígena'
+              : 'Uto\'b\'al Ixoqib\' Mayab\''
+          }}
         </p>
       </div>
     </div>
 
-    <button
-      class="salida-rapida"
-      type="button"
-      (click)="salidaRapida()"
-    >
-      Salida rápida
+    <!-- Botón de Pánico / Salida Rápida -->
+    <button class="btn-panico" (click)="salidaRapida()">
+      {{ idiomaService.esEspanol() ? 'Salida rápida' : 'Anim Elb\'al' }}
     </button>
-
   </header>
 
 
-  <!-- CONFIGURACIÓN -->
+  <!-- CONFIGURACIÓN DE IDIOMA Y ESTADO -->
   <section class="barra-configuracion">
-
     <label>
-      Idioma:
+      {{ idiomaService.esEspanol() ? 'Idioma:' : 'Ch\'ab\'al:' }}
 
       <select
         [value]="idiomaService.idioma()"
         (change)="cambiarIdioma($event)"
       >
-        <option value="es">
-          Español
-        </option>
-
-        <option value="quc">
-          K'iche'
-        </option>
-
+        <option value="es">Español</option>
+        <option value="quc">K'iche'</option>
       </select>
     </label>
-
 
     <div
       class="estado"
       [class.offline]="!conexionService.online()"
     >
-
-      <span class="punto"></span>
-
-      {{
-        conexionService.online()
-          ? 'Con conexión'
-          : 'Sin conexión'
-      }}
-
+      <span>
+        ● {{
+          conexionService.online()
+            ? (idiomaService.esEspanol() ? 'Con conexión' : 'K\'o k\'amab\'ey')
+            : (idiomaService.esEspanol() ? 'Modo sin conexión' : 'Maj k\'amab\'ey')
+        }}
+      </span>
     </div>
-
   </section>
 
 
-  <!-- CONTENIDO -->
+  <!-- CONTENIDO DINÁMICO -->
   <main class="contenido">
-
     <router-outlet></router-outlet>
-
   </main>
 
 
   <!-- NAVEGACIÓN INFERIOR -->
   <nav class="bottom-nav">
+    <a
+      class="nav-item"
+      routerLink="/inicio"
+      routerLinkActive="activo"
+    >
+      <span class="nav-icon">⌂</span>
+      <span>{{ idiomaService.esEspanol() ? 'Inicio' : 'Majb\'al' }}</span>
+    </a>
 
-  <a
-    class="nav-item"
-    routerLink="/inicio"
-    routerLinkActive="activo"
-  >
-    <span class="nav-icon">⌂</span>
-    <span>Inicio</span>
-  </a>
+    <a
+      class="nav-item"
+      routerLink="/ruta-denuncia"
+      routerLinkActive="activo"
+    >
+      <span class="nav-icon">➜</span>
+      <span>{{ idiomaService.esEspanol() ? 'Ruta' : 'Ub\'e' }}</span>
+    </a>
 
-  <a
-    class="nav-item"
-    routerLink="/ruta-denuncia"
-    routerLinkActive="activo"
-  >
-    <span class="nav-icon">➜</span>
-    <span>Ruta</span>
-  </a>
+    <a
+      class="nav-item"
+      routerLink="/prevencion"
+      routerLinkActive="activo"
+    >
+      <span class="nav-icon">✓</span>
+      <span>{{ idiomaService.esEspanol() ? 'Prevención' : 'Chajtalik' }}</span>
+    </a>
 
-  <a
-    class="nav-item"
-    routerLink="/prevencion"
-    routerLinkActive="activo"
-  >
-    <span class="nav-icon">✓</span>
-    <span>Prevención</span>
-  </a>
-
-  <a
-    class="nav-item"
-    routerLink="/asesoria"
-    routerLinkActive="activo"
-  >
-    <span class="nav-icon">?</span>
-    <span>Asesoría</span>
-  </a>
-
-</nav>
+    <a
+      class="nav-item"
+      routerLink="/asesoria"
+      routerLinkActive="activo"
+    >
+      <span class="nav-icon">?</span>
+      <span>{{ idiomaService.esEspanol() ? 'Asesoría' : 'Tob\'anïk' }}</span>
+    </a>
+  </nav>
 
 </div>

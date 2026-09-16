@@ -1,60 +1,40 @@
-export interface TextoBilingue {
-  es: string;
-  quc: string;
+export interface OpcionDecision {
+  texto: {
+    es: string;
+    quc: string;
+  };
+  color?: string;
+  siguiente: string;
 }
 
-export type TipoNodo =
-  | 'pregunta'
-  | 'resultado';
-
-export interface NodoPregunta {
-
+export interface NodoDecision {
   id: string;
-
-  tipo: 'pregunta';
-
-  pregunta: TextoBilingue;
-
-  descripcion?: TextoBilingue;
-
-  si: string;
-
-  no: string;
+  tipo: 'pregunta' | 'conclusion';
+  urgencia?: 'alta' | 'media' | 'baja';
+  pregunta?: {
+    es: string;
+    quc: string;
+  };
+  recomendacion?: {
+    es: string;
+    quc: string;
+  };
+  institucion_contacto?: {
+    nombre: string;
+    telefono: string;
+  };
+  acciones?: Array<{
+    es: string;
+    quc: string;
+  }>;
+  opciones?: OpcionDecision[];
 }
-
-export interface NodoResultado {
-
-  id: string;
-
-  tipo: 'resultado';
-
-  titulo: TextoBilingue;
-
-  recomendacion: TextoBilingue;
-
-  accion:
-    | 'inicio'
-    | 'prevencion'
-    | 'ruta-denuncia'
-    | 'instituciones';
-
-  instituciones: string[];
-
-  nivelUrgencia:
-    | 'informativo'
-    | 'orientacion';
-}
-
-export type NodoDecision =
-  | NodoPregunta
-  | NodoResultado;
 
 export interface ArbolDecisionData {
-
-  version: number;
-
-  nodoInicial: string;
-
-  nodos: NodoDecision[];
-
+  nodo_raiz: string;
+  disclaimer: {
+    es: string;
+    quc: string;
+  };
+  nodos: Record<string, NodoDecision>;
 }

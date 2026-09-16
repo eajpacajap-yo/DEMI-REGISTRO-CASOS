@@ -1,17 +1,11 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
-
   "index": "/index.html",
-
   "assetGroups": [
-
     {
       "name": "app",
-
       "installMode": "prefetch",
-
       "resources": {
-
         "files": [
           "/favicon.ico",
           "/index.html",
@@ -25,15 +19,11 @@
 
     {
       "name": "assets",
-
       "installMode": "lazy",
-
       "updateMode": "prefetch",
-
       "resources": {
-
         "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|webp|avif|gif|otf|ttf|woff|woff2|ani)"
+          "/**/*.(svg|cur|jpg|jpeg|png|webp|avif|gif|otf|ttf|woff|woff2|json)"
         ]
 
       }
@@ -41,20 +31,19 @@
 
     {
       "name": "contenido-demi",
-
       "installMode": "prefetch",
-
       "updateMode": "prefetch",
-
       "resources": {
-
         "files": [
           "/assets/data/*.json"
         ]
-
       }
     }
-
+  ], 
+  "navigationUrls": [
+    "/**",
+    "!/**/*.*",
+    "!/api/**"
   ]
 
 }
