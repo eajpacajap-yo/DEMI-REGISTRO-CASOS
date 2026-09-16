@@ -112,8 +112,8 @@ export class LoginComponent {
       return;
     }
 
-    if (this.nuevoPasswordRecuperar.length < 4) {
-      this.errorRecuperacion = 'La contraseña debe tener al menos 4 caracteres.';
+    if (this.nuevoPasswordRecuperar.length < 12) {
+      this.errorRecuperacion = 'La contraseña debe tener al menos 12 caracteres.';
       return;
     }
 
@@ -124,12 +124,12 @@ export class LoginComponent {
     this.authService.restablecerPassword(this.codigoPin.trim(), this.nuevoPasswordRecuperar).subscribe({
       next: () => {
         this.cargandoRecuperacion = false;
-        this.mensajeExitoRecuperacion = '¡Contraseña restablecida exitosamente! ✅';
+        this.mensajeExitoRecuperacion = '¡Contraseña restablecida exitosamente! ';
         this.cdr.detectChanges();
         setTimeout(() => {
           this.cerrarModalRecuperar();
           this.password = '';
-        }, 1500);
+        }, 2500);
       },
       error: (err) => {
         this.cargandoRecuperacion = false;
