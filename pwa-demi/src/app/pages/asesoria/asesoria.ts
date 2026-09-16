@@ -1,263 +1,70 @@
-import {
-  Component,
-  inject,
-  OnInit
-} from '@angular/core';
-
-import {
-  Router
-} from '@angular/router';
-
-import {
-  ArbolDecisionData,
-  NodoDecision,
-  NodoPregunta,
-  NodoResultado
-} from '../../core/models/arbol-decision.model';
-
-import {
-  AsesoriaService
-} from '../../core/services/asesoria';
-
-import {
-  IdiomaService
-} from '../../core/services/idioma';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ArbolDecisionData, NodoDecision, OpcionDecision } from '../../core/models/arbol-decision.model';
+import { AsesoriaService } from '../../core/services/asesoria';
+import { IdiomaService } from '../../core/services/idioma';
 
 @Component({
   selector: 'app-asesoria',
-
-  imports: [],
-
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './asesoria.html',
-
   styleUrl: './asesoria.css'
 })
 export class Asesoria implements OnInit {
-
-  private asesoriaService =
-    inject(AsesoriaService);
-
-  private router =
-    inject(Router);
-
-  idiomaService =
-    inject(IdiomaService);
-
+  private asesoriaService = inject(AsesoriaService);
+  idiomaService = inject(IdiomaService);
 
   datos?: ArbolDecisionData;
-
   nodoActual?: NodoDecision;
-
+  historial: NodoDecision[] = [];
   cargando = true;
-
   error = false;
 
-  historial: string[] = [];
-
-
   ngOnInit(): void {
-
-    this.asesoriaService
-      .obtenerArbol()
-      .subscribe({
-
-        next: (datos) => {
-
-          this.datos = datos;
-
-          this.iniciarArbol();
-
-          this.cargando = false;
-
-        },
-
-        error: (error) => {
-
-          console.error(
-            'Error cargando árbol de decisión:',
-            error
-          );
-
-          this.error = true;
-
-          this.cargando = false;
-
-        }
-
-      });
-
+    this.asesoriaService.obtenerArbol().subscribe({
+      next: (datos) => {
+        this.datos = datos;
+        this.iniciarArbol();
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('Error cargando el árbol de decisión:', err);
+        this.error = true;
+        this.cargando = false;
+      }
+    });
   }
-
 
   iniciarArbol(): void {
-
-    if (!this.datos) {
-      return;
-    }
-
     this.historial = [];
-
-    this.nodoActual =
-      this.buscarNodo(
-        this.datos.nodoInicial
-      );
-
-  }
-
-
-  buscarNodo(
-    id: string
-  ): NodoDecision | undefined {
-
-    return this.datos?.nodos.find(
-      nodo => nodo.id === id
-    );
-
-  }
-
-
-  responder(
-    respuesta: boolean
-  ): void {
-
-    if (
-      !this.nodoActual ||
-      this.nodoActual.tipo !== 'pregunta'
-    ) {
-      return;
+    if (this.datos && this.datos.nodos) {
+      const raiz = this.datos.nodo_raiz || 'N0';
+      this.nodoActual = this.buscarNodo(raiz);
     }
+  }
 
-    const nodoPregunta =
-      this.nodoActual as NodoPregunta;
+  buscarNodo(id: string): NodoDecision | undefined {
+    if (!this.datos || !this.datos.nodos) return undefined;
+    return this.datos.nodos[id];
+  }
 
-
-    this.historial.push(
-      nodoPregunta.id
-    );
-
-
-    const siguienteId =
-      respuesta
-        ? nodoPregunta.si
-        : nodoPregunta.no;
-
-
-    const siguienteNodo =
-      this.buscarNodo(
-        siguienteId
-      );
-
-
-    if (siguienteNodo) {
-
-      this.nodoActual =
-        siguienteNodo;
-
+  seleccionarOpcion(opcion: OpcionDecision): void {
+    if (this.nodoActual && opcion.siguiente) {
+      this.historial.push(this.nodoActual);
+      this.nodoActual = this.buscarNodo(opcion.siguiente);
     }
-
   }
 
-
-  regresar(): void {
-
-    const nodoAnterior =
-      this.historial.pop();
-
-    if (!nodoAnterior) {
-      return;
+  regresarPaso(): void {
+    if (this.historial.length > 0) {
+      this.nodoActual = this.historial.pop();
     }
-
-    this.nodoActual =
-      this.buscarNodo(
-        nodoAnterior
-      );
-
   }
 
-
-  reiniciar(): void {
-
-    this.iniciarArbol();
-
+  texto(t?: { es: string; quc: string }): string {
+    if (!t) return '';
+    return this.idiomaService.idioma() === 'quc' ? t.quc : t.es;
   }
-
-
-  texto(
-    texto: {
-      es: string;
-      quc: string;
-    }
-  ): string {
-
-    return this.idiomaService.idioma() ===
-      'quc'
-        ? texto.quc
-        : texto.es;
-
-  }
-
-
-  esPregunta(
-    nodo: NodoDecision
-  ): nodo is NodoPregunta {
-
-    return nodo.tipo === 'pregunta';
-
-  }
-
-
-  esResultado(
-    nodo: NodoDecision
-  ): nodo is NodoResultado {
-
-    return nodo.tipo === 'resultado';
-
-  }
-
-
-  irAResultado(
-    resultado: NodoResultado
-  ): void {
-
-    switch (
-      resultado.accion
-    ) {
-
-      case 'prevencion':
-
-        this.router.navigate([
-          '/prevencion'
-        ]);
-
-        break;
-
-
-      case 'ruta-denuncia':
-
-        this.router.navigate([
-          '/ruta-denuncia'
-        ]);
-
-        break;
-
-
-      case 'instituciones':
-
-        this.router.navigate([
-          '/instituciones'
-        ]);
-
-        break;
-
-
-      default:
-
-        this.router.navigate([
-          '/inicio'
-        ]);
-
-    }
-
-  }
-
 }

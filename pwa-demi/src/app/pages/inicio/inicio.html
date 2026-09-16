@@ -1,10 +1,11 @@
+
 <section class="bienvenida">
 
   <h2>
     {{
       idiomaService.esEspanol()
         ? '¿Cómo podemos orientarte?'
-        : "K'iche': ¿Cómo podemos orientarte?"
+        : '¿Jas ub\'anik kaqaya ri pixb\'anïk chawech?'
     }}
   </h2>
 
@@ -12,113 +13,94 @@
     {{
       idiomaService.esEspanol()
         ? 'Aquí puedes encontrar información sobre prevención, mecanismos de denuncia e instituciones que pueden brindarte orientación.'
-        : "Contenido en K'iche' pendiente de validación lingüística."
+        : 'Waral kariq reta\'maxik chrij ri chajtalik, ub\'e ri tzujunïk xuquje\' ja ri keya\'ow pixb\'anïk chiwech.'
     }}
   </p>
 
-
   <div class="modulos">
 
-    <a
-      routerLink="/ruta-denuncia"
-      class="tarjeta"
-    >
-
-      <div class="icono">
-        ➜
-      </div>
-
+    <!-- 1. Ruta de denuncia -->
+    <a routerLink="/ruta-denuncia" class="tarjeta">
+      <div class="icono">➜</div>
       <div>
         <h3>
-          Ruta de denuncia
+          {{ idiomaService.esEspanol() ? 'Ruta de denuncia' : 'Ub\'e tzujunïk' }}
         </h3>
-
         <p>
-          Conoce los pasos y las instituciones a las que puedes acudir.
+          {{
+            idiomaService.esEspanol()
+              ? 'Conoce los pasos y las instituciones a las que puedes acudir.'
+              : 'Chaweta\'maj ri cholajil xuquje\' ri ja q\'atb\'altzij katb\'e wi.'
+          }}
         </p>
       </div>
-
     </a>
 
-
-    <a
-      routerLink="/prevencion"
-      class="tarjeta"
-    >
-
-      <div class="icono">
-        ✓
-      </div>
-
+    <!-- 2. Prevención -->
+    <a routerLink="/prevencion" class="tarjeta">
+      <div class="icono">✓</div>
       <div>
         <h3>
-          Prevención
+          {{ idiomaService.esEspanol() ? 'Prevención' : 'Chajtalik' }}
         </h3>
-
         <p>
-          Identifica señales de riesgo y consulta información preventiva.
+          {{
+            idiomaService.esEspanol()
+              ? 'Identifica señales de riesgo y consulta información preventiva.'
+              : 'Chacha\' ri etal rech k\'ax xuquje\' chawila\' reta\'maxik rech chajinïk.'
+          }}
         </p>
       </div>
-
     </a>
 
-
-    <a
-      routerLink="/asesoria"
-      class="tarjeta"
-    >
-
-      <div class="icono">
-        ?
-      </div>
-
+    <!-- 3. Asesoría -->
+    <a routerLink="/asesoria" class="tarjeta">
+      <div class="icono">?</div>
       <div>
         <h3>
-          Asesoría
+          {{ idiomaService.esEspanol() ? 'Asesoría' : 'Tob\'anïk rech utzijoxik' }}
         </h3>
-
         <p>
-          Responde preguntas sencillas para recibir orientación inicial.
+          {{
+            idiomaService.esEspanol()
+              ? 'Responde preguntas sencillas para recibir orientación inicial.'
+              : 'Chatz\'alij uwach tak k\'otow chi\' rech kariq nab\'e pixb\'anïk.'
+          }}
         </p>
       </div>
-
     </a>
 
-
-    <a
-      routerLink="/instituciones"
-      class="tarjeta"
-    >
-
-      <div class="icono">
-        i
-      </div>
-
+    <!-- 4. Instituciones de apoyo -->
+    <a routerLink="/instituciones" class="tarjeta">
+      <div class="icono">i</div>
       <div>
         <h3>
-          Instituciones de apoyo
+          {{ idiomaService.esEspanol() ? 'Instituciones de apoyo' : 'Q\'atb\'altzij rech tob\'anïk' }}
         </h3>
-
         <p>
-          Consulta instituciones y servicios disponibles.
+          {{
+            idiomaService.esEspanol()
+              ? 'Consulta instituciones y servicios disponibles.'
+              : 'Chawila\' ri q\'atb\'altzij xuquje\' ri tob\'anïk k\'o waral.'
+          }}
         </p>
       </div>
-
     </a>
 
   </div>
 
-
+  <!-- Aviso legal -->
   <div class="aviso">
-
-    <strong>Importante</strong>
-
+    <strong>
+      {{ idiomaService.esEspanol() ? 'Importante' : 'Nim ub\'anik' }}
+    </strong>
     <p>
-      Esta aplicación proporciona información y orientación
-      inicial. No sustituye la atención profesional, legal,
-      psicológica o institucional.
+      {{
+        idiomaService.esEspanol()
+          ? 'Esta aplicación proporciona información y orientación inicial. No sustituye la atención profesional, legal, psicológica o institucional.'
+          : 'We chakub\'al kuya reta\'maxik xuquje\' nab\'e pixb\'anïk. Man kuq\'at taj ri upixb\'anïk jun ajq\'atb\'altzij, ajno\'jil on jun q\'atb\'altzij.'
+      }}
     </p>
-
   </div>
 
 </section>

@@ -1,22 +1,66 @@
-html,
 body {
   margin: 0;
   padding: 0;
-
-  min-height: 100%;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  color: #292929;
-
-  background: #f6f6f6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: #f8f9fa;
 }
 
-button,
-select,
-input {
-  font-family: inherit;
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.contenido {
+  flex: 1;
+  padding-bottom: 75px; /* Evita que el menú tape las tarjetas */
+}
+
+/* Barra inferior fija */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+}
+
+/* Enlaces individuales del menú */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #616161;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex: 1;
+  height: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+/* Estado activo cuando la ruta coincide */
+.nav-item.activo {
+  color: #6a1b9a;
+  font-weight: 700;
+}
+
+.nav-item:active {
+  background-color: #f3e5f5;
 }
