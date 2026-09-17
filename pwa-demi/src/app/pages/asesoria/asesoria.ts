@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ArbolDecisionData, NodoDecision, OpcionDecision } from '../../core/models/arbol-decision.model';
 import { AsesoriaService } from '../../core/services/asesoria';
 import { IdiomaService } from '../../core/services/idioma';
-
+import { AudioGuiaService } from '../../core/services/audio-guia.service';
 @Component({
   selector: 'app-asesoria',
   standalone: true,
@@ -13,6 +13,7 @@ import { IdiomaService } from '../../core/services/idioma';
   styleUrl: './asesoria.css'
 })
 export class Asesoria implements OnInit {
+  audioService = inject(AudioGuiaService);
   private asesoriaService = inject(AsesoriaService);
   idiomaService = inject(IdiomaService);
 
@@ -67,4 +68,9 @@ export class Asesoria implements OnInit {
     if (!t) return '';
     return this.idiomaService.idioma() === 'quc' ? t.quc : t.es;
   }
+   reproducirGuiaAudio(): void {
+    const rutaAudio = 'assets/audio/guia-asesoria-quc.mp3'; 
+    this.audioService.toggleAudio(rutaAudio, 'ruta-denuncia');
+  }
+
 }

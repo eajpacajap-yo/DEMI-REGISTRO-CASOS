@@ -24,6 +24,20 @@
       <p class="descripcion">{{ texto(datos.descripcion) }}</p>
     </div>
 
+    <div class="audio-accesible-caja">
+  <button 
+    type="button"
+    class="btn-audio-kiche" 
+    [class.activo]="audioService.estaReproduciendo() && audioService.moduloActivo() === 'ruta-denuncia'"
+    (click)="reproducirGuiaAudio()"
+  >
+    <span class="icono-audio">{{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'ruta-denuncia' ? '⏸' : '🔊' }}</span>
+    <span class="texto-audio">
+      {{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'ruta-denuncia' ? 'Tatb\'ej chik (Pausar)' : 'Tatatb\'ej ri ub\'ixik (Escuchar en K\'iche\')' }}
+    </span>
+  </button>
+</div>
+
     <!-- AVISO LEGAL Y PROCESAL -->
     <div class="aviso-ruta">
       <strong>{{ idiomaService.esEspanol() ? 'Importante' : 'Nim ub\'anik' }}</strong>
@@ -70,7 +84,7 @@
                           <span class="chip-nombre">{{ inst.nombre }}</span>
                           @if (inst.telefono) {
                             <a [href]="'tel:' + inst.telefono" class="btn-tel" (click)="$event.stopPropagation()">
-                              📞 {{ inst.telefono }}
+                              Telefono {{ inst.telefono }}
                             </a>
                           }
                         </div>

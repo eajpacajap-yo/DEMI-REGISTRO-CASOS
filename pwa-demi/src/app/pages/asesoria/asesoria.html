@@ -21,6 +21,20 @@
       </div>
     }
 
+    <div class="audio-accesible-caja">
+  <button 
+    type="button"
+    class="btn-audio-kiche" 
+    [class.activo]="audioService.estaReproduciendo() && audioService.moduloActivo() === 'asesoria'"
+    (click)="reproducirGuiaAudio()"
+  >
+    <span class="icono-audio">{{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'asesoria' ? '⏸' : '🔊' }}</span>
+    <span class="texto-audio">
+      {{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'asesoria' ? 'Tatb\'ej chik (Pausar)' : 'Tatatb\'ej ri ub\'ixik (Escuchar en K\'iche\')' }}
+    </span>
+  </button>
+</div>
+
     <!-- NODO TIPO PREGUNTA -->
     @if (nodoActual.tipo === 'pregunta' || (nodoActual.opciones && nodoActual.opciones.length > 0)) {
       <div class="tarjeta-pregunta">

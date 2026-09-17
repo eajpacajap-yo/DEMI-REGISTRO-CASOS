@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PrevencionData, TipoViolencia } from '../../core/models/prevencion.model';
 import { PrevencionService } from '../../core/services/prevencion';
 import { IdiomaService } from '../../core/services/idioma';
-
+import { AudioGuiaService } from '../../core/services/audio-guia.service';
 @Component({
   selector: 'app-prevencion',
   standalone: true,
@@ -12,6 +12,7 @@ import { IdiomaService } from '../../core/services/idioma';
   styleUrl: './prevencion.css'
 })
 export class Prevencion implements OnInit {
+  audioService = inject(AudioGuiaService);
   private prevencionService = inject(PrevencionService);
   idiomaService = inject(IdiomaService);
 
@@ -41,5 +42,10 @@ export class Prevencion implements OnInit {
 
   toggleTipo(id: string): void {
     this.tipoSeleccionado = this.tipoSeleccionado === id ? undefined : id;
+  }
+
+  reproducirGuiaAudio(): void {
+    const rutaAudio = 'assets/audio/guia-prevencion-quc.mp3'; 
+    this.audioService.toggleAudio(rutaAudio, 'ruta-denuncia');
   }
 }

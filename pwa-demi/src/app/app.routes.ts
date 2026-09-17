@@ -5,6 +5,7 @@ import { RutaDenuncia } from './pages/ruta-denuncia/ruta-denuncia';
 import { Prevencion } from './pages/prevencion/prevencion';
 import { Asesoria } from './pages/asesoria/asesoria';
 import { Instituciones } from './pages/instituciones/instituciones';
+import { Galeria } from './pages/galeria/galeria';
 
 export const routes: Routes = [
   {
@@ -33,7 +34,11 @@ export const routes: Routes = [
     component: Instituciones
   },
   {
-    path: '**',
+    path: 'galeria ',
     redirectTo: 'inicio'
-  }
+  },
+  {
+  path: 'galeria',
+  component: Galeria
+  }  
 ];

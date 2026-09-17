@@ -1,0 +1,132 @@
+.galeria-contenedor {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.encabezado-galeria h2 {
+  color: #5c1d68;
+  font-size: 1.35rem;
+  margin: 0 0 6px 0;
+}
+
+.encabezado-galeria p {
+  color: #555;
+  font-size: 0.9rem;
+  margin: 0 0 12px 0;
+}
+
+.cuadricula-galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.tarjeta-galeria {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-galeria:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(92, 29, 104, 0.12);
+}
+
+.imagen-wrap {
+  width: 100%;
+  height: 180px;
+  background-color: #f5f5f5;
+}
+
+.imagen-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cuerpo-tarjeta {
+  padding: 12px 14px;
+}
+
+.cuerpo-tarjeta h3 {
+  margin: 0 0 6px 0;
+  font-size: 1rem;
+  color: #5c1d68;
+}
+
+.cuerpo-tarjeta p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Modal */
+.modal-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-contenido {
+  background: #ffffff;
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.btn-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #d32f2f;
+  color: #ffffff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.modal-contenido img {
+  width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  display: block;
+}
+
+.modal-info {
+  padding: 16px;
+}
+
+.modal-info h3 {
+  margin: 0 0 8px 0;
+  color: #5c1d68;
+}
+
+.modal-info p {
+  margin: 0;
+  color: #333;
+  line-height: 1.45;
+}

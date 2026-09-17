@@ -25,6 +25,20 @@
       <p>{{ idiomaService.esEspanol() ? 'Puedes consultar esta información incluso cuando no tengas conexión a internet.' : 'Kaxlan tzij xuquje\' K\'iche\' kachakun we maj k\'amab\'ey.' }}</p>
     </div>
 
+    <div class="audio-accesible-caja">
+  <button 
+    type="button"
+    class="btn-audio-kiche" 
+    [class.activo]="audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion'"
+    (click)="reproducirGuiaAudio()"
+  >
+    <span class="icono-audio">{{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion' ? '⏸' : '🔊' }}</span>
+    <span class="texto-audio">
+      {{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion' ? 'Tatb\'ej chik (Pausar)' : 'Tatatb\'ej ri ub\'ixik (Escuchar en K\'iche\')' }}
+    </span>
+  </button>
+</div>
+
     <!-- LISTADO DE TARJETAS DESPLEGABLES -->
     <div class="lista-tarjetas">
       @for (tipo of datos.tiposViolencia; track tipo.id) {
