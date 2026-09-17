@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RutaDenunciaData, PasoRuta, InstitucionRuta } from '../../core/models/ruta-denuncia.model';
 import { RutaDenunciaService } from '../../core/services/ruta-denuncia';
 import { IdiomaService } from '../../core/services/idioma';
-
+import { AudioGuiaService } from '../../core/services/audio-guia.service';
 @Component({
   selector: 'app-ruta-denuncia',
   standalone: true,
@@ -12,6 +12,8 @@ import { IdiomaService } from '../../core/services/idioma';
   styleUrl: './ruta-denuncia.css'
 })
 export class RutaDenuncia implements OnInit {
+  
+  audioService = inject(AudioGuiaService);
   private rutaService = inject(RutaDenunciaService);
   idiomaService = inject(IdiomaService);
 
@@ -50,4 +52,10 @@ export class RutaDenuncia implements OnInit {
   obtenerInstitucion(codigo: string): InstitucionRuta | undefined {
     return this.datos?.instituciones.find((inst) => inst.codigo === codigo);
   }
+    
+  reproducirGuiaAudio(): void {
+    const rutaAudio = 'assets/audio/guia-ruta-quc.mp3';
+    this.audioService.toggleAudio(rutaAudio, 'ruta-denuncia');
+  }
+
 }

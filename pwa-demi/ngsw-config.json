@@ -23,7 +23,7 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|webp|avif|gif|otf|ttf|woff|woff2|json)"
+          "/**/*.(svg|cur|jpg|jpeg|png|webp|avif|gif|otf|ttf|woff|woff2|json|mp3|ogg|wav)"
         ]
 
       }

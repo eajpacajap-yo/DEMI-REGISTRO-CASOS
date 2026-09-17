@@ -1,0 +1,34 @@
+{
+  "titulo": {
+    "es": "Material Gráfico de Apoyo e Infografías",
+    "quc": "Retal Wachib'al rech Tob'anïk"
+  },
+  "elementos": [
+    {
+      "id": 1,
+      "titulo": {
+        "es": "Tipos y Señales de Violencia",
+        "quc": "Retal K'axk'olil pa Ja"
+      },
+      "descripcion": {
+        "es": "Infografía sobre cómo identificar agresiones físicas, psicológicas y económicas.",
+        "quc": "Wachib'al rech retal k'axk'olil chrij ri achakulal xuquje' apwaq."
+      },
+      "imagen_url": "assets/img/galeria-senales.jpeg",
+      "categoria": "prevencion"
+    },
+    {
+      "id": 2,
+      "titulo": {
+        "es": "Ruta y Teléfonos de Auxilio en Totonicapán",
+        "quc": "Ub'e Tzujunïk xuquje' Rajilab'al Ch'ab'al"
+      },
+      "descripcion": {
+        "es": "Instituciones directas: PNC (110), DEMI Totonicapán (7766-4444) y MP (1572).",
+        "quc": "Ja q'atb'altzij rech tob'anïk: PNC (110), DEMI (7766-4444) xuquje' MP (1572)."
+      },
+      "imagen_url": "assets/img/galeria-telefonos.jpeg",
+      "categoria": "ruta"
+    }
+  ]
+}

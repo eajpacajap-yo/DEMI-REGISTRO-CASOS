@@ -1,0 +1,55 @@
+<section class="galeria-contenedor">
+  <div class="encabezado-galeria">
+    <h2>{{ idiomaService.esEspanol() ? 'Apoyo Visual e Infografías' : 'Retal Wachib\'al rech Tob\'anïk' }}</h2>
+    <p>{{ idiomaService.esEspanol() ? 'Imágenes informativas y recursos de apoyo visual.' : 'Wachib\'al rech tob\'anïk xuquje\' chajtalik.' }}</p>
+  </div>
+
+  <!-- BOTÓN DE AUDIO EN K'ICHE' -->
+  <div class="audio-accesible-caja">
+    <button 
+      type="button"
+      class="btn-audio-kiche" 
+      [class.activo]="audioService.estaReproduciendo() && audioService.moduloActivo() === 'galeria'"
+      (click)="reproducirGuiaGaleria()"
+    >
+      <span class="icono-audio">{{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'galeria' ? '⏸' : '🔊' }}</span>
+      <span class="texto-audio">
+        {{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'galeria' ? 'Tatb\'ej chik (Pausar)' : 'Tatatb\'ej ri ub\'ixik (Escuchar en K\'iche\')' }}
+      </span>
+    </button>
+  </div>
+
+  @if (cargando) {
+    <div class="estado-carga">
+      <p>{{ idiomaService.esEspanol() ? 'Cargando imágenes...' : 'Tajin kesax uwach ri wachib\'al...' }}</p>
+    </div>
+  }
+
+  <div class="cuadricula-galeria">
+    @for (item of galeria; track item.id) {
+      <div class="tarjeta-galeria" (click)="ampliarImagen(item)">
+        <div class="imagen-wrap">
+          <img [src]="item.imagen_url" [alt]="texto(item.titulo)" loading="lazy" />
+        </div>
+        <div class="cuerpo-tarjeta">
+          <h3>{{ texto(item.titulo) }}</h3>
+          <p>{{ texto(item.descripcion) }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- MODAL DE VISUALIZACIÓN COMPLETA -->
+  @if (elementoSeleccionado) {
+    <div class="modal-fondo" (click)="cerrarModal()">
+      <div class="modal-contenido" (click)="$event.stopPropagation()">
+        <button type="button" class="btn-cerrar" (click)="cerrarModal()">✕</button>
+        <img [src]="elementoSeleccionado.imagen_url" [alt]="texto(elementoSeleccionado.titulo)" />
+        <div class="modal-info">
+          <h3>{{ texto(elementoSeleccionado.titulo) }}</h3>
+          <p>{{ texto(elementoSeleccionado.descripcion) }}</p>
+        </div>
+      </div>
+    </div>
+  }
+</section>
