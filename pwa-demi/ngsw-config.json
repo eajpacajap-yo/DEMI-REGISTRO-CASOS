@@ -13,37 +13,34 @@
           "/*.css",
           "/*.js"
         ]
-
       }
     },
-
+    {
+      "name": "multimedia-offline",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/audio/**",
+          "/assets/data/**",
+          "/assets/img/**"
+        ]
+      }
+    },
     {
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|webp|avif|gif|otf|ttf|woff|woff2|json|mp3|ogg|wav)"
-        ]
-
-      }
-    },
-
-    {
-      "name": "contenido-demi",
-      "installMode": "prefetch",
-      "updateMode": "prefetch",
-      "resources": {
-        "files": [
-          "/assets/data/*.json"
+          "/*.(svg|cur|jpg|jpeg|png|webp|avif|gif|otf|ttf|woff|woff2|json|mp3)"
         ]
       }
     }
-  ], 
+  ],
   "navigationUrls": [
     "/**",
     "!/**/*.*",
     "!/api/**"
   ]
-
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RutaDenunciaData, PasoRuta, InstitucionRuta } from '../../core/models/ruta-denuncia.model';
 import { RutaDenunciaService } from '../../core/services/ruta-denuncia';
@@ -12,6 +12,8 @@ import { AudioGuiaService } from '../../core/services/audio-guia.service';
   styleUrl: './ruta-denuncia.css'
 })
 export class RutaDenuncia implements OnInit {
+
+  private cdr = inject(ChangeDetectorRef);
   
   audioService = inject(AudioGuiaService);
   private rutaService = inject(RutaDenunciaService);
@@ -27,11 +29,13 @@ export class RutaDenuncia implements OnInit {
       next: (datos) => {
         this.datos = datos;
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error cargando la ruta de denuncia:', err);
         this.error = true;
         this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -54,7 +58,7 @@ export class RutaDenuncia implements OnInit {
   }
     
   reproducirGuiaAudio(): void {
-    const rutaAudio = 'assets/audio/guia-ruta-quc.mp3';
+    const rutaAudio = 'assets/audio/ruta.mp3';
     this.audioService.toggleAudio(rutaAudio, 'ruta-denuncia');
   }
 

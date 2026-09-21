@@ -1,27 +1,33 @@
-
 <section class="bienvenida">
 
   <h2>
     {{
       idiomaService.esEspanol()
-        ? '¿Cómo podemos orientarte?'
-        : '¿Jas ub\'anik kaqaya ri pixb\'anïk chawech?'
+        ? 'Aqui encontrarás información para conocer tus derechos y conocer sobre los tipos de violencia'
+        : '¿Waral kariq eta\'mab\'al rech kaweta\'maj ri e twechib\'al, xuquje\' kaweta\'maj ri jalajoj uwach k\'axk\'olil.?'
     }}
   </h2>
 
-  <p class="descripcion">
-    {{
-      idiomaService.esEspanol()
-        ? 'Aquí puedes encontrar información sobre prevención, mecanismos de denuncia e instituciones que pueden brindarte orientación.'
-        : 'Waral kariq reta\'maxik chrij ri chajtalik, ub\'e ri tzujunïk xuquje\' ja ri keya\'ow pixb\'anïk chiwech.'
-    }}
-  </p>
+   <!-- BOTÓN DE AUDIO EN K'ICHE' -->
+  <div class="audio-accesible-caja">
+    <button 
+      type="button"
+      class="btn-audio-kiche" 
+      [class.activo]="audioService.estaReproduciendo() && audioService.moduloActivo() === 'inicio'"
+      (click)="reproducirGuiaAudio()"
+    >
+      <span class="icono-audio">{{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'inicio' ? '⏸' : '🔊' }}</span>
+      <span class="texto-audio">
+        {{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'inicio' ? 'Tatb\'ej chik (Pausar)' : 'Tatatb\'ej ri ub\'ixik (Escuchar en K\'iche\')' }}
+      </span>
+    </button>
+  </div>
 
   <div class="modulos">
 
     <!-- 1. Ruta de denuncia -->
     <a routerLink="/ruta-denuncia" class="tarjeta">
-      <div class="icono">➜</div>
+      <div class="icono"><img src="assets/img/rutaDenuncia.jpg" /></div>
       <div>
         <h3>
           {{ idiomaService.esEspanol() ? 'Ruta de denuncia' : 'Ub\'e tzujunïk' }}
@@ -38,7 +44,7 @@
 
     <!-- 2. Prevención -->
     <a routerLink="/prevencion" class="tarjeta">
-      <div class="icono">✓</div>
+      <div class="icono"><img src="assets/img/prevencion.jpg" /></div>
       <div>
         <h3>
           {{ idiomaService.esEspanol() ? 'Prevención' : 'Chajtalik' }}
@@ -55,7 +61,7 @@
 
     <!-- 3. Asesoría -->
     <a routerLink="/asesoria" class="tarjeta">
-      <div class="icono">?</div>
+      <div class="icono"><img src="assets/img/mujer.jpg" /></div>
       <div>
         <h3>
           {{ idiomaService.esEspanol() ? 'Asesoría' : 'Tob\'anïk rech utzijoxik' }}
@@ -70,12 +76,12 @@
       </div>
     </a>
 
-    <!-- 4. Instituciones de apoyo -->
-    <a routerLink="/instituciones" class="tarjeta">
-      <div class="icono">i</div>
+    <!-- 4. Galeria e Instituciones de apoyo -->
+    <a routerLink="/galeria" class="tarjeta">
+      <div class="icono"><img src="assets/img/ojos.png" /></div>
       <div>
         <h3>
-          {{ idiomaService.esEspanol() ? 'Instituciones de apoyo' : 'Q\'atb\'altzij rech tob\'anïk' }}
+          {{ idiomaService.esEspanol() ? 'Galeria e Instituciones de apoyo' : 'Q\'atb\'altzij rech tob\'anïk' }}
         </h3>
         <p>
           {{

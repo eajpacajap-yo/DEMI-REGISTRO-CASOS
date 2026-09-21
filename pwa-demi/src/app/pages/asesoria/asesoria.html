@@ -77,11 +77,11 @@
         <div class="acciones-finales">
           @if (nodoActual.urgencia === 'alta') {
             <a href="tel:110" class="btn-emergencia">
-              📞 {{ idiomaService.esEspanol() ? 'Llamar al 110 (PNC)' : 'Chawixim ri 110 (PNC)' }}
+               {{ idiomaService.esEspanol() ? 'Llamar al 110 (PNC)' : 'Chawixim ri 110 (PNC)' }}
             </a>
           }
-          <a routerLink="/ruta-denuncia" class="btn-enlace">
-            ➜ {{ idiomaService.esEspanol() ? 'Ver Ruta de Denuncia' : 'Chawila\' Ub\'e Tzujunïk' }}
+          <a routerLink="/prevencion" class="btn-enlace">
+            ➜ {{ idiomaService.esEspanol() ? 'Ver modulo de prevencion' : 'Chawila\' Ub\'e Tzujunïk' }}
           </a>
         </div>
       </div>
@@ -95,7 +95,7 @@
         </button>
       }
       <button class="btn-reiniciar" (click)="iniciarArbol()">
-        🔄 {{ idiomaService.esEspanol() ? 'Reiniciar cuestionario' : 'Majb\'al chik' }}
+         {{ idiomaService.esEspanol() ? 'Reiniciar cuestionario' : 'Majb\'al chik' }}
       </button>
     </div>
 

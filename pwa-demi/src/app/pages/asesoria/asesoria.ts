@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ArbolDecisionData, NodoDecision, OpcionDecision } from '../../core/models/arbol-decision.model';
@@ -13,6 +13,9 @@ import { AudioGuiaService } from '../../core/services/audio-guia.service';
   styleUrl: './asesoria.css'
 })
 export class Asesoria implements OnInit {
+
+   
+   private cdr = inject(ChangeDetectorRef);
   audioService = inject(AudioGuiaService);
   private asesoriaService = inject(AsesoriaService);
   idiomaService = inject(IdiomaService);
@@ -29,11 +32,13 @@ export class Asesoria implements OnInit {
         this.datos = datos;
         this.iniciarArbol();
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error cargando el árbol de decisión:', err);
         this.error = true;
         this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -69,8 +74,8 @@ export class Asesoria implements OnInit {
     return this.idiomaService.idioma() === 'quc' ? t.quc : t.es;
   }
    reproducirGuiaAudio(): void {
-    const rutaAudio = 'assets/audio/guia-asesoria-quc.mp3'; 
-    this.audioService.toggleAudio(rutaAudio, 'ruta-denuncia');
+    const rutaAudio = 'assets/audio/asesoria.mp3'; 
+    this.audioService.toggleAudio(rutaAudio, 'asesoria');
   }
 
 }

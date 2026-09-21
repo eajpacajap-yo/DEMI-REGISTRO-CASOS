@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrevencionData, TipoViolencia } from '../../core/models/prevencion.model';
 import { PrevencionService } from '../../core/services/prevencion';
@@ -12,6 +12,7 @@ import { AudioGuiaService } from '../../core/services/audio-guia.service';
   styleUrl: './prevencion.css'
 })
 export class Prevencion implements OnInit {
+  private cdr = inject(ChangeDetectorRef);
   audioService = inject(AudioGuiaService);
   private prevencionService = inject(PrevencionService);
   idiomaService = inject(IdiomaService);
@@ -26,11 +27,13 @@ export class Prevencion implements OnInit {
       next: (datos) => {
         this.datos = datos;
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al cargar contenido preventivo:', err);
         this.error = true;
         this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -45,7 +48,7 @@ export class Prevencion implements OnInit {
   }
 
   reproducirGuiaAudio(): void {
-    const rutaAudio = 'assets/audio/guia-prevencion-quc.mp3'; 
-    this.audioService.toggleAudio(rutaAudio, 'ruta-denuncia');
+    const rutaAudio = 'assets/audio/prevencion.mp3'; 
+    this.audioService.toggleAudio(rutaAudio, 'prevencion');
   }
 }
