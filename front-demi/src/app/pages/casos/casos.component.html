@@ -24,8 +24,12 @@
       <div class="header-buttons-group">
         <!--  Botón visible ÚNICAMENTE para Administradora -->
         <button *ngIf="esAdmin" (click)="abrirGestionUsuarios()" class="btn-secondary-action">
-           Administrar Usuarias
+           Administrar Usuarios
         </button>
+        
+         <a *ngIf="esAdmin" routerLink="/multimedia" class="btn-secondary-action" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          Multimedia DEMI
+         </a>
         <button (click)="abrirModalCrear()" class="btn-primary">
           Nuevo Expediente
         </button>

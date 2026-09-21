@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CasoService } from '../../services/caso.service';
 import { SeguimientoService } from '../../services/seguimiento.service';
 import { AuthService } from '../../services/auth.service';
@@ -14,7 +14,7 @@ import { Usuario, UsuarioRegistro } from '../../models/usuario';
 @Component({
   selector: 'app-casos',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './casos.component.html',
   styleUrls: ['./casos.component.css']
 })
