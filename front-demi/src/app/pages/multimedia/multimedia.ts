@@ -1,8 +1,8 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { MultimediaAdminService } from '../../services/multimedia-admin.service';
+import { MultimediaAdminService, RecursoAdmin } from '../../services/multimedia-admin.service';
 
 @Component({
   selector: 'app-multimedia',
@@ -11,38 +11,63 @@ import { MultimediaAdminService } from '../../services/multimedia-admin.service'
   templateUrl: './multimedia.html',
   styleUrl: './multimedia.css'
 })
-export class MultimediaComponent {
+export class MultimediaComponent implements OnInit {
+  @ViewChild('inputArchivo') inputArchivoRef!: ElementRef<HTMLInputElement>;
   private mediaService = inject(MultimediaAdminService);
-  private cdr = inject(ChangeDetectorRef); // <-- Inyección obligatoria
+  private cdr = inject(ChangeDetectorRef);
 
+  // Lista de recursos
+  recursos: RecursoAdmin[] = [];
+  cargandoLista = false;
+
+  // Formulario de creación
   titulo = '';
   modulo = 'galeria';
-  idiomaId = 1; // 1: Español, 2: K'iche'
+  idiomaId = 1;
   descripcionEs = '';
   descripcionQuc = '';
   archivoSeleccionado: File | null = null;
   vistaPreviaUrl: string | null = null;
 
+  // Estado y edición
   cargando = false;
   mensajeExito = '';
   mensajeError = '';
+  recursoEnEdicion: RecursoAdmin | null = null;
+
+  ngOnInit(): void {
+    this.cargarListado();
+  }
+
+  cargarListado(): void {
+    this.cargandoLista = true;
+    this.mediaService.obtenerTodos().subscribe({
+      next: (data) => {
+        this.recursos = data;
+        this.cargandoLista = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error obteniendo listado multimedia:', err);
+        this.cargandoLista = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   alSeleccionarArchivo(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const archivo = input.files[0];
-
-      // Validar formato de imagen
       if (!archivo.type.startsWith('image/')) {
-        this.mensajeError = 'Por favor selecciona un archivo de imagen válido (.png, .jpg, .webp).';
+        this.mensajeError = 'Por favor selecciona un formato de imagen válido (.png, .jpg, .webp).';
+        input.value = '';
         this.cdr.detectChanges();
         return;
       }
-
       this.archivoSeleccionado = archivo;
       this.mensajeError = '';
 
-      // Crear vista previa local
       const reader = new FileReader();
       reader.onload = () => {
         this.vistaPreviaUrl = reader.result as string;
@@ -54,7 +79,7 @@ export class MultimediaComponent {
 
   guardarRecurso(): void {
     if (!this.archivoSeleccionado || !this.titulo.trim()) {
-      this.mensajeError = 'Debe ingresar un título y adjuntar una imagen obligatoriamente.';
+      this.mensajeError = 'Debe ingresar un título y adjuntar un archivo de imagen.';
       this.cdr.detectChanges();
       return;
     }
@@ -75,17 +100,61 @@ export class MultimediaComponent {
     this.mediaService.subirRecurso(formData).subscribe({
       next: () => {
         this.cargando = false;
-        this.mensajeExito = '¡Recurso visual publicado exitosamente para la PWA!';
+        this.mensajeExito = '¡Recurso publicado exitosamente!';
         this.limpiarFormulario();
-        this.cdr.detectChanges(); // Desbloquea el botón y muestra el mensaje verde
+        this.cargarListado();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.cargando = false;
-        console.error('Error en subida:', err);
         this.mensajeError = err.status === 403 
-          ? 'Acceso denegado: Se requieren permisos de Administradora.' 
-          : 'Error al comunicarse con el servidor al subir la imagen.';
-        this.cdr.detectChanges(); // Desbloquea el botón y muestra el error
+          ? 'No cuenta con permisos de Administradora.' 
+          : 'Error al subir la imagen al servidor.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  iniciarEdicion(item: RecursoAdmin): void {
+    this.recursoEnEdicion = { ...item };
+  }
+
+  cancelarEdicion(): void {
+    this.recursoEnEdicion = null;
+  }
+
+  guardarEdicion(): void {
+    if (!this.recursoEnEdicion) return;
+
+    this.mediaService.actualizarRecurso(this.recursoEnEdicion.id, this.recursoEnEdicion).subscribe({
+      next: () => {
+        this.mensajeExito = 'Recurso actualizado con éxito.';
+        this.recursoEnEdicion = null;
+        this.cargarListado();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al actualizar:', err);
+        this.mensajeError = 'Error al actualizar el recurso.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  eliminar(item: RecursoAdmin): void {
+    const confirmar = confirm(`¿Está segura de eliminar permanentemente "${item.titulo}"? Esta acción lo removerá de la PWA.`);
+    if (!confirmar) return;
+
+    this.mediaService.eliminarRecurso(item.id).subscribe({
+      next: () => {
+        this.mensajeExito = 'Recurso eliminado correctamente.';
+        this.cargarListado();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al eliminar:', err);
+        this.mensajeError = 'No fue posible eliminar el archivo.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -96,5 +165,10 @@ export class MultimediaComponent {
     this.descripcionQuc = '';
     this.archivoSeleccionado = null;
     this.vistaPreviaUrl = null;
+       if (this.inputArchivoRef && this.inputArchivoRef.nativeElement) {
+      this.inputArchivoRef.nativeElement.value = '';
+      }
+
+    this.cdr.detectChanges();
   }
 }

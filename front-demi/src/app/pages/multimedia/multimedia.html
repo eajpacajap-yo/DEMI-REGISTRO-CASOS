@@ -1,44 +1,29 @@
 <div class="dashboard-container">
-  <!-- Barra superior idéntica a casos -->
   <header class="navbar">
     <div class="brand">
       <h2>DEMI - Totonicapán</h2>
       <span>Gestión de Recursos y Contenido Multimedia</span>
     </div>
     <div class="user-info">
-      <a routerLink="/casos" class="btn-volver"> Volver a Expedientes</a>
+      <a routerLink="/casos" class="btn-volver">← Volver a Expedientes</a>
     </div>
   </header>
 
-  <!-- Área de contenido -->
   <main class="content">
+    <!-- PANEL DE SUBIDA -->
     <div class="tarjeta-panel">
       <div class="header-tarjeta">
-        <div>
-          <h3>Publicación de Recursos Visuales</h3>
-          <p class="subtitulo">Subida y actualización de infografías para los módulos de la PWA comunitaria.</p>
-        </div>
+        <h3>Publicación de Recursos Visuales</h3>
+        <p class="subtitulo">Sube infografías e imágenes para la PWA comunitaria.</p>
       </div>
 
-      @if (mensajeExito) {
-        <div class="alerta exito">{{ mensajeExito }}</div>
-      }
-      @if (mensajeError) {
-        <div class="alerta error">{{ mensajeError }}</div>
-      }
+      @if (mensajeExito) { <div class="alerta exito">{{ mensajeExito }}</div> }
+      @if (mensajeError) { <div class="alerta error">{{ mensajeError }}</div> }
 
       <form class="formulario-carga" (ngSubmit)="guardarRecurso()">
-        
         <div class="grupo-campo">
           <label for="titulo">Título de la imagen / Guía:</label>
-          <input 
-            type="text" 
-            id="titulo" 
-            [(ngModel)]="titulo" 
-            name="titulo" 
-            required 
-            placeholder="Ej. Ruta y Teléfonos de Auxilio en Totonicapán" 
-          />
+          <input type="text" id="titulo" [(ngModel)]="titulo" name="titulo" required placeholder="Ej. Ruta y Teléfonos de Auxilio" />
         </div>
 
         <div class="fila-doble">
@@ -63,39 +48,22 @@
 
         <div class="grupo-campo">
           <label for="descEs">Descripción en Español:</label>
-          <textarea 
-            id="descEs" 
-            [(ngModel)]="descripcionEs" 
-            name="descEs" 
-            rows="2" 
-            placeholder="Detalle o instrucción en español..."
-          ></textarea>
+          <textarea id="descEs" [(ngModel)]="descripcionEs" name="descEs" rows="2"></textarea>
         </div>
 
         <div class="grupo-campo">
           <label for="descQuc">Descripción en K'iche':</label>
-          <textarea 
-            id="descQuc" 
-            [(ngModel)]="descripcionQuc" 
-            name="descQuc" 
-            rows="2" 
-            placeholder="Ucholajil pa Maya K'iche'..."
-          ></textarea>
+          <textarea id="descQuc" [(ngModel)]="descripcionQuc" name="descQuc" rows="2"></textarea>
         </div>
 
         <div class="grupo-campo-archivo">
-          <label for="archivoInput">Seleccionar archivo de imagen (.jpg, .png, .webp):</label>
-          <input 
-            type="file" 
-            id="archivoInput" 
-            (change)="alSeleccionarArchivo($event)" 
-            accept="image/png, image/jpeg, image/webp" 
-          />
+          <label for="archivoInput">Seleccionar imagen (.jpg, .png, .webp):</label>
+          <input type="file" id="archivoInput" #inputArchivo (change)="alSeleccionarArchivo($event)" accept="image/png, image/jpeg, image/webp" />
         </div>
 
         @if (vistaPreviaUrl) {
           <div class="zona-preview">
-            <span class="preview-titulo">Vista previa del archivo a publicar:</span>
+            <span class="preview-titulo">Vista previa:</span>
             <div class="preview-caja">
               <img [src]="vistaPreviaUrl" alt="Previsualización" />
             </div>
@@ -107,8 +75,117 @@
             {{ cargando ? 'Subiendo imagen...' : 'Publicar Imagen en la PWA' }}
           </button>
         </div>
-
       </form>
     </div>
+
+    <!-- LISTADO Y ADMINISTRACIÓN DE IMÁGENES PUBLICADAS -->
+    <div class="tarjeta-panel tabla-contenedor">
+      <div class="header-tarjeta">
+        <h3>Imágenes y Recursos Registrados</h3>
+        <p class="subtitulo">Visualiza, modifica metadatos o remueve recursos cargados.</p>
+      </div>
+
+      @if (cargandoLista) {
+        <p class="cargando-texto">Cargando catálogo multimedia...</p>
+      }
+
+      @if (!cargandoLista && recursos.length === 0) {
+        <p class="sin-registros">No se han publicado recursos multimedia todavía.</p>
+      }
+
+      @if (!cargandoLista && recursos.length > 0) {
+        <div class="tabla-responsive">
+          <table class="tabla-demi">
+            <thead>
+              <tr>
+                <th>Vista</th>
+                <th>Título</th>
+                <th>Módulo PWA</th>
+                <th>Idioma</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of recursos; track item.id) {
+                <tr>
+                  <td>
+                    <img [src]="'http://localhost:8080' + item.rutaAlmacenamiento" alt="Miniatura" class="miniatura-tabla" />
+                  </td>
+                  <td><strong>{{ item.titulo }}</strong></td>
+                  <td><span class="badge-modulo">{{ item.moduloPwa }}</span></td>
+                  <td>{{ item.idiomaId === 2 ? "K'iche'" : "Español" }}</td>
+                  <td>
+                    <span [class]="item.activo ? 'badge-activo' : 'badge-inactivo'">
+                      {{ item.activo ? 'Activo' : 'Inactivo' }}
+                    </span>
+                  </td>
+                  <td class="acciones-tabla">
+                    <button class="btn-accion btn-editar" (click)="iniciarEdicion(item)">Editar</button>
+                    <button class="btn-accion btn-eliminar" (click)="eliminar(item)">Eliminar</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
   </main>
+
+  <!-- MODAL DE EDICIÓN -->
+  @if (recursoEnEdicion) {
+    <div class="modal-overlay">
+      <div class="modal-card">
+        <h3>Editar Recurso #{{ recursoEnEdicion.id }}</h3>
+        
+        <div class="grupo-campo">
+          <label>Título:</label>
+          <input type="text" [(ngModel)]="recursoEnEdicion.titulo" />
+        </div>
+
+        <div class="fila-doble">
+          <div class="grupo-campo">
+            <label>Módulo PWA:</label>
+            <select [(ngModel)]="recursoEnEdicion.moduloPwa">
+              <option value="galeria">Galería de Apoyo</option>
+              <option value="prevencion">Prevención</option>
+              <option value="ruta-denuncia">Ruta de Denuncia</option>
+              <option value="asesoria">Asesoría Legal</option>
+            </select>
+          </div>
+
+          <div class="grupo-campo">
+            <label>Idioma:</label>
+            <select [(ngModel)]="recursoEnEdicion.idiomaId">
+              <option [ngValue]="1">Español</option>
+              <option [ngValue]="2">K'iche'</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grupo-campo">
+          <label>Descripción en Español:</label>
+          <textarea [(ngModel)]="recursoEnEdicion.descripcionEs" rows="2"></textarea>
+        </div>
+
+        <div class="grupo-campo">
+          <label>Descripción en K'iche':</label>
+          <textarea [(ngModel)]="recursoEnEdicion.descripcionQuc" rows="2"></textarea>
+        </div>
+
+        <div class="grupo-campo-checkbox">
+          <label>
+            <input type="checkbox" [(ngModel)]="recursoEnEdicion.activo" />
+            Recurso visible en la PWA
+          </label>
+        </div>
+
+        <div class="modal-acciones">
+          <button class="btn-secundario" (click)="cancelarEdicion()">Cancelar</button>
+          <button class="btn-primary" (click)="guardarEdicion()">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  }
 </div>

@@ -1,0 +1,123 @@
+<div class="dashboard-container">
+  <header class="navbar">
+    <div class="brand">
+      <h2>DEMI - Totonicapán</h2>
+      <span>Módulo Analítico e Informes Estadísticos</span>
+    </div>
+    <div class="user-info">
+      <a routerLink="/casos" class="btn-volver">← Volver a Expedientes</a>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="header-acciones-reporte">
+      <div>
+        <h3>Resumen General de Expedientes</h3>
+        <p class="subtitulo">Métricas consolidadas de atención institucional por cobertura y tipología.</p>
+      </div>
+      
+      <div class="botones-exportar">
+        <button class="btn-exportar btn-pdf" (click)="exportarPDF()" [disabled]="cargando || !resumen">
+           Exportar a PDF
+        </button>
+        <button class="btn-exportar btn-excel" (click)="exportarExcel()" [disabled]="cargando || !resumen">
+           Exportar a Excel
+        </button>
+      </div>
+    </div>
+
+    @if (cargando) {
+      <div class="estado-cargando">
+        <p>Procesando estadísticas de la base de datos...</p>
+      </div>
+    }
+
+    @if (error) {
+      <div class="alerta error">
+        No fue posible generar el resumen estadístico. Verifique la conexión con el servidor.
+      </div>
+    }
+
+    @if (!cargando && resumen) {
+      <!-- Tarjeta Total General -->
+      <div class="tarjeta-total">
+        <span class="total-etiqueta">Total General de Casos Registrados</span>
+        <span class="total-valor">{{ resumen.totalCasos }}</span>
+      </div>
+
+      <!-- Cuadrícula de Desgloses -->
+      <div class="grid-resumen">
+        
+        <!-- Por Municipio -->
+        <div class="tarjeta-desglose">
+          <div class="tarjeta-header">
+            <h4>Casos por Municipio</h4>
+          </div>
+          <table class="tabla-resumen">
+            <thead>
+              <tr>
+                <th>Municipio</th>
+                <th class="col-num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of obtenerEntradas(resumen.casosPorMunicipio); track item.clave) {
+                <tr>
+                  <td>{{ item.clave }}</td>
+                  <td class="col-num"><strong>{{ item.valor }}</strong></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Por Tipo de Violencia -->
+        <div class="tarjeta-desglose">
+          <div class="tarjeta-header header-verde">
+            <h4>Casos por Tipo de Violencia</h4>
+          </div>
+          <table class="tabla-resumen">
+            <thead>
+              <tr>
+                <th>Tipo de Violencia</th>
+                <th class="col-num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of obtenerEntradas(resumen.casosPorTipoViolencia); track item.clave) {
+                <tr>
+                  <td>{{ item.clave }}</td>
+                  <td class="col-num"><strong>{{ item.valor }}</strong></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Por Estado -->
+        <div class="tarjeta-desglose">
+          <div class="tarjeta-header header-gris">
+            <h4>Casos por Estado Procesal</h4>
+          </div>
+          <table class="tabla-resumen">
+            <thead>
+              <tr>
+                <th>Estado Procesal</th>
+                <th class="col-num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of obtenerEntradas(resumen.casosPorEstado); track item.clave) {
+                <tr>
+                  <td>{{ item.clave }}</td>
+                  <td class="col-num"><strong>{{ item.valor }}</strong></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    }
+  </main>
+</div>
