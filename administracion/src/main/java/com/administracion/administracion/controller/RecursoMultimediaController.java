@@ -75,6 +75,49 @@ public class RecursoMultimediaController {
             return ResponseEntity.internalServerError().body("Error al almacenar el archivo: " + e.getMessage());
         }
     }
+     
+    @GetMapping("/admin/todos")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<RecursoMultimedia>> listarTodosParaAdmin() {
+        return ResponseEntity.ok(recursoRepo.findAll());
+    }
+
+    // 4. Actualizar metadatos y estado del recurso
+    @PutMapping("/admin/actualizar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> actualizarRecurso(
+            @PathVariable Integer id,
+            @RequestBody RecursoMultimedia datosActualizados
+    ) {
+        return recursoRepo.findById(id).map(recurso -> {
+            recurso.setTitulo(datosActualizados.getTitulo());
+            recurso.setModuloPwa(datosActualizados.getModuloPwa());
+            recurso.setIdiomaId(datosActualizados.getIdiomaId());
+            recurso.setDescripcionEs(datosActualizados.getDescripcionEs());
+            recurso.setDescripcionQuc(datosActualizados.getDescripcionQuc());
+            recurso.setActivo(datosActualizados.getActivo());
+            recursoRepo.save(recurso);
+            return ResponseEntity.ok(recurso);
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/admin/eliminar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> eliminarRecurso(@PathVariable Integer id) {
+        return recursoRepo.findById(id).map(recurso -> {
+            try {
+                // Borrar archivo físico del disco
+                String rutaLimpia = recurso.getRutaAlmacenamiento().replaceFirst("^/", "");
+                Path archivoPath = Paths.get(rutaLimpia);
+                Files.deleteIfExists(archivoPath);
+            } catch (IOException e) {
+                System.err.println("Advertencia: No se pudo eliminar el archivo físico: " + e.getMessage());
+            }
+
+            recursoRepo.delete(recurso);
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
 
     // 2. Endpoint público para la PWA (No requiere token)
     @GetMapping("/publicos/{modulo}")
