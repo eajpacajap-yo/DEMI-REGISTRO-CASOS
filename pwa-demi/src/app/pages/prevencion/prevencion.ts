@@ -20,6 +20,7 @@ export class Prevencion implements OnInit {
   datos?: PrevencionData;
   cargando = true;
   error = false;
+
   tipoSeleccionado?: string;
 
   ngOnInit(): void {

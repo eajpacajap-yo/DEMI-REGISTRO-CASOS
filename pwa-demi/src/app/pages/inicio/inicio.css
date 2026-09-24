@@ -1,16 +1,18 @@
-.bienvenida {
-  max-width: 850px;
-  margin: auto;
+.descripcion-demi {
+  color: #1b365d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 500;
+  margin: 12px 0 16px 0;
+  text-align: left;
 }
 
-.bienvenida h2 {
-  margin-top: 0;
-
-  color: #5d1e58;
-
-  font-size: 28px;
+@media (min-width: 600px) {
+  .descripcion-demi {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
 }
-
 .descripcion {
   line-height: 1.6;
 
@@ -64,7 +66,7 @@
 .tarjeta h3 {
   margin: 0 0 7px;
 
-  color: #72246c;
+  color: #1b365d;
 }
 
 .tarjeta p {
@@ -81,7 +83,7 @@
   height: 55px;
   border-radius: 50%;
   background: #f2e4f0;
-  color: #72246c;
+  color: #1b365d;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,7 +141,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: #5c1d68;
+  background-color: #0284c7;
   color: #ffffff;
   border: none;
   padding: 10px 18px;

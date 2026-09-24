@@ -82,6 +82,31 @@
           "quc": "Umajixik awulew on reta'maxik uk'ayixik ri awechb'al."
         }
       ]
+    },
+    {
+      "id": "sexual",
+      "titulo": {
+        "es": "Violencia Sexual",
+        "quc": "K'axk'olil rech Tz'aloj K'aslemal"
+      },
+      "descripcion": {
+        "es": "Cualquier contacto, acto o imposición de carácter sexual sin tu consentimiento o bajo amenazas.",
+        "quc": "Ronojel chapoj, b'anow on taqik rech k'aslemal che man kakaj ta on ruk' xib'inïk."
+      },
+      "senales": [
+        {
+          "es": "Exigir o forzar relaciones sexuales sin tu consentimiento, incluso en el matrimonio o pareja.",
+          "quc": "Utaqik on uchapik ak'aslemal che man kakaj ta, pane' k'o ak'ulaja'il."
+        },
+        {
+          "es": "Tocamientos o acosos no deseados en tu cuerpo.",
+          "quc": "Uchapik achakulal che man kakaj ta xuquje' yoq'onik pa k'aslemal."
+        },
+        {
+          "es": "Obligar a ver imágenes, actos sexuales o impedir el uso de métodos anticonceptivos.",
+          "quc": "Utaqik rech kawil b'anow rech k'aslemal on uq'atexik rech man kachajij awib'."
+        }
+      ]
     }
   ],
   "checklist_derechos": [
@@ -96,6 +121,10 @@
     {
       "es": "Tienes derecho a conservar tus bienes propios y administrar tu trabajo.",
       "quc": "K'o awechb'al chrij ri ajastaq, awulew xuquje' ri apwaq kach'ako."
+    },
+    {
+      "es": "Tienes derecho a decidir sobre tu cuerpo y a vivir una vida libre de violencia sexual.",
+      "quc": "K'o awechb'al rech kach'obo chrij ri achakulal xuquje' katk'asi' pa jamalil rech k'axk'olil."
     }
   ]
 }

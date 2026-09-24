@@ -1,34 +1,58 @@
 {
   "titulo": {
-    "es": "Material Gráfico de Apoyo e Infografías",
+    "es": "Material Gráfico de Apoyo",
     "quc": "Retal Wachib'al rech Tob'anïk"
   },
   "elementos": [
     {
       "id": 1,
       "titulo": {
-        "es": "Tipos y Señales de Violencia",
-        "quc": "Retal K'axk'olil pa Ja"
+        "es": "Defensoría de la Mujer Indígena",
+        "quc": "DEMI"
       },
       "descripcion": {
-        "es": "Infografía sobre cómo identificar agresiones físicas, psicológicas y económicas.",
-        "quc": "Wachib'al rech retal k'axk'olil chrij ri achakulal xuquje' apwaq."
+        "es": "Horario 8:00 AM a 4:30 PM, Dirección: 9na. avenida 00-19 zona 2, San Miguel Totonicapán. Telefono:7766 1113 ",
+        "quc": "Kechakun pa wajxaqib' taj'il nimq'ij k'a pa k'ajib' taj'il ruk' nik'aj b'enq'ij."
+        
       },
-      "imagen_url": "assets/img/tiposViolencia.png",
-      "categoria": "prevencion"
+      
+      "imagen_url": "assets/img/demiLOGO.png"
     },
     {
       "id": 2,
       "titulo": {
-        "es": "Ruta y Teléfonos de Auxilio en Totonicapán",
-        "quc": "Ub'e Tzujunïk xuquje' Rajilab'al Ch'ab'al"
+        "es": "Fiscalía de la mujer MP",
+        "quc": "Fiscalía de la mujer MP"
       },
       "descripcion": {
-        "es": "Instituciones directas: PNC (110), DEMI Totonicapán (7766-1113) y MP (1572).",
-        "quc": "Ja q'atb'altzij rech tob'anïk: PNC (110), DEMI (7766-1113) xuquje' MP (1572)."
+        "es": "Horario: las 24 horas, Direccion: 13 avenida 6-13, zona 3 de Totonicapán, Telefono: 1572",
+        "quc": "Kachakunik 24 ramaj, ronojel q'ij, Direccion: 13 avenida 6-13, zona 3 de Totonicapán, Telefono: 1572 "
       },
-      "imagen_url": "assets/img/DEMI.png",
-      "categoria": "ruta"
+      "imagen_url": "assets/img/FiscaliaMujer.jpg"
+    },
+    {
+      "id": 3,
+      "titulo": {
+        "es": "Policia Nacional Civil",
+        "quc": "Policiap"
+      },
+      "descripcion": {
+        "es": "Horario: las 24 horas, Direccion: Comisaría Departamental: 4ta. calle y 4ta. avenida, zona 1, Telefono: 3043-1912",
+        "quc": "Kachakunik 24 ramaj, ronojel q'ij, Direccion: Direccion: Comisaría Departamental: 4ta. calle y 4ta. avenida, zona 1, Telefono: 3043-1912 "
+      },
+      "imagen_url": "assets/img/PNC.png"
+    },
+    {
+      "id": 4,
+      "titulo": {
+        "es": "Clínica de atención a la víctima",
+        "quc": "kunab'al"
+      },
+      "descripcion": {
+        "es": "Horario: las 24 horas, Direccion: Kilómetro 198 cantón Poxlajuj, Totonicapán, Telefono: 7932-1200",
+        "quc": "Kachakunik 24 ramaj, ronojel q'ij, Direccion: Kilómetro 198 cantón Poxlajuj, Totonicapán, Telefono: 7932-1200"},
+      "imagen_url": "assets/img/HN.png"
     }
   ]
+
 }

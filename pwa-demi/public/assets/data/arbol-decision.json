@@ -63,15 +63,15 @@
       "tipo": "conclusion",
       "urgencia": "alta",
       "recomendacion": {
-        "es": "EMERGENCIA: Llama de inmediato al 110 (PNC) o acude al Centro de Salud / Hospital más cercano. Solicita auxilio y resguardo físico.",
-        "quc": "ANINAQ: Chawixim ri 110 (PNC) on jat pa ri Ja Kunanb'al k'o naqaj chawech. Chatz'onoj chajtalik xuquje' kunanïk."
+        "es": "EMERGENCIA: Llama de inmediato al 3043-1912 (PNC) o acude al Centro de Salud / Hospital más cercano. Solicita auxilio y resguardo físico.",
+        "quc": "ANINAQ: Chawixim ri 3043-1912 (PNC) on jat pa ri Ja Kunanb'al k'o naqaj chawech. Chatz'onoj chajtalik xuquje' kunanïk."
       },
       "institucion_contacto": {
         "nombre": "Policía Nacional Civil",
-        "telefono": "110"
+        "telefono": "3043-1912"
       },
       "acciones": [
-        { "es": "Llama al 110 de la PNC", "quc": "Chawixim ri 110 rech PNC" },
+        { "es": "Llama al 3043-1912 de la PNC", "quc": "Chawixim ri 3043-1912 rech PNC" },
         { "es": "Dirígete a un lugar seguro", "quc": "Jat pa jun k'olib'al jik" }
       ]
     },
@@ -80,12 +80,12 @@
       "tipo": "conclusion",
       "urgencia": "alta",
       "recomendacion": {
-        "es": "Acude de inmediato a la subestación de la PNC o a la sede de la DEMI más cercana. No te quedes en el lugar donde esté el agresor.",
-        "quc": "Jat aninaq pa ri rachoch PNC on DEMI k'o naqaj chawech. Mat kanaj kan pa ri ja jawi' k'o wi ri b'anow k'ax."
+        "es": "Acude de inmediato a la subestación de la PNC o a la fiscalia de la mujer MP. No te quedes en el lugar donde esté el agresor.",
+        "quc": "Jat aninaq pa ri rachoch PNC on MP k'o naqaj chawech. Mat kanaj kan pa ri ja jawi' k'o wi ri b'anow k'ax."
       },
       "institucion_contacto": {
         "nombre": "PNC / DEMI Totonicapán",
-        "telefono": "110"
+        "telefono": "3043-1912, 7766 1113"
       },
       "acciones": [
         { "es": "Busca resguardo con personas de confianza", "quc": "Jat kuk' awachalal e jik" },
@@ -127,7 +127,7 @@
       "opciones": [
         {
           "texto": { "es": "Sí", "quc": "Je'" },
-          "siguiente": "H_NARANJA_INACIF"
+          "siguiente": "H_NARANJA_HN"
         },
         {
           "texto": { "es": "No", "quc": "Man je' taj" },
@@ -135,17 +135,17 @@
         }
       ]
     },
-    "H_NARANJA_INACIF": {
-      "id": "H_NARANJA_INACIF",
+    "H_NARANJA_HN": {
+      "id": "H_NARANJA_HN",
       "tipo": "conclusion",
       "urgencia": "media",
       "recomendacion": {
-        "es": "Acude al Ministerio Público o al INACIF para evaluación médico-forense. El certificado médico servirá como prueba para solicitar medidas de protección.",
-        "quc": "Jat pa Ministerio Público on INACIF rech kawilixik. We wuj re kuya uchuq'ab' ri atzujunïk rech katz'onoj chajtalik."
+        "es": "Acude al Ministerio Público o a la clinica de atención a la víctima para evaluación médica. El certificado médico servirá como prueba para solicitar medidas de protección.",
+        "quc": "Jat pa Ministerio Público on kunab'al  rech katz'ib'axik chuwach rech kawilixik. We wuj re kuya uchuq'ab' ri atzujunïk rech katz'onoj chajtalik."
       },
       "institucion_contacto": {
-        "nombre": "Ministerio Público / INACIF",
-        "telefono": "77664789 "
+        "nombre": "Ministerio Público / Clinica de atencion a la víctima",
+        "telefono": "1572 "
       },
       "acciones": [
         { "es": "No te bañes ni cambies de ropa si hubo agresión sexual", "quc": "Mat atinik we xb'an k'ax che ri achakulal" },
@@ -175,12 +175,12 @@
       "tipo": "conclusion",
       "urgencia": "media",
       "recomendacion": {
-        "es": "Acude al Juzgado de Paz de tu municipio o al Juzgado de Femicidio. Tienen la obligación de otorgarte medidas de seguridad inmediatas.",
+        "es": "Acude al Juzgado de Paz de tu municipio o a la fiscalia de la mujer. Tienen la obligación de otorgarte medidas de seguridad inmediatas.",
         "quc": "Jat pa ri Q'atb'altzij rech Ja'maril pa ri akomon. Rajawaxik kuya wuj rech kachajixik aninaq."
       },
       "institucion_contacto": {
-        "nombre": "Juzgado de Paz / DEMI",
-        "telefono": "2290-4444"
+        "nombre": "Fiscalia de la mujer MP",
+        "telefono": "1572"
       },
       "acciones": [
         { "es": "Solicita orden de alejamiento", "quc": "Tz'onoj chi man kape ta naqaj chawech" },
@@ -192,7 +192,7 @@
       "tipo": "conclusion",
       "urgencia": "media",
       "recomendacion": {
-        "es": "Acude a la DEMI en Totonicapán o a la Oficina de Atención a la Víctima del MP. Recibirás asesoría jurídica y psicológica confidencial.",
+        "es": "Acude a la DEMI en Totonicapán o a la fiscalia de la mujer del MP. Recibirás asesoría jurídica y psicológica confidencial.",
         "quc": "Jat pa DEMI pa Chuwi' Meq'enya' on pa MP. Kariq pixb'anïk rech q'atb'altzij xuquje' no'jib'al pa awikatz."
       },
       "institucion_contacto": {

@@ -17,7 +17,17 @@
     <!-- DESCARGO LEGAL / DISCLAIMER -->
     @if (datos?.disclaimer) {
       <div class="disclaimer-caja">
-        <p>{{ texto(datos?.disclaimer) }}</p>
+        <div class="disclaimer-cabecera">
+          <strong class="disclaimer-titulo">
+            {{ idiomaService.esEspanol() ? 'Importante' : 'Nim ub\'anik' }}
+          </strong>
+          <img 
+            src="assets/img/demiLOGO.png" 
+            alt="Logo DEMI" 
+            class="disclaimer-logo" 
+          />
+        </div>
+        <p class="disclaimer-texto">{{ texto(datos?.disclaimer) }}</p>
       </div>
     }
 
@@ -76,8 +86,8 @@
 
         <div class="acciones-finales">
           @if (nodoActual.urgencia === 'alta') {
-            <a href="tel:110" class="btn-emergencia">
-               {{ idiomaService.esEspanol() ? 'Llamar al 110 (PNC)' : 'Chawixim ri 110 (PNC)' }}
+            <a href="tel:3043-1912" class="btn-emergencia">
+               {{ idiomaService.esEspanol() ? 'Llamar al 3043-1912 (PNC)' : 'Chawixim ri 3043-1912 (PNC)' }}
             </a>
           }
           <a routerLink="/prevencion" class="btn-enlace">

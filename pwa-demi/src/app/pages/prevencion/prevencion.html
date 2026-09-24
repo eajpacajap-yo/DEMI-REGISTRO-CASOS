@@ -21,25 +21,41 @@
 
     <!-- TARJETA AVISO OFFLINE -->
     <div class="caja-recuerda">
-      <strong>{{ idiomaService.esEspanol() ? 'Recuerda' : 'Chana\'taj chawech' }}</strong>
-      <p>{{ idiomaService.esEspanol() ? 'Puedes consultar esta información incluso cuando no tengas conexión a internet.' : 'Kaxlan tzij xuquje\' K\'iche\' kachakun we maj k\'amab\'ey.' }}</p>
+      <div class="caja-recuerda-cabecera">
+        <strong class="caja-recuerda-titulo">
+          {{ idiomaService.esEspanol() ? 'Recuerda' : 'Chana\'taj chawech' }}
+        </strong>
+        <img 
+          src="assets/img/demiLOGO.png" 
+          alt="Logo DEMI" 
+          class="caja-recuerda-logo" 
+        />
+      </div>
+      <p class="caja-recuerda-texto">
+        {{
+          idiomaService.esEspanol()
+            ? 'Puedes consultar esta información incluso cuando no tengas conexión a internet.'
+            : 'Kaxlan tzij xuquje\' K\'iche\' kachakun we maj k\'amab\'ey.'
+        }}
+      </p>
     </div>
 
+    <!-- BOTÓN DE AUDIO ACCESIBLE EN K'ICHE' -->
     <div class="audio-accesible-caja">
-  <button 
-    type="button"
-    class="btn-audio-kiche" 
-    [class.activo]="audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion'"
-    (click)="reproducirGuiaAudio()"
-  >
-    <span class="icono-audio">{{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion' ? '⏸' : '🔊' }}</span>
-    <span class="texto-audio">
-      {{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion' ? 'Tatb\'ej chik (Pausar)' : 'Tatatb\'ej ri ub\'ixik (Escuchar en K\'iche\')' }}
-    </span>
-  </button>
-</div>
+      <button 
+        type="button"
+        class="btn-audio-kiche" 
+        [class.activo]="audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion'"
+        (click)="reproducirGuiaAudio()"
+      >
+        <span class="icono-audio">{{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion' ? '⏸' : '🔊' }}</span>
+        <span class="texto-audio">
+          {{ audioService.estaReproduciendo() && audioService.moduloActivo() === 'prevencion' ? 'Tatb\'ej chik (Pausar)' : 'Tatatb\'ej ri ub\'ixik (Escuchar en K\'iche\')' }}
+        </span>
+      </button>
+    </div>
 
-    <!-- LISTADO DE TARJETAS DESPLEGABLES -->
+    <!-- LISTADO DE TARJETAS DESPLEGABLES (TIPOS DE VIOLENCIA) -->
     <div class="lista-tarjetas">
       @for (tipo of datos.tiposViolencia; track tipo.id) {
         <div 
@@ -48,7 +64,7 @@
           (click)="toggleTipo(tipo.id)"
         >
           <div class="tipo-header">
-            <h3>{{ texto(tipo.titulo)  }}</h3>
+            <h3>{{ texto(tipo.titulo) }}</h3>
             <span class="icono-toggle">{{ tipoSeleccionado === tipo.id ? '▲' : '▼' }}</span>
           </div>
 
@@ -68,14 +84,41 @@
       }
     </div>
 
+    <!-- TARJETA INSTITUCIONAL: DERECHOS FUNDAMENTALES (UBICADA CORRECTAMENTE FUERA DEL FOR) -->
+    @if (datos.checklist_derechos?.length) {
+      <div class="tarjeta-derechos">
+        <div class="tarjeta-derechos-cabecera">
+          <div class="derechos-titulo-grupo">
+            
+            <h3>{{ idiomaService.esEspanol() ? 'Tus derechos como mujer' : 'Awechb\'al pacha\' ixoq' }}</h3>
+          </div>
+          <img 
+            src="assets/img/demiLOGO.png" 
+            alt="Logo DEMI" 
+            class="derechos-logo" 
+          />
+        </div>
+
+        <ul class="lista-derechos">
+          @for (derecho of $any(datos.checklist_derechos); track $index) {
+            <li class="item-derecho">
+              <span class="icono-check">✓</span>
+              <p class="texto-derecho">{{ texto(derecho) }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
     <!-- CAJA DE ORIENTACIÓN EXTRA -->
     <div class="caja-orientacion">
       <div class="icono-pregunta">?</div>
       <div>
-        <strong>{{ idiomaService.esEspanol() ? '¿Necesitas más orientación?' : '¿La kawaj chi tob\'anïk?' }}</strong>
-        <p>{{ idiomaService.esEspanol() ? 'Consulta la Ruta crítica de denuncia o las instituciones de apoyo disponibles en la aplicación.' : 'Chawila\' ri Ub\'e Tzujunïk on ri q\'atb\'altzij k\'o waral.' }}</p>
+        <strong>{{ idiomaService.esEspanol() ? '¿Necesitas una orientación?' : '¿La kawaj chi tob\'anïk?' }}</strong>
+        <p>{{ idiomaService.esEspanol() ? 'Consulta la Ruta crítica de denuncia en donde están las instituciones de apoyo disponibles.' : 'Chawila\' ri Ub\'e Tzujunïk' }}</p>
       </div>
     </div>
+
   }
 
 </section>

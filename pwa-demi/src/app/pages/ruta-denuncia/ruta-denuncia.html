@@ -38,17 +38,27 @@
   </button>
 </div>
 
-    <!-- AVISO LEGAL Y PROCESAL -->
-    <div class="aviso-ruta">
-      <strong>{{ idiomaService.esEspanol() ? 'Importante' : 'Nim ub\'anik' }}</strong>
-      <p>
-        {{
-          idiomaService.esEspanol()
-            ? 'Esta información proporciona orientación inicial y no sustituye la atención profesional ni las instrucciones de las autoridades competentes.'
-            : 'We reta\'maxik kuya nab\'e pixb\'anïk xuquje\' man kuq\'at taj ri utoq\'oxik jun ajq\'atb\'altzij.'
-        }}
-      </p>
-    </div>
+   <div class="aviso-ruta">
+  <div class="aviso-encabezado">
+    <strong class="aviso-titulo">
+      {{ idiomaService.esEspanol() ? 'Importante' : 'Nim ub\'anik' }}
+    </strong>
+    <img 
+      src="assets/img/demiLOGO.png" 
+      alt="Logo DEMI" 
+      class="aviso-logo" 
+    />
+  </div>
+
+  <p class="aviso-texto">
+    {{
+      idiomaService.esEspanol()
+        ? 'Esta información proporciona orientación inicial y no sustituye la atención profesional ni las instrucciones de las autoridades competentes.'
+        : 'We reta\'maxik kuya nab\'e pixb\'anïk xuquje\' man kuq\'at taj ri utoq\'oxik jun ajq\'atb\'altzij.'
+    }}
+  </p>
+  </div>
+
 
     <!-- LISTA DE PASOS INTERACTIVOS (ACORDEÓN) -->
     <div class="lista-pasos">
@@ -82,10 +92,29 @@
                       @if (obtenerInstitucion(cod); as inst) {
                         <div class="chip">
                           <span class="chip-nombre">{{ inst.nombre }}</span>
+                          @if (inst.direccion) {
+                            <span class="chip-direccion"> Direccion: {{ inst.direccion }}</span>
+                          }
+                          @if (inst.horario) {
+                              <div class="chip-horario-bloque">
+                                <strong class="chip-horario-titulo">
+                                  {{ idiomaService.esEspanol() ? 'Horario de atención:' : 'Ramaj rech chajinïk:' }}
+                                </strong>
+                                  <ul class="lista-horarios">
+                                   @for (item of obtenerHorariosLista(inst.horario); track $index) {
+                                  <li>{{ item }}</li>
+                                  }
+                                 </ul>
+                          </div>
+                          }
                           @if (inst.telefono) {
-                            <a [href]="'tel:' + inst.telefono" class="btn-tel" (click)="$event.stopPropagation()">
-                              Telefono {{ inst.telefono }}
-                            </a>
+                            <div class="grupo-telefonos">
+                               @for (tel of obtenerTelefonos(inst.telefono); track tel) {
+                                  <a [href]="'tel:' + tel" class="btn-tel" (click)="$event.stopPropagation()">
+                                     LLAMAR {{ tel }}
+                                 </a>
+                                 }
+                           </div>
                           }
                         </div>
                       }

@@ -62,4 +62,13 @@ export class RutaDenuncia implements OnInit {
     this.audioService.toggleAudio(rutaAudio, 'ruta-denuncia');
   }
 
+  obtenerTelefonos(telefono?: string | string[]): string[] {
+  if (!telefono) return [];
+  return Array.isArray(telefono) ? telefono : [telefono];
+}
+obtenerHorariosLista(horario?: { es: string | string[]; quc: string | string[] }): string[] {
+  if (!horario) return [];
+  const val = this.idiomaService.idioma() === 'quc' ? horario.quc : horario.es;
+  return Array.isArray(val) ? val : [val];
+}
 }

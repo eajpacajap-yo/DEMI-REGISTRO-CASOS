@@ -11,32 +11,70 @@
     {
       "codigo": "PNC",
       "nombre": "Policía Nacional Civil",
-      "telefono": "110",
-      "direccion": "Comisaría departamental y subestaciones municipales"
+      "telefono": "3043-1912",
+      "direccion": "Comisaría Departamental: 4ta. calle y 4ta. avenida, zona 1 y subestaciones municipales",
+      "horario" :{
+            "es" :"Atención las 24 horas, todos los dias",
+            "quc": "Kachakunik ronojel q'ij,"
+      }
     },
     {
       "codigo": "MP",
-      "nombre": "Ministerio Público",
-      "telefono": "77664789",
-      "direccion": "Sede Departamental de Totonicapán"
+      "nombre": "Ministerio Público, Fiscalía de la Mujer",
+      "telefono": ["1572", "77664789"],
+      "direccion": "13 avenida 6-13, zona 3 de Totonicapán",
+      "horario": {
+          "es": [
+                  "Línea 1572: Atención las 24 horas, todos los días.",
+                  "Línea 7766-4789: Lunes a viernes de 8:00 am a 4:00 pm."
+                 ],
+          "quc": [
+                 "Ch'ab'al 1572: Kachakunik 24 ramaj, ronojel q'ij.",
+                 "Ch'ab'al 7766-4789: Luq'ij chi wuq'ij rech 8:00 am chi 4:00 pm."
+             ]
+         }
     },
     {
-      "codigo": "OJ",
-      "nombre": "Juzgados de Paz / Femicidio",
-      "telefono": "22904444",
-      "direccion": "Cabecera  departamental"
+      "codigo": "JP",
+      "nombre": "Juzgado de Paz Penal ",
+      "telefono": "5990-0320",
+      "direccion": "2da. Calle, zona 2, Totonicapán.",
+       "horario": {
+        "es": "Atención las 24 horas, todos los días.",
+        "quc": "Kachakunik ronojel q'ij."
+      }
     },
+    {
+      "codigo": "JF",
+      "nombre": "Juzgado de Familia ",
+      "telefono": "2290-4444",
+      "direccion": " 10ª Avenida (entre 2ª y 3ª Calle), Zona 2.",
+       "horario": {
+        "es": "Atención de lunes a viernes de 8:00 AM a 3:30 PM",
+        "quc": "Kechakun pa wajxaqib' taj'il nimq'ij k'a pa oxib' taj'il ruk' nik'aj b'enq'ij."
+      }
+    },
+    
     {
       "codigo": "DEMI",
       "nombre": "Defensoría de la Mujer Indígena",
       "telefono": "7766 1113",
-      "direccion": "Sede Regional de Totonicapán"
+      "direccion": "9na. avenida 00-19 zona 2, San Miguel Totonicapán.",
+      "horario": {
+        "es": "Atención de lunes a viernes de 8:00 AM a 4:30 PM",
+        "quc": "Kechakun pa wajxaqib' taj'il nimq'ij k'a pa k'ajib' taj'il ruk' nik'aj b'enq'ij."
+      }
     },
     {
-      "codigo": "INACIF",
-      "nombre": "Instituto Nacional de Ciencias Forenses",
-      "telefono": "2297-9811",
-      "direccion": "Unidad de peritajes forenses"
+      "codigo": "HN",
+      "nombre": "Clínica de atención a la víctima ",
+      "telefono": "7932-1200",
+      "direccion": "Kilómetro 198 cantón Poxlajuj, Totonicapán",
+      "horario": {
+        "es": "Atención las 24 horas, todos los días.",
+        "quc": "Kachakunik ronojel q'ij."
+      }
+
     }
   ],
   "pasos": [
@@ -52,8 +90,8 @@
         "quc": "Chawixim ri ch'ab'al rech tob'anïk we k'o k'axk'olil tajin kak'ulmatajik."
       },
       "detalle": {
-        "es": "Si estás en riesgo inmediato, llama a la PNC (110) o acude a la subestación policial más cercana para resguardar tu integridad física.",
-        "quc": "We k'o nimalaj k'ax chawa'ij, chawixim ri PNC (110) on jat pa ri rachoch chajinela' k'o naqaj chawech rech kachajij awib'."
+        "es": "Si estás en riesgo inmediato, llama a la PNC o acude a la subestación policial más cercana para resguardar tu integridad física.",
+        "quc": "We k'o nimalaj k'ax chawa'ij, chawixim ri PNC  on jat pa ri rachoch chajinela' k'o naqaj chawech rech kachajij awib'."
       },
       "instituciones": ["PNC"]
     },
@@ -61,18 +99,18 @@
       "id": 2,
       "paso": 2,
       "titulo": {
-        "es": "2. Evaluación Médica o Forense",
+        "es": "2. Evaluación Médica",
         "quc": "2. Rilik rumal Ajkunanel"
       },
       "resumen": {
-        "es": "Atención médica urgente y certificación forense de lesiones.",
-        "quc": "Kunanïk aninaq xuquje' rilik ri socotajik rumal INACIF."
+        "es": "Atención médica urgente y certificación de lesiones.",
+        "quc": "Kunanïk aninaq xuquje' rilik ri socotajik."
       },
       "detalle": {
-        "es": "Si tienes golpes o heridas visibles, acude a los servicios de salud o al INACIF para certificar las lesiones físicas antes de que transcurran 72 horas.",
-        "quc": "We k'o socotajik chawij, jat pa kunab'al on pa INACIF rech katz'ib'axik chuwach maxtoq kaq'ax oxib' q'ij (72 horas)."
+        "es": "Si tienes golpes o heridas visibles, acude a los servicios de salud o a la clínica de atención a la víctima  para tratarte de forma inmediata.",
+        "quc": "We k'o socotajik chawij, jat pa kunab'al  rech katz'ib'axik chuwach maxtoq kaq'ax oxib' q'ij (72 horas)."
       },
-      "instituciones": ["INACIF"]
+      "instituciones": ["HN"]
     },
     {
       "id": 3,
@@ -89,7 +127,7 @@
         "es": "Describe lo sucedido con el mayor detalle posible. Tienes derecho a asistencia legal gratuita y a un intérprete en idioma Maya K'iche'.",
         "quc": "Chatzijoj ronojel ri xb'antajik. K'o awechbalil rech katz'onoj jun q'axol tzij we katch'aw pa K'iche' xuquje' man ktoj taj."
       },
-      "instituciones": ["MP", "OJ", "PNC"]
+      "instituciones": ["MP", "PNC", "JP"]
     },
     {
       "id": 4,
@@ -106,7 +144,7 @@
         "es": "El Juzgado de Paz o el MP pueden emitir órdenes de alejamiento inmediatas para salvaguardar tu hogar, trabajo y familia.",
         "quc": "Ri Q'atb'altzij kuya jun wuj rech uq'atexik ri achi rech man kape ta pa awachoch, achak on k'o ak'alk'al."
       },
-      "instituciones": ["OJ", "MP"]
+      "instituciones": ["MP","JP", "JF"]
     },
     {
       "id": 5,
@@ -120,7 +158,7 @@
         "quc": "Tob'anïk rech q'atb'altzij, utoq'oxik no'jil xuquje' man ktoj taj."
       },
       "detalle": {
-        "es": "Acude a la sede regional de la DEMI en Totonicapán para recibir asesoría jurídica, peritajes culturales y seguimiento a tu expediente.",
+        "es": "Acude a la sede regional de la DEMI en Totonicapán para recibir asesoría jurídica, atención social y Psicológica",
         "quc": "Jat pa ri rachoch DEMI pa Chuwi' Meq'enya' rech kato'ik rumal jun ajpixb'anij xuquje' utoq'oxik ano'jib'al pa K'iche'."
       },
       "instituciones": ["DEMI"]

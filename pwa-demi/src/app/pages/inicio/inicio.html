@@ -1,12 +1,8 @@
 <section class="bienvenida">
 
-  <h2>
-    {{
-      idiomaService.esEspanol()
-        ? 'Aqui encontrarás información para conocer tus derechos y conocer sobre los tipos de violencia'
-        : '¿Waral kariq eta\'mab\'al rech kaweta\'maj ri e twechib\'al, xuquje\' kaweta\'maj ri jalajoj uwach k\'axk\'olil.?'
-    }}
-  </h2>
+  <p class="descripcion-demi">
+    {{ idiomaService.esEspanol() ? misionDemi.es : misionDemi.quc }}
+  </p>
 
    <!-- BOTÓN DE AUDIO EN K'ICHE' -->
   <div class="audio-accesible-caja">

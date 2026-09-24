@@ -16,7 +16,7 @@
 }
 
 .encabezado-prevencion h2 {
-  color: #5c1d68;
+  color: #1b365d;
   font-size: 1.35rem;
   margin: 0 0 6px 0;
 }
@@ -31,9 +31,23 @@
   background: #f1f8e9;
   border-left: 4px solid #43a047;
   padding: 12px 14px;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-bottom: 16px;
-  font-size: 0.85rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.caja-recuerda-logo {
+  width: 90px;
+  height: auto;
+  max-height: 30px;
+  object-fit: contain;
+  display: block;
+}
+
+.caja-recuerda-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
 .caja-recuerda strong {
@@ -65,7 +79,7 @@
 }
 
 .tarjeta-tipo.expandida {
-  border-color: #5c1d68;
+  border-color: #1b365d;
   box-shadow: 0 2px 8px rgba(92, 29, 104, 0.12);
 }
 
@@ -78,7 +92,7 @@
 .tipo-header h3 {
   margin: 0;
   font-size: 1.05rem;
-  color: #5c1d68;
+  color: #1b365d;
 }
 
 .icono-toggle {
@@ -126,7 +140,7 @@
 }
 
 .icono-pregunta {
-  background: #5c1d68;
+  background: #1b365d;
   color: #fff;
   width: 32px;
   height: 32px;
@@ -140,7 +154,7 @@
 
 .caja-orientacion strong {
   display: block;
-  color: #5c1d68;
+  color: #1b365d;
   font-size: 0.9rem;
   margin-bottom: 2px;
 }
@@ -159,7 +173,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: #5c1d68;
+  background-color: #0284c7;
   color: #ffffff;
   border: none;
   padding: 10px 18px;
@@ -182,4 +196,93 @@
 
 .icono-audio {
   font-size: 1.1rem;
+}
+
+/* TARJETA DE DERECHOS FUNDAMENTALES */
+.tarjeta-derechos {
+  background: #ffffff;
+  border: 1px solid #d2e3fc;
+  border-left: 5px solid #1b365d;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(27, 54, 93, 0.06);
+}
+
+.tarjeta-derechos-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #edf2f7;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.derechos-titulo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.insignia-derechos {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0097d8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tarjeta-derechos-cabecera h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #1b365d;
+  font-weight: 700;
+}
+
+.derechos-logo {
+  width: 90px;
+  height: auto;
+  max-height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* LISTA DE DERECHOS CON CHECK */
+.lista-derechos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-derecho {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.icono-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.texto-derecho {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #374151;
+  line-height: 1.45;
 }

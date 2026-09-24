@@ -6,8 +6,9 @@ export interface TextoI18n {
 export interface InstitucionRuta {
   codigo: string;
   nombre: string;
-  telefono: string;
+  telefono: string | string[];
   direccion?: string;
+  horario?: TextoI18n;
 }
 
 export interface PasoRuta {
@@ -25,3 +26,4 @@ export interface RutaDenunciaData {
   instituciones: InstitucionRuta[];
   pasos: PasoRuta[];
 }
+
