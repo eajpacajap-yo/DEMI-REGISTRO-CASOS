@@ -1,32 +1,41 @@
 <div class="app-shell">
 
-  <!-- ENCABEZADO -->
-  <header class="header">
-    <div class="brand">
-       <img src="assets/img/demiLOGO.png" alt="Logo DEMI" class="logo-img" />
-      <div>
-        <h1>
-          {{
-            idiomaService.esEspanol()
-              ? 'Información y orientación'
-              : 'Reta\'maxik xuquje\' pixb\'anïk'
-          }}
-        </h1>
-        <p>
-          {{
-            idiomaService.esEspanol()
-              ? 'Defensoría de la Mujer Indígena'
-              : 'Uto\'b\'al Ixoqib\' Mayab\''
-          }}
-        </p>
-      </div>
-    </div>
+  <!-- ENCABEZADO INSTITUCIONAL -->
+<header class="header">
+  
+  <!-- FILA SUPERIOR: LOGO Y BOTÓN SALIDA RÁPIDA -->
+  <div class="header-top">
+    <img 
+      src="assets/img/demiLOGO.png" 
+      alt="Logo DEMI" 
+      class="logo-img" 
+    />
 
-    <!-- Botón de Pánico / Salida Rápida -->
     <button class="btn-panico" (click)="salidaRapida()">
-      {{ idiomaService.esEspanol() ? 'Salida rápida' : 'Anim Elb\'al' }}
+      <span class="icono-salida">➜</span>
+      <span>{{ idiomaService.esEspanol() ? 'Salida rápida' : "Anim Elb'al" }}</span>
     </button>
-  </header>
+  </div>
+
+  <!-- FILA INFERIOR: TEXTO CENTRADO -->
+  <div class="header-bottom">
+    <h1>
+      {{
+        idiomaService.esEspanol()
+          ? 'Información y orientación'
+          : "Reta'maxik xuquje' pixb'anïk"
+      }}
+    </h1>
+    <p>
+      {{
+        idiomaService.esEspanol()
+          ? 'Defensoría de la Mujer Indígena'
+          : "Uto'b'al Ixoqib' Mayab'"
+      }}
+    </p>
+  </div>
+
+</header>
 
 
   <!-- CONFIGURACIÓN DE IDIOMA Y ESTADO -->

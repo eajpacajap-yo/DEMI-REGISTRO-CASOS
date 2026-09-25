@@ -1,10 +1,38 @@
-.descripcion-demi {
+.tarjeta-mision-demi {
+  background: #ffffff;
+  border-left: 4px solid #0097d8; /* Azul cian DEMI */
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 10px 0 18px 0;
+  box-shadow: 0 2px 6px rgba(27, 54, 93, 0.08);
+  border-top: 1px solid #eef2f6;
+  border-right: 1px solid #eef2f6;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.mision-etiqueta {
+  font-size: 0.8rem;
+  font-weight: 700;
   color: #1b365d;
-  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.punto-azul {
+  color: #0097d8;
+  font-size: 0.9rem;
+}
+
+.mision-cuerpo {
+  margin: 0;
+  font-size: 0.88rem;
   line-height: 1.5;
-  font-weight: 500;
-  margin: 12px 0 16px 0;
-  text-align: left;
+  color: #334155;
+  text-align: justify;
 }
 
 @media (min-width: 600px) {

@@ -81,7 +81,7 @@ export class Galeria implements OnInit {
   }
 
   reproducirGuiaGaleria(): void {
-    this.audioService.toggleAudio('assets/audio/galeria.mp3', 'galeria');
+    this.audioService.toggleAudio('assets/audio/instituciones.mp3', 'galeria');
   }
 
   ampliarImagen(item: RecursoGaleriaVisual): void {

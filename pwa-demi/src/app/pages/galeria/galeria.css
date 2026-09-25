@@ -5,7 +5,7 @@
 }
 
 .encabezado-galeria h2 {
-  color: #5c1d68;
+  color: #1b365d;
   font-size: 1.35rem;
   margin: 0 0 6px 0;
 }
@@ -59,7 +59,7 @@
 .cuerpo-tarjeta h3 {
   margin: 0 0 6px 0;
   font-size: 1rem;
-  color: #5c1d68;
+  color: #1b365d;
 }
 
 .cuerpo-tarjeta p {
@@ -139,7 +139,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: #5c1d68;
+  background-color: #0097d8;
   color: #ffffff;
   border: none;
   padding: 10px 18px;

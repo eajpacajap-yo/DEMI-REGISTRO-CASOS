@@ -12,7 +12,7 @@
       },
       "descripcion": {
         "es": "Horario 8:00 AM a 4:30 PM, Dirección: 9na. avenida 00-19 zona 2, San Miguel Totonicapán. Telefono:7766 1113 ",
-        "quc": "Kechakun pa wajxaqib' taj'il nimq'ij k'a pa k'ajib' taj'il ruk' nik'aj b'enq'ij."
+        "quc": "Kechakun pa wajxaqib' taj'il nimq'ij k'a pa k'ajib' taj'il ruk' nik'aj b'enq'ij. Dirección: 9na. avenida 00-19 zona 2, San Miguel Totonicapán. Telefono:7766 1113 "
         
       },
       
@@ -25,8 +25,8 @@
         "quc": "Fiscalía de la mujer MP"
       },
       "descripcion": {
-        "es": "Horario: las 24 horas, Direccion: 13 avenida 6-13, zona 3 de Totonicapán, Telefono: 1572",
-        "quc": "Kachakunik 24 ramaj, ronojel q'ij, Direccion: 13 avenida 6-13, zona 3 de Totonicapán, Telefono: 1572 "
+        "es": "Horario: las 24 horas, Direccion: 13 avenida 6-13, zona 3 de Totonicapán. Telefono: 1572",
+        "quc": "Kachakunik 24 ramaj, ronojel q'ij, Direccion: 13 avenida 6-13, zona 3 de Totonicapán. Telefono: 1572 "
       },
       "imagen_url": "assets/img/FiscaliaMujer.jpg"
     },
@@ -52,6 +52,28 @@
         "es": "Horario: las 24 horas, Direccion: Kilómetro 198 cantón Poxlajuj, Totonicapán, Telefono: 7932-1200",
         "quc": "Kachakunik 24 ramaj, ronojel q'ij, Direccion: Kilómetro 198 cantón Poxlajuj, Totonicapán, Telefono: 7932-1200"},
       "imagen_url": "assets/img/HN.png"
+    },
+    {
+      "id": 5,
+      "titulo": {
+        "es": "Juzgado de Paz Penal",
+        "quc": "Q'atb'al Tzij re Kaslemal ruk' Jeqal"
+      },
+      "descripcion": {
+        "es": "Horario: las 24 horas, Direccion: 2da. Calle, zona 2, Totonicapán, Telefono: 5990-0320",
+        "quc": "Kachakunik 24 ramaj, ronojel q'ij, Direccion: 2da. Calle, zona 2, Totonicapán, Telefono: 5990-0320"},
+      "imagen_url": "assets/img/JuzgadodePaz.png"
+    },
+    {
+      "id": 6,
+      "titulo": {
+        "es": "Juzgado de Familia",
+        "quc": "Q'atb'al Tzij re ri Achalaxik"
+      },
+      "descripcion": {
+        "es": "Horario: lunes a viernes de 8:00 AM a 3:30 PM, Dirección: 10ª Avenida (entre 2ª y 3ª Calle), Zona 2, Telefono: 2290-4444",
+        "quc": "Kachakun pa wajxaqib' taj'il nimq'ij k'a pa oxib' taj'il ruk' nik'aj b'enq'ij, Direccion: 10ª Avenida (entre 2ª y 3ª Calle), Zona 2 , Telefono: 2290-4444"},
+      "imagen_url": "assets/img/Juzgadofamilia.png"
     }
   ]
 

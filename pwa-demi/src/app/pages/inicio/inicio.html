@@ -1,8 +1,14 @@
 <section class="bienvenida">
 
-  <p class="descripcion-demi">
-    {{ idiomaService.esEspanol() ? misionDemi.es : misionDemi.quc }}
-  </p>
+  <div class="tarjeta-mision-demi">
+    <div class="mision-etiqueta">
+      <span class="punto-azul">●</span>
+      {{ idiomaService.esEspanol() ? misionDemi.titulo.es : misionDemi.titulo.quc }}
+    </div>
+    <p class="mision-cuerpo">
+      {{ idiomaService.esEspanol() ? misionDemi.texto.es : misionDemi.texto.quc }}
+    </p>
+  </div>
 
    <!-- BOTÓN DE AUDIO EN K'ICHE' -->
   <div class="audio-accesible-caja">

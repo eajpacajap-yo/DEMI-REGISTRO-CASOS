@@ -9,29 +9,68 @@
   box-sizing: border-box;
 }
 
-/* ENCABEZADO INSTITUCIONAL - AZUL OFICIAL DEMI */
+
+/* ENCABEZADO INSTITUCIONAL */
 .header {
-  background-color: #1b365d;
+  background-color: #1b365d; /* Azul institucional */
   color: #ffffff;
-  border-bottom: 3px solid #0097d8;
-  padding: 10px 16px;
+  border-bottom: 3px solid #0097d8; /* Línea cian */
+  padding: 12px 14px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+.header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+.header-bottom {
+  text-align: center;
+  width: 100%;
+}
+
+.header-bottom h1 {
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.header-bottom p {
+  font-size: 0.78rem;
+  margin: 3px 0 0 0;
+  color: #e0f2fe;
+  opacity: 0.92;
 }
 
 .brand {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column; /* Apila el texto debajo de la imagen */
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
 }
-
+.brand-textos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 .brand h1 {
   font-size: 1.05rem;
   margin: 0;
   font-weight: 700;
   line-height: 1.2;
+}
+.brand-textos p {
+  font-size: 0.74rem;
+  margin: 2px 0 0 0;
+  color: #e0f2fe; /* Azul cielo legible */
+  opacity: 0.9;
 }
 
 .brand p {
@@ -42,39 +81,55 @@
 
 
 
- .logo-img {
-  width: 215px; 
-  max-width: 38vw;          
-  height: 46px;         
-  object-fit: contain;      
-  flex-shrink: 0;
+.logo-img {
+  width: 175px;
+  max-width: 62vw;
+  height: auto;
+  max-height: 48px;
+  object-fit: contain;
   display: block;
+  border-radius: 16px;   
+  overflow: hidden;    
+}
+.brand-textos {
+  display: flex;
+  flex-direction: column;
 }
 
+.brand-textos h1 {
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+}
 
-/* BOTÓN DE PÁNICO / SALIDA RÁPIDA */
 .btn-panico {
   background-color: #d32f2f;
   color: #ffffff;
   border: none;
   border-radius: 6px;
-  padding: 8px 14px;
-  font-size: 0.82rem;
+  padding: 8px 12px;
+  font-size: 0.8rem;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
   white-space: nowrap;
-  flex-shrink: 0;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.2s ease;
+}
+
+.btn-panico:active {
+  background-color: #b71c1c;
 }
 
 .btn-panico:hover {
   background-color: #b71c1c;
 }
 
-.btn-panico:active {
-  transform: scale(0.97);
-}
+
 
 /* BARRA DE CONFIGURACIÓN Y ESTADO - TONOS AZULADOS CLAROS */
 .barra-configuracion {
@@ -161,4 +216,16 @@
 
 .nav-item:active {
   background-color: #e8f0fe;
+}
+@media (max-width: 380px) {
+  .logo-contenedor {
+    width: 75px;
+    height: 38px;
+  }
+  .brand h1 {
+    font-size: 0.85rem;
+  }
+  .brand p {
+    display: none; /* Oculta el subtítulo largo en pantallas diminutas */
+  }
 }
