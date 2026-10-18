@@ -36,6 +36,9 @@ public class Usuario {
     @Column(name = "segundo_apellido", length = 30)
     private String segundoApellido;
 
+    @Column(name = "profesion", length = 100)
+    private String profesion;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
@@ -134,9 +137,17 @@ public class Usuario {
         this.creadoEn = creadoEn;
     }
 
+    public String getprofesion() {
+        return profesion;
+    }
+
+    public void setprofesion (String profesion) {
+        this.profesion = profesion;
+    }
+
     public Usuario(Long id, String correo, String passwordHash, String primerNombre, String segundoNombre,
             String tercerNombre, String primerApellido, String segundoApellido, Rol rol, Boolean activo,
-            LocalDateTime creadoEn) {
+            LocalDateTime creadoEn, String profesion) {
         this.id = id;
         this.correo = correo;
         this.passwordHash = passwordHash;
@@ -148,6 +159,7 @@ public class Usuario {
         this.rol = rol;
         this.activo = activo;
         this.creadoEn = creadoEn;
+        this.profesion = profesion;
     }
 
     public Usuario() {

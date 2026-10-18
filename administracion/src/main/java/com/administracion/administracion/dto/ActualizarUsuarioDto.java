@@ -10,6 +10,7 @@ public class ActualizarUsuarioDto {
     private String password; // Opcional: si viene vacío, no se modifica la contraseña
     private Long rolId;
     private Boolean activo;
+    public String profesion;
 
     public ActualizarUsuarioDto() {}
 
@@ -39,4 +40,7 @@ public class ActualizarUsuarioDto {
 
     public Boolean getActivo() { return activo; }
     public void setActivo(Boolean activo) { this.activo = activo; }
+
+    public String getProfesion() { return profesion; }
+    public void setprofesion(String profesion) { this.profesion = profesion; }
 }

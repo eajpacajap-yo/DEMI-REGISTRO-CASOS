@@ -9,10 +9,11 @@ public class CrearUsuarioDto {
     private String correo;
     private String password;
     private Long rolId; // ID del rol: 1 = ROLE_ADMIN, 2 = ROLE_PROFESIONAL / USUARIA
+    private String profesion;
 
     public CrearUsuarioDto() {}
 
-    public CrearUsuarioDto(String primerNombre, String segundoNombre, String tercerNombre, String primerApellido, String segundoApellido, String correo, String password, Long rolId) {
+    public CrearUsuarioDto(String primerNombre, String segundoNombre, String tercerNombre, String primerApellido, String segundoApellido, String correo, String password, Long rolId, String profesion ) {
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.tercerNombre = tercerNombre;
@@ -21,6 +22,7 @@ public class CrearUsuarioDto {
         this.correo = correo;
         this.password = password;
         this.rolId = rolId;
+        this.profesion = profesion;
     }
 
     public String getPrimerNombre() { return primerNombre; }
@@ -46,4 +48,7 @@ public class CrearUsuarioDto {
 
     public Long getRolId() { return rolId; }
     public void setRolId(Long rolId) { this.rolId = rolId; }
+
+    public String getProfesion() { return profesion; }
+    public void setProfesion(String profesion) { this.profesion = profesion; }
 }

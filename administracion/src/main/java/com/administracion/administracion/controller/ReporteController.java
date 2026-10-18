@@ -24,18 +24,14 @@ public class ReporteController {
     public ReporteController(CasoRepository casoRepository) {
         this.casoRepository = casoRepository;
     }
-
     @GetMapping("/resumen")
     @PreAuthorize("hasAnyRole('ADMIN', 'TRABAJADORA')")
     public ResponseEntity<ResumenReporteDto> obtenerResumenGeneral() {
         List<Caso> expedientes = casoRepository.findAll();
-
         long totalCasos = expedientes.size();
-
         Map<String, Long> porMunicipio = new HashMap<>();
         Map<String, Long> porTipo = new HashMap<>();
         Map<String, Long> porEstado = new HashMap<>();
-
         // Recorrido seguro sin problemas de genéricos ni lambdas complejas
         for (Caso c : expedientes) {
             // Conteo por Municipio
@@ -43,13 +39,11 @@ public class ReporteController {
                 String muni = c.getMunicipio().getNombre();
                 porMunicipio.put(muni, porMunicipio.getOrDefault(muni, 0L) + 1);
             }
-
             // Conteo por Tipo de Violencia
             if (c.getTipoViolencia() != null && c.getTipoViolencia().getNombre() != null) {
                 String tipo = c.getTipoViolencia().getNombre();
                 porTipo.put(tipo, porTipo.getOrDefault(tipo, 0L) + 1);
             }
-
             // Conteo por Estado Procesal
             if (c.getEstado() != null && c.getEstado().getNombre() != null) {
                 String estado = c.getEstado().getNombre();

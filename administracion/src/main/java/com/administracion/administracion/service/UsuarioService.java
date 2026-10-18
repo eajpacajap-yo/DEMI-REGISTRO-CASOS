@@ -52,6 +52,7 @@ public class UsuarioService {
         usuario.setPasswordHash(passwordEncoder.encode(dto.getPassword())); // Encriptación BCrypt
         usuario.setRol(rol);
         usuario.setActivo(true);
+        usuario.setprofesion(dto.getProfesion());
 
         return usuarioRepository.save(usuario);
     }
@@ -76,6 +77,7 @@ public class UsuarioService {
         usuario.setPrimerApellido(dto.getPrimerApellido());
         usuario.setSegundoApellido(dto.getSegundoApellido());
         usuario.setRol(rol);
+        usuario.setprofesion(dto.getProfesion());
 
         if (dto.getActivo() != null) {
             usuario.setActivo(dto.getActivo());
