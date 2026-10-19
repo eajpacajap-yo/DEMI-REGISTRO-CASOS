@@ -12,7 +12,8 @@ export interface Usuario {
   rol?: {
     id: number;
     nombre: string;
-  };
+  },
+  profesion?: string;
 }
 
 export interface UsuarioRegistro {
@@ -26,4 +27,5 @@ export interface UsuarioRegistro {
   password?: string;
   rolId: number;
   activo?: boolean;
+  profesion?: string;
 }

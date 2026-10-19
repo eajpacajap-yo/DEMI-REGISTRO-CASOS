@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MultimediaAdminService, RecursoAdmin } from '../../services/multimedia-admin.service';
-
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-multimedia',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './multimedia.html',
   styleUrl: './multimedia.css'
 })
@@ -15,7 +15,8 @@ export class MultimediaComponent implements OnInit {
   @ViewChild('inputArchivo') inputArchivoRef!: ElementRef<HTMLInputElement>;
   private mediaService = inject(MultimediaAdminService);
   private cdr = inject(ChangeDetectorRef);
-
+  private authService = inject(AuthService);
+  private router = inject(Router);
   // Lista de recursos
   recursos: RecursoAdmin[] = [];
   cargandoLista = false;
@@ -171,4 +172,5 @@ export class MultimediaComponent implements OnInit {
 
     this.cdr.detectChanges();
   }
+
 }

@@ -1,0 +1,77 @@
+<div class="dashboard-container">
+  
+  <!-- BARRA SUPERIOR INSTITUCIONAL FIJA -->
+  <header class="navbar">
+     <div class="header-top">
+      <img 
+       src="demiLOGO.png" 
+       alt="Logo DEMI" 
+       class="logo-img" 
+      />
+   </div>
+
+    <!-- Navegación estilo Pestañas -->
+    <nav class="nav-tabs">
+      <a routerLink="/casos" routerLinkActive="tab-active" class="tab-item">Expedientes</a>
+      <a *ngIf="esAdmin" routerLink="/multimedia" routerLinkActive="tab-active" class="tab-item">Multimedia</a>
+      <a *ngIf="esAdmin" routerLink="/reportes" routerLinkActive="tab-active" class="tab-item">Reportes</a>
+      <a *ngIf="esAdmin" routerLink="/usuarias" routerLinkActive="tab-active" class="tab-item">usuarios</a>
+      
+
+
+    </nav>
+
+    <!-- Información de usuario y acciones -->
+    <div class="user-info">
+      <div class="user-meta">
+        <span class="user-name">{{ usuario?.nombreCompleto }}</span>
+        <span class="user-role">{{ usuario?.rol }}</span>
+      </div>
+      <button (click)="abrirModalPassword()" class="btn-user-action" title="Cambiar mi contraseña">
+        Cambiar contraseña 
+      </button>
+      <button (click)="cerrarSesion()" class="btn-logout" title="Cerrar Sesión">
+        Cerrar Sesión
+      </button>
+    </div>
+  </header>
+
+  <!-- AQUÍ CARGAN LAS VISTAS DE CASOS, MULTIMEDIA Y REPORTES -->
+  <router-outlet></router-outlet>
+
+  <!-- MODAL CAMBIAR CONTRASEÑA GLOBAL -->
+  <div *ngIf="mostrarModalPassword" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4>Cambiar Mi Contraseña</h4>
+        <button (click)="cerrarModalPassword()" class="btn-close">&times;</button>
+      </div>
+      <form (ngSubmit)="ejecutarCambioPassword()">
+        <div class="modal-body">
+          <div *ngIf="errorPassword" class="alert-error">{{ errorPassword }}</div>
+          <div *ngIf="mensajeExitoPassword" class="alert-success">{{ mensajeExitoPassword }}</div>
+
+          <div class="form-group">
+            <label>Contraseña Actual</label>
+            <input type="password" name="passwordActual" [(ngModel)]="passwordForm.passwordActual" required />
+          </div>
+          <div class="form-group">
+            <label>Nueva Contraseña</label>
+            <input type="password" name="nuevoPassword" [(ngModel)]="passwordForm.nuevoPassword" placeholder="Mínimo 12 caracteres" required />
+          </div>
+          <div class="form-group">
+            <label>Confirmar Nueva Contraseña</label>
+            <input type="password" name="confirmarPassword" [(ngModel)]="passwordForm.confirmarPassword" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="cerrarModalPassword()" class="btn-secondary">Cancelar</button>
+          <button type="submit" [disabled]="guardandoPassword || !!mensajeExitoPassword" class="btn-primary">
+            {{ guardandoPassword ? 'Verificando...' : 'Actualizar Clave' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

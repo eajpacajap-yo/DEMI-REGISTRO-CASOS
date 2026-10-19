@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #5c2d91 0%, #3b1766 100%);
+  background: linear-gradient(135deg, #e3e2e2 0%, #f4f3f6 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -16,13 +16,13 @@
   max-width: 420px;
 }
 
-.header h2 { margin: 0; color: #5c2d91; font-size: 1.6rem; font-weight: 700; text-align: center; }
+.header h2 { margin: 0; color: #2b0180; font-size: 1.6rem; font-weight: 700; text-align: center; }
 .header p { margin: 0.5rem 0 1.5rem 0; color: #64748b; font-size: 0.88rem; text-align: center; }
 
 .form-group { margin-bottom: 1.2rem; }
 .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 0.4rem; }
 .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; }
-.form-group input:focus { border-color: #5c2d91; outline: none; }
+.form-group input:focus { border-color: #290382; outline: none; }
 
 .forgot-password-link {
   text-align: right;
@@ -30,7 +30,7 @@
   margin-bottom: 1.2rem;
 }
 .forgot-password-link a {
-  color: #5c2d91;
+  color: #23166b;
   font-size: 0.82rem;
   font-weight: 600;
   text-decoration: none;
@@ -39,7 +39,7 @@
 
 .btn-submit {
   width: 100%;
-  background-color: #5c2d91;
+  background-color: #22257e;
   color: white;
   border: none;
   padding: 0.85rem;
@@ -49,7 +49,7 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-.btn-submit:hover:not(:disabled) { background-color: #4a2375; }
+.btn-submit:hover:not(:disabled) { background-color: #33017f; }
 
 /* Modal y Alertas */
 .modal-backdrop {
@@ -88,15 +88,15 @@
 
 .alert-pin {
   background-color: #f5f3ff;
-  border: 1px dashed #7c3aed;
+  border: 1px dashed rgb(53, 1, 144);
   border-radius: 8px;
   padding: 1rem;
   text-align: center;
   margin-bottom: 1.2rem;
 }
-.alert-pin span { font-size: 0.8rem; color: #6d28d9; font-weight: 600; }
-.alert-pin h3 { margin: 0.3rem 0; font-size: 1.6rem; letter-spacing: 4px; color: #5b21b6; }
-.alert-pin small { color: #8b5cf6; font-size: 0.75rem; }
+.alert-pin span { font-size: 0.8rem; color: #431aa2; font-weight: 600; }
+.alert-pin h3 { margin: 0.3rem 0; font-size: 1.6rem; letter-spacing: 4px; color: #100572; }
+.alert-pin small { color: #431aa2; font-size: 0.75rem; }
 
 .modal-footer {
   display: flex;
@@ -107,7 +107,7 @@
   border-top: 1px solid #edf2f7;
 }
 
-.btn-primary { background-color: #5c2d91; color: white; border: none; padding: 0.65rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.btn-primary { background-color: #3f249f; color: white; border: none; padding: 0.65rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
 .btn-secondary { background-color: #e2e8f0; color: #475569; border: none; padding: 0.65rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
 .alert-error { background-color: #fee2e2; color: #dc2626; padding: 0.65rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem; text-align: center; }
 .alert-success { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; padding: 0.75rem; border-radius: 6px; font-size: 0.88rem; font-weight: 600; margin-bottom: 1rem; text-align: center; }

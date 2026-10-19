@@ -1,25 +1,21 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { CasoService } from '../../services/caso.service';
 import { SeguimientoService } from '../../services/seguimiento.service';
 import { AuthService } from '../../services/auth.service';
 import { Caso } from '../../models/caso';
 import { SeguimientoCaso } from '../../models/seguimiento';
-import { UsuarioService } from '../../services/usuario.service';
-import { Usuario, UsuarioRegistro } from '../../models/usuario';
-
 
 @Component({
   selector: 'app-casos',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './casos.component.html',
   styleUrls: ['./casos.component.css']
 })
 export class CasosComponent implements OnInit {
-
 
   casos: Caso[] = [];
   casosFiltrados: Caso[] = [];
@@ -57,67 +53,6 @@ export class CasosComponent implements OnInit {
   seguimientoAEliminar: SeguimientoCaso | null = null;
   mostrarModalBorrarSeg: boolean = false;
 
-  // Variables para cambio de contraseña
-mostrarModalPassword: boolean = false;
-guardandoPassword: boolean = false;
-errorPassword: string = '';
-mensajeExitoPassword: string = '';
-
-passwordForm = {
-  passwordActual: '',
-  nuevoPassword: '',
-  confirmarPassword: ''
-};
-
-abrirModalPassword(): void {
-  this.passwordForm = {
-    passwordActual: '',
-    nuevoPassword: '',
-    confirmarPassword: ''
-  };
-  this.errorPassword = '';
-  this.mensajeExitoPassword = '';
-  this.mostrarModalPassword = true;
-  this.cdr.detectChanges();
-}
-
-cerrarModalPassword(): void {
-  this.mostrarModalPassword = false;
-  this.errorPassword = '';
-  this.mensajeExitoPassword = '';
-  this.cdr.detectChanges();
-}
-
-  
-  // Gestion de usuarias
-  mostrarModalGestionUsuarios: boolean = false;
-  mostrarFormUsuario: boolean = false;
-  editandoUsuario: boolean = false;
-  cargandoUsuarios: boolean = false;
-  listaUsuarios: Usuario[] = [];
-  filtroUsuario: string = '';
-
-  usuarioForm: UsuarioRegistro = {
-    primerNombre: '',
-    segundoNombre: '',
-    tercerNombre: '',
-    primerApellido: '',
-    segundoApellido: '',
-    correo: '',
-    password: '',
-    rolId: 2,
-    activo: true
-  };
-  errorUsuario: string = '';
-  mensajeExitoUsuario: string = '';
-  usuarioAEliminar: Usuario | null = null;
-  mostrarModalBorrarUsu: boolean = false;
-
-  rolesDisponibles = [
-    { id: 1, nombre: 'Administradora (ROLE_ADMIN)' },
-    { id: 2, nombre: 'Profesional de Atención (ROLE_PROFESIONAL)' }
-  ];
-  // Formulario nuevo caso
   nuevoCaso: Caso = {
     codigoExpediente: '',
     municipioId: 1,
@@ -126,7 +61,6 @@ cerrarModalPassword(): void {
     estadoId: 1
   };
 
-  // Formulario edición caso
   casoEdicion: Caso = {
     codigoExpediente: '',
     municipioId: 1,
@@ -135,7 +69,6 @@ cerrarModalPassword(): void {
     estadoId: 1
   };
 
-  // Catálogos
   municipios = [
     { id: 1, nombre: 'Totonicapán' },
     { id: 2, nombre: 'San Cristóbal Totonicapán' },
@@ -144,7 +77,7 @@ cerrarModalPassword(): void {
     { id: 5, nombre: 'Momostenango' },
     { id: 6, nombre: 'Santa María Chiquimula' },
     { id: 7, nombre: 'Santa Lucía La Reforma' },
-    { id: 8, nombre: 'San Bartolo Aguas Calientes ' }
+    { id: 8, nombre: 'San Bartolo Aguas Calientes' }
   ];
 
   tiposViolencia = [
@@ -171,40 +104,20 @@ cerrarModalPassword(): void {
     'Cierre / Resolución de Caso'
   ];
 
-mostrarModalUsuario: boolean = false;
-guardandoUsuario: boolean = false;
-
-
-nuevoUsuario: UsuarioRegistro = {
-  primerNombre: '',
-  segundoNombre: '',
-  tercerNombre: '',
-  primerApellido: '',
-  segundoApellido: '',
-  correo: '',
-  password: '',
-  rolId: 2 // Por defecto rol no-admin
-};
-
-
   constructor(
     private casoService: CasoService,
     private seguimientoService: SeguimientoService,
-    private usuarioService: UsuarioService,
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
-
-  get esAdmin(): boolean {
-  return this.usuario?.rol === 'ROLE_ADMIN';
-}
 
   ngOnInit(): void {
     this.usuario = this.authService.getUsuario();
     this.cargarCasos();
   }
 
+  // --- CASOS ---
   cargarCasos(): void {
     this.cargando = true;
     this.casoService.listarCasos().subscribe({
@@ -225,9 +138,6 @@ nuevoUsuario: UsuarioRegistro = {
     });
   }
 
-
-  
-  // --- FILTROS DE CASOS ---
   aplicarFiltros(): void {
     this.casosFiltrados = this.casos.filter(caso => {
       const coincideTexto = !this.filtroTexto || 
@@ -248,7 +158,6 @@ nuevoUsuario: UsuarioRegistro = {
     this.aplicarFiltros();
   }
 
-  // --- CREAR CASO ---
   abrirModalCrear(): void {
     this.nuevoCaso = {
       codigoExpediente: this.generarCodigoSugerido(),
@@ -286,7 +195,7 @@ nuevoUsuario: UsuarioRegistro = {
           this.cerrarModalCrear();
           this.mensajeExito = '';
           this.cargarCasos();
-        }, 2500);
+        }, 1500);
       },
       error: (err) => {
         this.guardando = false;
@@ -296,7 +205,6 @@ nuevoUsuario: UsuarioRegistro = {
     });
   }
 
-  // --- EDITAR CASO ---
   abrirModalEditar(caso: Caso): void {
     this.errorFormulario = '';
     this.mensajeExito = '';
@@ -332,7 +240,7 @@ nuevoUsuario: UsuarioRegistro = {
     this.casoService.actualizarCaso(this.casoEdicion.id, this.casoEdicion).subscribe({
       next: () => {
         this.guardando = false;
-        this.mensajeExito = '¡Expediente actualizado correctamente! ✅';
+        this.mensajeExito = '¡Expediente actualizado correctamente!';
         this.cdr.detectChanges();
         setTimeout(() => {
           this.cerrarModalEditar();
@@ -348,7 +256,6 @@ nuevoUsuario: UsuarioRegistro = {
     });
   }
 
-  // --- DETALLE CASO ---
   verDetalle(caso: Caso): void {
     this.casoSeleccionado = caso;
     this.mostrarModalDetalle = true;
@@ -361,7 +268,6 @@ nuevoUsuario: UsuarioRegistro = {
     this.cdr.detectChanges();
   }
 
-  // --- BORRAR CASO ---
   confirmarBorrar(caso: Caso): void {
     this.casoAEliminar = caso;
     this.mostrarModalBorrar = true;
@@ -391,61 +297,8 @@ nuevoUsuario: UsuarioRegistro = {
       }
     });
   }
-  abrirModalUsuario(): void {
-  this.nuevoUsuario = {
-    primerNombre: '',
-    segundoNombre: '',
-    tercerNombre: '',
-    primerApellido: '',
-    segundoApellido: '',
-    correo: '',
-    password: '',
-    rolId: 2
-  };
-  this.errorUsuario = '';
-  this.mensajeExitoUsuario = '';
-  this.mostrarModalUsuario = true;
-  this.cdr.detectChanges();
-}
 
-cerrarModalUsuario(): void {
-  this.mostrarModalUsuario = false;
-  this.errorUsuario = '';
-  this.mensajeExitoUsuario = '';
-  this.cdr.detectChanges();
-}
-
-guardarNuevoUsuario(): void {
-  if (!this.nuevoUsuario.primerNombre || !this.nuevoUsuario.primerApellido || 
-      !this.nuevoUsuario.correo || !this.nuevoUsuario.password) {
-    this.errorUsuario = 'Todos los campos son obligatorios.';
-    return;
-  }
-
-  this.guardandoUsuario = true;
-  this.errorUsuario = '';
-  this.mensajeExitoUsuario = '';
-
-  this.usuarioService.crearUsuario(this.nuevoUsuario).subscribe({
-    next: () => {
-      this.guardandoUsuario = false;
-      this.mensajeExitoUsuario = '¡Usuaria creada correctamente! ✅';
-      this.cdr.detectChanges();
-      setTimeout(() => {
-        this.cerrarModalUsuario();
-      }, 1200);
-    },
-    error: (err) => {
-      this.guardandoUsuario = false;
-      this.errorUsuario = err.error || 'Error al registrar la usuaria.';
-      this.cdr.detectChanges();
-    }
-  });
-}
-
-  
-  // --- MÓDULO DE SEGUIMIENTOS (BITÁCORA) ---
-  
+  // --- SEGUIMIENTOS (BITÁCORA) ---
   abrirSeguimientos(caso: Caso): void {
     this.casoSeleccionado = caso;
     this.mostrarModalSeguimientos = true;
@@ -581,231 +434,9 @@ guardarNuevoUsuario(): void {
     });
   }
 
-
-  // --- MÓDULO CRUD USUARIAS (ADMIN) ---
- 
-  abrirGestionUsuarios(): void {
-    this.mostrarModalGestionUsuarios = true;
-    this.mostrarFormUsuario = false;
-    this.filtroUsuario = '';
-    this.cargarUsuarios();
-  }
-
-  cerrarGestionUsuarios(): void {
-    this.mostrarModalGestionUsuarios = false;
-    this.mostrarFormUsuario = false;
-    this.cdr.detectChanges();
-  }
-
-  cargarUsuarios(): void {
-    this.cargandoUsuarios = true;
-    this.usuarioService.listarUsuarios().subscribe({
-      next: (data) => {
-        this.listaUsuarios = data;
-        this.cargandoUsuarios = false;
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error al cargar usuarias', err);
-        this.cargandoUsuarios = false;
-        this.cdr.detectChanges();
-      }
-    });
-  }
-
-  get usuariosFiltrados(): Usuario[] {
-    if (!this.filtroUsuario) return this.listaUsuarios;
-    const txt = this.filtroUsuario.toLowerCase();
-    return this.listaUsuarios.filter(u =>
-      u.primerNombre.toLowerCase().includes(txt) ||
-      u.primerApellido.toLowerCase().includes(txt) ||
-      u.correo.toLowerCase().includes(txt) ||
-      (u.rol?.nombre && u.rol.nombre.toLowerCase().includes(txt))
-    );
-  }
-
-  iniciarNuevoUsuario(): void {
-    this.editandoUsuario = false;
-    this.usuarioForm = {
-      primerNombre: '',
-      segundoNombre: '',
-      tercerNombre: '',
-      primerApellido: '',
-      segundoApellido: '',
-      correo: '',
-      password: '',
-      rolId: 2,
-      activo: true
-    };
-    this.errorUsuario = '';
-    this.mensajeExitoUsuario = '';
-    this.mostrarFormUsuario = true;
-    this.cdr.detectChanges();
-  }
-
-  iniciarEdicionUsuario(u: Usuario): void {
-    this.editandoUsuario = true;
-    this.usuarioForm = {
-      id: u.id,
-      primerNombre: u.primerNombre,
-      segundoNombre: u.segundoNombre,
-      tercerNombre: u.tercerNombre,
-      primerApellido: u.primerApellido,
-      segundoApellido: u.segundoApellido,
-      correo: u.correo,
-      password: '', // En blanco si no se va a cambiar
-      rolId: u.rol?.id || 2,
-      activo: u.activo ?? true
-    };
-    this.errorUsuario = '';
-    this.mensajeExitoUsuario = '';
-    this.mostrarFormUsuario = true;
-    this.cdr.detectChanges();
-  }
-
-  cancelarFormUsuario(): void {
-    this.mostrarFormUsuario = false;
-    this.errorUsuario = '';
-    this.mensajeExitoUsuario = '';
-    this.cdr.detectChanges();
-  }
-
-  guardarUsuario(): void {
-  // Solo se exige primerNombre, primerApellido y correo
-  if (!this.usuarioForm.primerNombre?.trim() || 
-      !this.usuarioForm.primerApellido?.trim() || 
-      !this.usuarioForm.correo?.trim()) {
-    this.errorUsuario = 'El primer nombre, primer apellido y correo son obligatorios.';
-    this.cdr.detectChanges();
-    return;
-  }
-
-    // Si es nuevo registro, la contraseña es obligatoria
-  if (!this.editandoUsuario && !this.usuarioForm.password?.trim()) {
-    this.errorUsuario = 'La contraseña temporal es obligatoria para nuevos registros.';
-    this.cdr.detectChanges();
-    return;
-  }
-
-    this.guardando = true;
-    this.errorUsuario = '';
-    this.mensajeExitoUsuario = '';
-
-    if (this.editandoUsuario && this.usuarioForm.id) {
-      this.usuarioService.actualizarUsuario(this.usuarioForm.id, this.usuarioForm).subscribe({
-        next: () => {
-          this.guardando = false;
-          this.mensajeExitoUsuario = '¡Usuaria actualizada con éxito!';
-          this.cdr.detectChanges();
-          setTimeout(() => {
-            this.mostrarFormUsuario = false;
-            this.cargarUsuarios();
-          }, 2500);
-        },
-        error: (err) => {
-          this.guardando = false;
-          this.errorUsuario = err.error || 'Error al actualizar usuaria.';
-          this.cdr.detectChanges();
-        }
-      });
-    } else {
-      this.usuarioService.crearUsuario(this.usuarioForm).subscribe({
-        next: () => {
-          this.guardando = false;
-          this.mensajeExitoUsuario = '¡Usuaria registrada con éxito!';
-          this.cdr.detectChanges();
-          setTimeout(() => {
-            this.mostrarFormUsuario = false;
-            this.cargarUsuarios();
-          }, 2500);
-        },
-        error: (err) => {
-          this.guardando = false;
-          this.errorUsuario = err.error || 'Error al registrar usuaria.';
-          this.cdr.detectChanges();
-        }
-      });
-    }
-  }
-
-  confirmarBorrarUsuario(u: Usuario): void {
-    this.usuarioAEliminar = u;
-    this.mostrarModalBorrarUsu = true;
-    this.cdr.detectChanges();
-  }
-
-  cerrarModalBorrarUsu(): void {
-    this.mostrarModalBorrarUsu = false;
-    this.usuarioAEliminar = null;
-    this.cdr.detectChanges();
-  }
-
-  ejecutarBorradoUsuario(): void {
-    if (!this.usuarioAEliminar?.id) return;
-    this.guardando = true;
-
-    this.usuarioService.eliminarUsuario(this.usuarioAEliminar.id).subscribe({
-      next: () => {
-        this.guardando = false;
-        this.cerrarModalBorrarUsu();
-        this.cargarUsuarios();
-      },
-      error: () => {
-        this.guardando = false;
-        alert('Error al desactivar usuaria.');
-        this.cerrarModalBorrarUsu();
-      }
-    });
-  }
-
-  ejecutarCambioPassword(): void {
-  if (!this.passwordForm.passwordActual || !this.passwordForm.nuevoPassword || !this.passwordForm.confirmarPassword) {
-    this.errorPassword = 'Todos los campos son obligatorios.';
-    return;
-  }
-
-  if (this.passwordForm.nuevoPassword !== this.passwordForm.confirmarPassword) {
-    this.errorPassword = 'La nueva contraseña y su confirmación no coinciden.';
-    return;
-  }
-
-  if (this.passwordForm.nuevoPassword.length < 12) {
-    this.errorPassword = 'La nueva contraseña debe tener al menos 12 caracteres.';
-    return;
-  }
-
-  this.guardandoPassword = true;
-  this.errorPassword = '';
-  this.mensajeExitoPassword = '';
-
-  this.usuarioService.cambiarPassword(this.usuario.id, {
-    passwordActual: this.passwordForm.passwordActual,
-    nuevoPassword: this.passwordForm.nuevoPassword
-  }).subscribe({
-    next: () => {
-      this.guardandoPassword = false;
-      this.mensajeExitoPassword = '¡Tu contraseña ha sido cambiada exitosamente! ';
-      this.cdr.detectChanges();
-      setTimeout(() => {
-        this.cerrarModalPassword();
-      }, 1400);
-    },
-    error: (err) => {
-      this.guardandoPassword = false;
-      this.errorPassword = err.error || 'Error al cambiar contraseña.';
-      this.cdr.detectChanges();
-    }
-  });
-}
   generarCodigoSugerido(): string {
     const anio = new Date().getFullYear();
     const corr = (this.casos.length + 1).toString().padStart(4, '0');
     return `TOT-${anio}-${corr}`;
   }
-
-  cerrarSesion(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
 }
-

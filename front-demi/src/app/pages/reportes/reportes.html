@@ -1,123 +1,141 @@
-<div class="dashboard-container">
-  <header class="navbar">
-    <div class="brand">
-      <h2>DEMI - Totonicapán</h2>
-      <span>Módulo Analítico e Informes Estadísticos</span>
+<main class="content">
+  <!-- ENCABEZADO Y ACCIONES -->
+  <div class="header-actions">
+    <div>
+      <h3>Reportes Estadísticos y Consolidado DEMI</h3>
+      <p class="subtitle-text">Informes oficiales, métricas analíticas y exportación de datos</p>
     </div>
-    <div class="user-info">
-      <a routerLink="/casos" class="btn-volver">← Volver a Expedientes</a>
+    <div class="header-buttons-group">
+      <button 
+        type="button" 
+        class="btn-secondary-action" 
+        (click)="exportarExcel()" 
+        [disabled]="cargando || !resumen"
+      >
+        📊 Exportar a Excel
+      </button>
+      <button 
+        type="button" 
+        class="btn-primary" 
+        (click)="exportarPDF()" 
+        [disabled]="cargando || !resumen"
+      >
+        📄 Exportar a PDF
+      </button>
     </div>
-  </header>
+  </div>
 
-  <main class="content">
-    <div class="header-acciones-reporte">
-      <div>
-        <h3>Resumen General de Expedientes</h3>
-        <p class="subtitulo">Métricas consolidadas de atención institucional por cobertura y tipología.</p>
+  <!-- ESTADO DE CARGA -->
+  @if (cargando) {
+    <div class="estado-carga">
+      <p>Generando resumen estadístico institucional...</p>
+    </div>
+  }
+
+  <!-- ESTADO DE ERROR -->
+  @if (error) {
+    <div class="mensaje-error">
+      <p>No fue posible cargar el informe estadístico. Verifique la conexión con el servidor.</p>
+    </div>
+  }
+
+  <!-- CONTENIDO PRINCIPAL -->
+  @if (!cargando && resumen) {
+    <!-- TARJETA TOTAL GENERAL -->
+    <div class="tarjeta-total">
+      <span class="total-etiqueta">Total General de Casos Registrados</span>
+      <span class="total-valor">{{ resumen.totalCasos }}</span>
+    </div>
+
+    <!-- SECCIÓN DE GRÁFICAS ANALÍTICAS -->
+    <div class="grid-graficas">
+      <div class="tarjeta-grafica">
+        <h4>Incidencia por Municipio</h4>
+        <div class="canvas-contenedor">
+          <canvas #graficaMunicipios></canvas>
+        </div>
       </div>
-      
-      <div class="botones-exportar">
-        <button class="btn-exportar btn-pdf" (click)="exportarPDF()" [disabled]="cargando || !resumen">
-           Exportar a PDF
-        </button>
-        <button class="btn-exportar btn-excel" (click)="exportarExcel()" [disabled]="cargando || !resumen">
-           Exportar a Excel
-        </button>
+
+      <div class="tarjeta-grafica">
+        <h4>Proporción por Tipología de Violencia</h4>
+        <div class="canvas-contenedor">
+          <canvas #graficaViolencia></canvas>
+        </div>
       </div>
     </div>
 
-    @if (cargando) {
-      <div class="estado-cargando">
-        <p>Procesando estadísticas de la base de datos...</p>
-      </div>
-    }
-
-    @if (error) {
-      <div class="alerta error">
-        No fue posible generar el resumen estadístico. Verifique la conexión con el servidor.
-      </div>
-    }
-
-    @if (!cargando && resumen) {
-      <!-- Tarjeta Total General -->
-      <div class="tarjeta-total">
-        <span class="total-etiqueta">Total General de Casos Registrados</span>
-        <span class="total-valor">{{ resumen.totalCasos }}</span>
-      </div>
-
-      <!-- Cuadrícula de Desgloses -->
-      <div class="grid-resumen">
-        
-        <!-- Por Municipio -->
-        <div class="tarjeta-desglose">
-          <div class="tarjeta-header">
-            <h4>Casos por Municipio</h4>
-          </div>
-          <table class="tabla-resumen">
-            <thead>
+    <!-- TABLAS DE DESGLOSE INSTITUCIONAL -->
+    <div class="grid-reportes">
+      <!-- 1. Municipios -->
+      <div class="tarjeta-reporte">
+        <h4>1. Distribución Geográfica por Municipio</h4>
+        <table class="tabla-reporte">
+          <thead>
+            <tr>
+              <th>Municipio</th>
+              <th class="texto-centro">Casos</th>
+              <th class="texto-derecha">Porcentaje</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of obtenerEntradas(resumen.casosPorMunicipio); track item.clave) {
               <tr>
-                <th>Municipio</th>
-                <th class="col-num">Total</th>
+                <td>{{ item.clave }}</td>
+                <td class="texto-centro fw-bold">{{ item.valor }}</td>
+                <td class="texto-derecha">
+                  {{ ((item.valor / (resumen.totalCasos || 1)) * 100).toFixed(1) }}%
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              @for (item of obtenerEntradas(resumen.casosPorMunicipio); track item.clave) {
-                <tr>
-                  <td>{{ item.clave }}</td>
-                  <td class="col-num"><strong>{{ item.valor }}</strong></td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Por Tipo de Violencia -->
-        <div class="tarjeta-desglose">
-          <div class="tarjeta-header header-verde">
-            <h4>Casos por Tipo de Violencia</h4>
-          </div>
-          <table class="tabla-resumen">
-            <thead>
-              <tr>
-                <th>Tipo de Violencia</th>
-                <th class="col-num">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (item of obtenerEntradas(resumen.casosPorTipoViolencia); track item.clave) {
-                <tr>
-                  <td>{{ item.clave }}</td>
-                  <td class="col-num"><strong>{{ item.valor }}</strong></td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Por Estado -->
-        <div class="tarjeta-desglose">
-          <div class="tarjeta-header header-gris">
-            <h4>Casos por Estado Procesal</h4>
-          </div>
-          <table class="tabla-resumen">
-            <thead>
-              <tr>
-                <th>Estado Procesal</th>
-                <th class="col-num">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (item of obtenerEntradas(resumen.casosPorEstado); track item.clave) {
-                <tr>
-                  <td>{{ item.clave }}</td>
-                  <td class="col-num"><strong>{{ item.valor }}</strong></td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-
+            }
+          </tbody>
+        </table>
       </div>
-    }
-  </main>
-</div>
+
+      <!-- 2. Tipos de Violencia -->
+      <div class="tarjeta-reporte">
+        <h4>2. Clasificación por Tipología de Violencia</h4>
+        <table class="tabla-reporte">
+          <thead>
+            <tr>
+              <th>Tipo de Violencia</th>
+              <th class="texto-centro">Total</th>
+              <th class="texto-derecha">Proporción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of obtenerEntradas(resumen.casosPorTipoViolencia); track item.clave) {
+              <tr>
+                <td>{{ item.clave }}</td>
+                <td class="texto-centro fw-bold">{{ item.valor }}</td>
+                <td class="texto-derecha">
+                  {{ ((item.valor / (resumen.totalCasos || 1)) * 100).toFixed(1) }}%
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 3. Estado Procesal -->
+      <div class="tarjeta-reporte">
+        <h4>3. Estado de Seguimiento de Expedientes</h4>
+        <table class="tabla-reporte">
+          <thead>
+            <tr>
+              <th>Estado Procesal</th>
+              <th class="texto-centro">Expedientes</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of obtenerEntradas(resumen.casosPorEstado); track item.clave) {
+              <tr>
+                <td>{{ item.clave }}</td>
+                <td class="texto-centro fw-bold">{{ item.valor }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</main>

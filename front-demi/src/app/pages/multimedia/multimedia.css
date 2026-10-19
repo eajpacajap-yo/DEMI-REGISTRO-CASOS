@@ -1,46 +1,3 @@
-.dashboard-container {
-  min-height: 100vh;
-  background-color: #f4f6f9;
-  font-family: inherit;
-}
-
-/* Barra superior */
-.navbar {
-  background-color: #5c1d68;
-  color: #ffffff;
-  padding: 14px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.brand h2 {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.brand span {
-  font-size: 0.8rem;
-  opacity: 0.85;
-}
-
-.btn-volver {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: background-color 0.2s;
-}
-
-.btn-volver:hover {
-  background-color: rgba(255, 255, 255, 0.28);
-}
-
 /* Tarjeta principal */
 .content {
   padding: 24px;
@@ -129,13 +86,13 @@
 .grupo-campo input:focus,
 .grupo-campo select:focus,
 .grupo-campo textarea:focus {
-  border-color: #5c1d68;
+  border-color: #475569;
   box-shadow: 0 0 0 3px rgba(92, 29, 104, 0.1);
 }
 
 .grupo-campo-archivo {
   background: #fbf8fc;
-  border: 2px dashed #ce93d8;
+  border: 2px dashed #475569;
   border-radius: 8px;
   padding: 20px;
   text-align: center;
@@ -145,7 +102,7 @@
   display: block;
   font-weight: 600;
   margin-bottom: 10px;
-  color: #5c1d68;
+  color: #475569;
   font-size: 0.9rem;
 }
 
@@ -184,7 +141,7 @@
 }
 
 .btn-primary {
-  background-color: #5c1d68;
+  background-color: #475569;
   color: #ffffff;
   border: none;
   padding: 12px 24px;
@@ -197,7 +154,7 @@
 }
 
 .btn-primary:hover {
-  background-color: #43124d;
+  background-color: #475569;
 }
 
 .btn-primary:disabled {
@@ -243,7 +200,7 @@
 
 .badge-modulo {
   background: #ede7f6;
-  color: #5c1d68;
+  color:#475569;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -318,7 +275,7 @@
 
 .modal-card h3 {
   margin: 0;
-  color: #5c1d68;
+  color: #475569;
 }
 
 .modal-acciones {

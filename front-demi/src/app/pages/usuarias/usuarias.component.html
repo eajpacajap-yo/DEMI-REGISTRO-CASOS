@@ -1,0 +1,121 @@
+<main class="content">
+  <div class="header-actions">
+    <div>
+      <h3>Administración de Usuarias</h3>
+      <p class="subtitle-text">Control de acceso y asignación de roles institucionales</p>
+    </div>
+    <div class="header-actions-cta">
+      <button *ngIf="!mostrarFormUsuario" (click)="iniciarNuevoUsuario()" class="btn-primary">
+        + Registrar Nuevo Usuario
+      </button>
+    </div>
+  </div>
+
+  <!-- FORMULARIO CREAR / EDITAR -->
+  <div *ngIf="mostrarFormUsuario" class="card-form-box">
+    <h5>{{ editandoUsuario ? 'Modificar Datos de la Usuaria' : 'Registrar Nueva Usuaria' }}</h5>
+
+    <div *ngIf="errorUsuario" class="alert-error">{{ errorUsuario }}</div>
+    <div *ngIf="mensajeExitoUsuario" class="alert-success">{{ mensajeExitoUsuario }}</div>
+
+    <div class="form-row">
+      <div class="form-group"><label>Primer Nombre *</label><input type="text" [(ngModel)]="usuarioForm.primerNombre" required /></div>
+      <div class="form-group"><label>Segundo Nombre</label><input type="text" [(ngModel)]="usuarioForm.segundoNombre" /></div>
+      <div class="form-group"><label>Primer Apellido *</label><input type="text" [(ngModel)]="usuarioForm.primerApellido" required /></div>
+      <div class="form-group"><label>Segundo Apellido</label><input type="text" [(ngModel)]="usuarioForm.segundoApellido" /></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group"><label>Correo *</label><input type="email" [(ngModel)]="usuarioForm.correo" required /></div>
+      <div class="form-group">
+        <label>Rol *</label>
+        <select [(ngModel)]="usuarioForm.rolId">
+          <option *ngFor="let r of rolesDisponibles" [value]="r.id">{{ r.nombre }}</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Profesion</label><input type="text" [(ngModel)]="usuarioForm.profesion" /></div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>{{ editandoUsuario ? 'Nueva Contraseña (Opcional)' : 'Contraseña Temporal *' }}</label>
+        <input type="password" [(ngModel)]="usuarioForm.password" />
+      </div>
+      <div *ngIf="editandoUsuario" class="form-group">
+        <label>Estado</label>
+        <select [(ngModel)]="usuarioForm.activo">
+          <option [ngValue]="true">Activa</option>
+          <option [ngValue]="false">Inactiva (Bloqueada)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-buttons-inline">
+      <button (click)="cancelarFormUsuario()" class="btn-secondary" [disabled]="guardando">Cancelar</button>
+      <button (click)="guardarUsuario()" class="btn-primary" [disabled]="guardando">
+        {{ guardando ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- FILTRO -->
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label>Buscar usuaria:</label>
+      <input type="text" placeholder="Nombre o correo..." [(ngModel)]="filtroUsuario" />
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div *ngIf="cargandoUsuarios" class="loading">Cargando usuarias...</div>
+  <div *ngIf="!cargandoUsuarios && usuariosFiltrados.length === 0" class="empty">No se encontraron usuarias.</div>
+
+  <div *ngIf="!cargandoUsuarios && usuariosFiltrados.length > 0" class="table-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Nombre Completo</th>
+          <th>Correo</th>
+          <th>Rol</th>
+          <th>Profesion</th>
+          <th>Estado</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of usuariosFiltrados">
+          <td><strong>{{ u.primerNombre }} {{ u.primerApellido }}</strong></td>
+          <td>{{ u.correo }}</td>
+          <td><span class="badge">{{ u.rol?.nombre === 'ROLE_ADMIN' ? 'Administradora' : 'Profesional' }}</span></td>
+          <td>{{ u.profesion }}</td>
+          <td><span [ngClass]="u.activo ? 'status-active' : 'status-inactive'">{{ u.activo ? '● Activa' : '○ Inactiva' }}</span></td>
+        
+          <td class="text-center">
+            <div class="action-buttons">
+              <button (click)="iniciarEdicionUsuario(u)" class="btn-action btn-edit">Editar</button>
+              <button *ngIf="u.id !== usuarioActual?.id" (click)="confirmarBorrarUsuario(u)" class="btn-action btn-delete"> Dar de baja</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- MODAL CONFIRMAR BAJA -->
+<div *ngIf="mostrarModalBorrarUsu && usuarioAEliminar" class="modal-backdrop">
+  <div class="modal-card modal-sm">
+    <div class="modal-header">
+      <h4>¿Desactivar Usuario?</h4>
+      <button (click)="cerrarModalBorrarUsu()" class="btn-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>¿Desactivar cuenta de <strong>{{ usuarioAEliminar.primerNombre }}</strong>?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" (click)="cerrarModalBorrarUsu()" class="btn-secondary">Cancelar</button>
+      <button type="button" (click)="ejecutarBorradoUsuario()" class="btn-danger">Sí, Desactivar</button>
+    </div>
+  </div>
+</div>
