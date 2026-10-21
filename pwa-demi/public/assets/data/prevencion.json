@@ -1,11 +1,11 @@
 {
   "titulo": {
-    "es": "Prevención y Señales de Violencia",
-    "quc": "Chajtalik xuquje' Retal ri K'axk'olil"
+    "es": " Señales de Violencia",
+    "quc": "Retal ri K'axk'olil"
   },
   "descripcion": {
-    "es": "Identifica los tipos de agresión, señales de alerta y recursos formativos comunitarios.",
-    "quc": "Chaweta'maj uwach tak ri k'ax, retal k'axk'olil xuquje' reta'maxik chrij achomanik."
+    "es": "Formas en las que se manifiesta la violencia",
+    "quc": "Uwach tak ri k'axk'olil kak'utunïk"
   },
   "tiposViolencia": [
     {
@@ -15,7 +15,7 @@
         "quc": "K'axk'olil rech Ch'akulal"
       },
       "descripcion": {
-        "es": "Cualquier acto que cause daño no accidental en tu cuerpo mediante golpes, empujones, heridas o quemaduras.",
+        "es": "Cualquier acto que cause daño a tu cuerpo mediante golpes, empujones, heridas o quemaduras.",
         "quc": "Ronojel b'anow k'ax che ri achakulal: ch'ayik, yuqik, socotajik on k'atinik."
       },
       "senales": [
@@ -65,10 +65,14 @@
         "quc": "K'axk'olil rech Pwaq xuquje' Jastaq"
       },
       "descripcion": {
-        "es": "Control, retención o despojo injustificado de dinero, bienes, terrenos, animales o documentos personales.",
-        "quc": "Umajixik ri apwaq, awulew, awikatz on uwujil ak'aslemal rumal jun chi winaq."
+        "es": "Control de tus bienes, terrenos, animales o documentos personales.",
+        "quc": "Umajixik awulew, awikatz on uwujil ak'aslemal rumal jun chi winaq."
       },
       "senales": [
+        {
+          "es": "Prohibirte trabajar",
+          "quc": "Kuq'at chi man katchakun taj"
+        },
         {
           "es": "Quitarte el dinero de tu trabajo, ventas o tejido.",
           "quc": "Kresaj ri pwaq chawach rech achemom on ak'ayib'al."
@@ -78,9 +82,14 @@
           "quc": "Man kuya ta ri echb'al xuquje' waib' che ri ak'alk'al."
         },
         {
-          "es": "Apropiarse o amenazar con vender tus tierras y herencia.",
+          "es": "Apropiarse o amenazar con vender o hipotecar tus tierras y herencia.",
           "quc": "Umajixik awulew on reta'maxik uk'ayixik ri awechb'al."
+        },
+        {
+          "es": "Manejo de tus ingresos economicos",
+          "quc": "Umajixik ri pwaq"
         }
+
       ]
     },
     {
@@ -90,8 +99,8 @@
         "quc": "K'axk'olil rech Tz'aloj K'aslemal"
       },
       "descripcion": {
-        "es": "Cualquier contacto, acto o imposición de carácter sexual sin tu consentimiento o bajo amenazas.",
-        "quc": "Ronojel chapoj, b'anow on taqik rech k'aslemal che man kakaj ta on ruk' xib'inïk."
+        "es": "Quien, con violencia física o psicológica, tenga acceso carnal a los genitales o vía bucal con otra persona, o le introduzca cualquier parte del cuerpo u objetos, por cualquiera de las vías señaladas, u obligue a otra persona a introducírselos a sí misma",
+        "quc": "Jun winaq che ruk' ch'ayik on xib'inïk kuxol rib' ruk' jun chi winaq pa k'olib'al rech ch'akulal, kokisaj jun b'anow on jastaq che ri uch'akul, on kutaq chi kub'an che rib' man ruk' ta urayib'al."
       },
       "senales": [
         {
@@ -111,20 +120,36 @@
   ],
   "checklist_derechos": [
     {
-      "es": "Tienes derecho a vivir sin violencia, miedo ni humillaciones.",
-      "quc": "K'o awechb'al rech katk'asi' pa ja'maril, maj xib'inïk on yoq'onik."
+      "es": "Tienes derecho a vivir sin violencia, miedo ni humillaciones en tu hogar y comunidad.",
+      "quc": "K'o awechb'al rech katk'asi' pa ja'maril, maj xib'inïk on yoq'onik pa awachoch xuquje' pa ri akomon."
     },
     {
-      "es": "Tienes derecho a recibir atención pública en tu propio idioma Maya K'iche'.",
-      "quc": "K'o awechb'al rech katch'aw pa ri ach'ab'al Maya K'iche' pa ronojel q'atb'altzij."
+      "es": "Tienes derecho a recibir atención pública gratuita y en tu propio idioma Maya K'iche'.",
+      "quc": "K'o awechb'al rech katch'aw pa ri ach'ab'al Maya K'iche' pa ronojel q'atb'altzij xuquje' man ktoj taj."
     },
     {
-      "es": "Tienes derecho a conservar tus bienes propios y administrar tu trabajo.",
-      "quc": "K'o awechb'al chrij ri ajastaq, awulew xuquje' ri apwaq kach'ako."
+      "es": "Tienes derecho a conservar tus bienes propios, administrar tu trabajo y tu propio dinero.",
+      "quc": "K'o awechb'al chrij ri ajastaq, awulew, ri apwaq kach'ako xuquje' uchajixik achak."
     },
     {
-      "es": "Tienes derecho a decidir sobre tu cuerpo y a vivir una vida libre de violencia sexual.",
+      "es": "Tienes derecho a decidir sobre tu propio cuerpo y a vivir libre de toda violencia sexual.",
       "quc": "K'o awechb'al rech kach'obo chrij ri achakulal xuquje' katk'asi' pa jamalil rech k'axk'olil."
+    },
+    {
+      "es": "Tienes derecho a solicitar medidas de seguridad y alejamiento inmediato contra el agresor.",
+      "quc": "K'o awechb'al rech katz'onoj wuj rech chajinïk chi man kape ta ri b'anow k'ax naqaj chawech."
+    },
+    {
+      "es": "Tienes derecho a recibir acompañamiento legal, psicológico y social confidencial por parte de la DEMI.",
+      "quc": "K'o awechb'al rech kato'ik rumal jun ajpixb'anij, ajno'jib'al xuquje' to'b'anïk pa DEMI che man kak'ut taj."
+    },
+    {
+      "es": "Tienes derecho a la educación, superación y a trabajar libremente sin impedimento de nadie.",
+      "quc": "K'o awechb'al rech kattijoj awib', katchakun pa jamalil xuquje' maj jun kuq'at ri achak."
+    },
+    {
+      "es": "Tienes derecho a participar, opinar y tomar decisiones dentro de tu familia y comunidad.",
+      "quc": "K'o awechb'al rech katya' ri achomanik, katb'e pa ri komon xuquje' kach'ob' pa ri awachoch."
     }
   ]
 }

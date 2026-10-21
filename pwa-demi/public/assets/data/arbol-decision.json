@@ -1,8 +1,8 @@
 {
   "nodo_raiz": "N0",
   "disclaimer": {
-    "es": "Esta herramienta proporciona orientación inicial y no sustituye la asesoría legal o psicológica profesional.",
-    "quc": "We chakub'al kuya nab'e pixb'anïk, man kuq'at taj ri upixb'anïk jun ajq'atb'altzij on ajno'jib'al."
+    "es": "Utiliza esta herramienta para conocer qué hacer en distintas situaciones, esta herramienta proporciona orientación inicial y no sustituye la asesoría legal o psicológica profesional.",
+    "quc": "Chakoj we chakub'al rech kaweta'maj jas kab'ano we k'axk'olil kak'ulmatajik, we chakub'al kuya nab'e pixb'anïk, man kuq'at taj ri upixb'anïk jun ajq'atb'altzij on ajno'jib'al."
   },
   "nodos": {
     "N0": {
@@ -80,7 +80,7 @@
       "tipo": "conclusion",
       "urgencia": "alta",
       "recomendacion": {
-        "es": "Acude de inmediato a la subestación de la PNC o a la fiscalia de la mujer MP. No te quedes en el lugar donde esté el agresor.",
+        "es": "Acude de inmediato a la subestación de la PNC o a la fiscalia de la mujer del Mnisterio Público. No te quedes en el lugar donde esté el agresor.",
         "quc": "Jat aninaq pa ri rachoch PNC on MP k'o naqaj chawech. Mat kanaj kan pa ri ja jawi' k'o wi ri b'anow k'ax."
       },
       "institucion_contacto": {
@@ -140,7 +140,7 @@
       "tipo": "conclusion",
       "urgencia": "media",
       "recomendacion": {
-        "es": "Acude al Ministerio Público o a la clinica de atención a la víctima para evaluación médica. El certificado médico servirá como prueba para solicitar medidas de protección.",
+        "es": "Acude al Ministerio Público o a la clinica de atención a la víctima del hospital departamental para evaluación médica. El certificado médico servirá como prueba para solicitar medidas de protección y medidas de seguridad.",
         "quc": "Jat pa Ministerio Público on kunab'al  rech katz'ib'axik chuwach rech kawilixik. We wuj re kuya uchuq'ab' ri atzujunïk rech katz'onoj chajtalik."
       },
       "institucion_contacto": {
@@ -156,7 +156,7 @@
       "id": "N_NARANJA_3",
       "tipo": "pregunta",
       "pregunta": {
-        "es": "¿Deseas solicitar medidas de protección legales contra el agresor?",
+        "es": "¿Deseas solicitar medidas de protección y de seguridad contra el agresor?",
         "quc": "¿La kawaj katz'onoj wuj rech uq'atexik ri b'anow k'ax?"
       },
       "opciones": [
@@ -175,7 +175,7 @@
       "tipo": "conclusion",
       "urgencia": "media",
       "recomendacion": {
-        "es": "Acude al Juzgado de Paz de tu municipio o a la fiscalia de la mujer. Tienen la obligación de otorgarte medidas de seguridad inmediatas.",
+        "es": "Acude al Juzgado de Paz de tu municipio o a la fiscalia de la mujer. Tienen la obligación de otorgarte medidas de protección y de seguridad inmediatas.",
         "quc": "Jat pa ri Q'atb'altzij rech Ja'maril pa ri akomon. Rajawaxik kuya wuj rech kachajixik aninaq."
       },
       "institucion_contacto": {

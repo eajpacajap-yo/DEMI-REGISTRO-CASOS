@@ -90,9 +90,17 @@
                {{ idiomaService.esEspanol() ? 'Llamar al 3043-1912 (PNC)' : 'Chawixim ri 3043-1912 (PNC)' }}
             </a>
           }
-          <a routerLink="/prevencion" class="btn-enlace">
-            ➜ {{ idiomaService.esEspanol() ? 'Ver modulo de prevencion' : 'Chawila\' Ub\'e Tzujunïk' }}
-          </a>
+            <!-- SI ES EL NODO DE DERECHOS/PREVENCIÓN VERDE: REDIRIGE A PREVENCIÓN -->
+      @if (nodoActual.id === 'H_VERDE_DERECHOS' || nodoActual.id === 'H_VERDE_SENALES') {
+        <a routerLink="/prevencion" class="btn-enlace">
+          ➜ {{ idiomaService.esEspanol() ? 'Ver módulo de prevención' : 'Chawila\' ri Chajtalik' }}
+        </a>
+      } @else {
+        <!-- PARA TODOS LOS DEMÁS NODOS: CONTINÚA A LA RUTA DE DENUNCIA -->
+        <a routerLink="/ruta-denuncia" class="btn-enlace">
+          ➜ {{ idiomaService.esEspanol() ? 'Ver ruta de denuncia' : 'Chawila\' Ub\'e Tzujunïk' }}
+        </a>
+      }
         </div>
       </div>
     }

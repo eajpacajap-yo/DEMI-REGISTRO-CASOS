@@ -4,9 +4,9 @@
     "quc": "Ub'e Tzujunïk xuquje' Tob'anïk"
   },
   "descripcion": {
-    "es": "Conoce los pasos legales e institucionales para solicitar auxilio y protección en Totonicapán.",
-    "quc": "Chaweta'maj ri cholajil rech q'atb'altzij rech katz'onoj tob'anïk pa Chuwi' Meq'enya'."
-  },
+  "es": "Conoce los pasos e instituciones que pueden ayudarte si sufres de violencia en Totonicapán.",
+  "quc": "Chaweta'maj ri cholajil rech q'atb'altzij rech katz'onoj tob'anïk pa Chuimeqena'."
+},
   "instituciones": [
     {
       "codigo": "PNC",
@@ -20,7 +20,7 @@
     },
     {
       "codigo": "MP",
-      "nombre": "Ministerio Público, Fiscalía de la Mujer",
+      "nombre": "Fiscalía de la Mujer/Ministerio Público",
       "telefono": ["1572", "77664789"],
       "direccion": "13 avenida 6-13, zona 3 de Totonicapán",
       "horario": {
@@ -51,25 +51,29 @@
       "direccion": " 10ª Avenida (entre 2ª y 3ª Calle), Zona 2.",
        "horario": {
         "es": "Atención de lunes a viernes de 8:00 AM a 3:30 PM",
-        "quc": "Kechakun pa wajxaqib' taj'il nimq'ij k'a pa oxib' taj'il ruk' nik'aj b'enq'ij."
+        "quc": "Kachakun pa wajxaqib' taj'il nimq'ij k'a pa oxib' taj'il ruk' nik'aj b'enq'ij."
       }
     },
     
     {
       "codigo": "DEMI",
       "nombre": "Defensoría de la Mujer Indígena",
-      "telefono": "7766 1113",
+      "telefono": ["7766 1113", "1529"],
       "direccion": "9na. avenida 00-19 zona 2, San Miguel Totonicapán.",
       "horario": {
-        "es": "Atención de lunes a viernes de 8:00 AM a 4:30 PM",
-        "quc": "Kechakun pa wajxaqib' taj'il nimq'ij k'a pa k'ajib' taj'il ruk' nik'aj b'enq'ij."
+        "es": ["Atención de lunes a viernes de 8:00 AM a 4:30 PM",
+                 "Atencion las 24 horas, línea central 1529"
+               ],
+        "quc": ["Kachakun pa wajxaqib' taj'il nimq'ij k'a pa k'ajib' taj'il ruk' nik'aj b'enq'ij.",
+                "Kachakunik ronojel q'ij."
+              ]
       }
     },
     {
       "codigo": "HN",
-      "nombre": "Clínica de atención a la víctima ",
+      "nombre": "Clínica de atención a la víctima del Hospital Departamental ",
       "telefono": "7932-1200",
-      "direccion": "Kilómetro 198 cantón Poxlajuj, Totonicapán",
+      "direccion": "Kilómetro 198 cantón Poxlajuj, Hospital departamental de Totonicapán",
       "horario": {
         "es": "Atención las 24 horas, todos los días.",
         "quc": "Kachakunik ronojel q'ij."
@@ -82,11 +86,28 @@
       "id": 1,
       "paso": 1,
       "titulo": {
-        "es": "1. Petición de Auxilio Inmediato",
-        "quc": "1. Utz'onoxik Tob'anïk Chanim"
+        "es": "1. Asesoria y acompañamiento Integral en DEMI",
+        "quc": "1. Tob'anïk pa DEMI"
       },
       "resumen": {
-        "es": "Comunícate a las líneas de emergencia en caso de agresión flagrante.",
+        "es": "Orientación legal, psicológica y social continua en tu idioma.",
+        "quc": "Tob'anïk rech q'atb'altzij, utoq'oxik no'jil xuquje' man ktoj taj."
+      },
+      "detalle": {
+        "es": "Acude a la oficina regional de la DEMI en Totonicapán para recibir asesoría y acompañamiento jurídico, atención social y psicológico",
+        "quc": "Jat pa ri rachoch DEMI pa Chuimekena' rech kato'ik rumal jun ajpixb'anij xuquje' utoq'oxik ano'jib'al pa K'iche'."
+      },
+      "instituciones": ["DEMI"]
+    },
+    {
+      "id": 2,
+      "paso": 2,
+      "titulo": {
+        "es": "2. Petición de Auxilio Inmediato",
+        "quc": "2. Utz'onoxik Tob'anïk Chanim"
+      },
+      "resumen": {
+        "es": "Comunícate a las líneas de emergencia si eres víctima de violencia.",
         "quc": "Chawixim ri ch'ab'al rech tob'anïk we k'o k'axk'olil tajin kak'ulmatajik."
       },
       "detalle": {
@@ -96,31 +117,31 @@
       "instituciones": ["PNC"]
     },
     {
-      "id": 2,
-      "paso": 2,
+      "id": 3,
+      "paso": 3,
       "titulo": {
-        "es": "2. Evaluación Médica",
-        "quc": "2. Rilik rumal Ajkunanel"
+        "es": "3. Evaluación Médica",
+        "quc": "3. Rilik rumal Ajkunanel"
       },
       "resumen": {
         "es": "Atención médica urgente y certificación de lesiones.",
         "quc": "Kunanïk aninaq xuquje' rilik ri socotajik."
       },
       "detalle": {
-        "es": "Si tienes golpes o heridas visibles, acude a los servicios de salud o a la clínica de atención a la víctima  para tratarte de forma inmediata.",
+        "es": "Si tienes golpes o heridas visibles, acude a los servicios de salud o a la clínica de atención a la víctima del Hospital departamental para tratarte de forma inmediata.",
         "quc": "We k'o socotajik chawij, jat pa kunab'al  rech katz'ib'axik chuwach maxtoq kaq'ax oxib' q'ij (72 horas)."
       },
       "instituciones": ["HN"]
     },
     {
-      "id": 3,
-      "paso": 3,
+      "id": 4,
+      "paso": 4,
       "titulo": {
-        "es": "3. Interposición de la Denuncia",
-        "quc": "3. Uya'ik ri Tzujunïk"
+        "es": "4. Presenta tu Denuncia",
+        "quc": "4. Uya'ik ri Tzujunïk"
       },
       "resumen": {
-        "es": "Presenta el relato de los hechos ante el MP, Juzgado de Paz o PNC.",
+        "es": "Debes de recordar el relato de los hechos ante el Ministerio Público, Juzgado de Paz o PNC.",
         "quc": "Chatzujun ri k'ax xb'an chawech chuwach ri MP, Q'atb'altzij on PNC."
       },
       "detalle": {
@@ -130,11 +151,11 @@
       "instituciones": ["MP", "PNC", "JP"]
     },
     {
-      "id": 4,
-      "paso": 4,
+      "id": 5,
+      "paso": 5,
       "titulo": {
-        "es": "4. Solicitud de Medidas de Seguridad",
-        "quc": "4. Utz'onoxik Chajinïk"
+        "es": "5. Solicitud de Medidas de Seguridad",
+        "quc": "5. Utz'onoxik Chajinïk"
       },
       "resumen": {
         "es": "El Juez ordenará restricción de acercamiento del agresor.",
@@ -145,23 +166,6 @@
         "quc": "Ri Q'atb'altzij kuya jun wuj rech uq'atexik ri achi rech man kape ta pa awachoch, achak on k'o ak'alk'al."
       },
       "instituciones": ["MP","JP", "JF"]
-    },
-    {
-      "id": 5,
-      "paso": 5,
-      "titulo": {
-        "es": "5. Acompañamiento Integral en DEMI",
-        "quc": "5. Tob'anïk pa DEMI"
-      },
-      "resumen": {
-        "es": "Orientación legal, psicológica y social continua en tu idioma.",
-        "quc": "Tob'anïk rech q'atb'altzij, utoq'oxik no'jil xuquje' man ktoj taj."
-      },
-      "detalle": {
-        "es": "Acude a la sede regional de la DEMI en Totonicapán para recibir asesoría jurídica, atención social y Psicológica",
-        "quc": "Jat pa ri rachoch DEMI pa Chuwi' Meq'enya' rech kato'ik rumal jun ajpixb'anij xuquje' utoq'oxik ano'jib'al pa K'iche'."
-      },
-      "instituciones": ["DEMI"]
     }
   ]
 }

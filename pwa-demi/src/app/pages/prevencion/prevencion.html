@@ -13,11 +13,20 @@
   }
 
   @if (!cargando && !error && datos) {
-    <div class="encabezado-prevencion">
-      <span class="badge-tema">{{ idiomaService.esEspanol() ? 'Información preventiva' : 'Chajinïk reta\'maxik' }}</span>
-      <h2>{{ texto(datos.titulo) }}</h2>
-      <p class="descripcion">{{ texto(datos.descripcion) }}</p>
-    </div>
+    <!-- BANNER MOTIVACIONAL Y DE BIENVENIDA -->
+<div class="banner-intro-prevencion">
+  <div class="intro-decoracion">💡</div>
+  <div class="intro-contenido">
+    <h3>{{ idiomaService.esEspanol() ? '¿Sabías que el primer paso es informarte?' : '¿La aweta\'am chi ri nab\'e are reta\'maxik?' }}</h3>
+    <p>
+      {{
+        idiomaService.esEspanol()
+          ? 'Reconocer las señales a tiempo es clave para protegerte a ti y a tus seres queridos. Descubre cómo se manifiesta y conoce los derechos que te respaldan.'
+          : 'Rilik ri retal k\'ax chanim are nab\'e tob\'anïk rech kachajij awib\'. Chaweta\'maj jas ub\'anik kak\'utunik xuquje\' ri awechb\'al chuwach ri q\'atb\'altzij.'
+      }}
+    </p>
+  </div>
+</div>
 
     <!-- TARJETA AVISO OFFLINE -->
     <div class="caja-recuerda">
@@ -86,11 +95,11 @@
 
     <!-- TARJETA INSTITUCIONAL: DERECHOS FUNDAMENTALES (UBICADA CORRECTAMENTE FUERA DEL FOR) -->
     @if (datos.checklist_derechos?.length) {
-      <div class="tarjeta-derechos">
+      <div id="tarjeta-derechos" class="tarjeta-derechos">
         <div class="tarjeta-derechos-cabecera">
           <div class="derechos-titulo-grupo">
             
-            <h3>{{ idiomaService.esEspanol() ? 'Tus derechos como mujer' : 'Awechb\'al pacha\' ixoq' }}</h3>
+            <h3>{{ idiomaService.esEspanol() ? ' Recuerda que tienes derecho a: ' : 'Awechb\'al pacha\' ixoq' }}</h3>
           </div>
           <img 
             src="assets/img/demiLOGO.png" 
