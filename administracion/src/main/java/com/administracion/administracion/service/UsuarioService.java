@@ -53,6 +53,7 @@ public class UsuarioService {
         usuario.setRol(rol);
         usuario.setActivo(true);
         usuario.setprofesion(dto.getProfesion());
+        usuario.setTelefono(dto.getTelefono());
 
         return usuarioRepository.save(usuario);
     }
@@ -78,6 +79,7 @@ public class UsuarioService {
         usuario.setSegundoApellido(dto.getSegundoApellido());
         usuario.setRol(rol);
         usuario.setprofesion(dto.getProfesion());
+        usuario.setTelefono(dto.getTelefono());
 
         if (dto.getActivo() != null) {
             usuario.setActivo(dto.getActivo());

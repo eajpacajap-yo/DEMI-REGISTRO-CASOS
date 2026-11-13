@@ -49,6 +49,7 @@ public class CasoService {
         caso.setCodigoExpediente(dto.getCodigoExpediente());
         caso.setMunicipio(municipio);
         caso.setLocalidad(dto.getLocalidad());
+        caso.setTelefono(dto.getTelefono());
         caso.setTipoViolencia(tipoViolencia);
         caso.setEstado(estado);
         caso.setUsuarioRegistro(usuario);
@@ -68,6 +69,7 @@ public class CasoService {
 
         caso.setMunicipio(municipio);
         caso.setLocalidad(dto.getLocalidad());
+        caso.setTelefono(dto.getTelefono());
         caso.setTipoViolencia(tipoViolencia);
         caso.setEstado(estado);
 

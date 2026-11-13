@@ -11,6 +11,7 @@ public class ActualizarUsuarioDto {
     private Long rolId;
     private Boolean activo;
     public String profesion;
+    private  String telefono;
 
     public ActualizarUsuarioDto() {}
 
@@ -43,4 +44,12 @@ public class ActualizarUsuarioDto {
 
     public String getProfesion() { return profesion; }
     public void setprofesion(String profesion) { this.profesion = profesion; }
+
+    public String getTelefono() {
+    return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+    this.telefono = telefono;
+    }
 }

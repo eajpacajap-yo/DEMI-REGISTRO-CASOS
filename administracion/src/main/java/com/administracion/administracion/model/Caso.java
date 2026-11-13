@@ -42,6 +42,8 @@ public class Caso {
 
     @Column(name = "creado_en", nullable = false, updatable = false)
     private LocalDateTime creadoEn = LocalDateTime.now();
+    @Column(name = "telefono", length = 20)
+    private String telefono;
 
     public Long getId() {
         return id;
@@ -115,8 +117,16 @@ public class Caso {
         this.creadoEn = creadoEn;
     }
 
+    public String getTelefono() {
+    return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+    this.telefono = telefono;
+    }
+
     public Caso(Long id, String codigoExpediente, Municipio municipio, String localidad, TipoViolencia tipoViolencia,
-            EstadoExpediente estado, LocalDate fechaRegistro, Usuario usuarioRegistro, LocalDateTime creadoEn) {
+            EstadoExpediente estado, LocalDate fechaRegistro, Usuario usuarioRegistro, LocalDateTime creadoEn, String telefono) {
         this.id = id;
         this.codigoExpediente = codigoExpediente;
         this.municipio = municipio;
@@ -126,6 +136,7 @@ public class Caso {
         this.fechaRegistro = fechaRegistro;
         this.usuarioRegistro = usuarioRegistro;
         this.creadoEn = creadoEn;
+        this.telefono = telefono;
     }
 
     public Caso() {

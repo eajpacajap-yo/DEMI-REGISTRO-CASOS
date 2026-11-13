@@ -8,17 +8,19 @@ public class CrearCasoDto {
     private Long tipoViolenciaId;
     private Long estadoId;
     private Long usuarioRegistroId;
+    private String telefono;
 
     public CrearCasoDto() {
     }
 
-    public CrearCasoDto(String codigoExpediente, Long municipioId, String localidad, Long tipoViolenciaId, Long estadoId, Long usuarioRegistroId) {
+    public CrearCasoDto(String codigoExpediente, Long municipioId, String localidad, Long tipoViolenciaId, Long estadoId, Long usuarioRegistroId, String telefono) {
         this.codigoExpediente = codigoExpediente;
         this.municipioId = municipioId;
         this.localidad = localidad;
         this.tipoViolenciaId = tipoViolenciaId;
         this.estadoId = estadoId;
         this.usuarioRegistroId = usuarioRegistroId;
+        this.telefono = telefono;
     }
 
     public String getCodigoExpediente() {
@@ -67,5 +69,13 @@ public class CrearCasoDto {
 
     public void setUsuarioRegistroId(Long usuarioRegistroId) {
         this.usuarioRegistroId = usuarioRegistroId;
+    }
+
+    public String getTelefono() {
+    return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+    this.telefono = telefono;
     }
 }

@@ -26,19 +26,22 @@ public class RecuperacionService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired 
+    private EmailService emailService;
+
     @Transactional
     public String generarCodigoRecuperacion(SolicitarRecuperacionDto dto) {
         Usuario usuario = usuarioRepository.findByCorreo(dto.getCorreo())
                 .orElseThrow(() -> new RuntimeException("El correo ingresado no se encuentra registrado en el sistema."));
 
-        if (!usuario.getActivo()) {
+        if (usuario.getActivo() != null && !usuario.getActivo()) {
             throw new RuntimeException("La cuenta de usuario se encuentra inactiva. Contacte a la administradora.");
         }
 
-        // Eliminar token previo si ya existía uno para este usuario
+        // Eliminar tokens previos que existían para este usuario
         tokenRepository.deleteByUsuario(usuario);
 
-        // Generar PIN aleatorio de 6 dígitos
+        // Generar PIN numérico de 6 dígitos
         SecureRandom random = new SecureRandom();
         int numero = 100000 + random.nextInt(900000);
         String pin = String.valueOf(numero);
@@ -46,22 +49,41 @@ public class RecuperacionService {
         // Válido por 10 minutos
         LocalDateTime expiracion = LocalDateTime.now().plusMinutes(10);
 
-        TokenRecuperacion token = new TokenRecuperacion(pin, usuario, expiracion);
+        // Instanciar y asignar TODOS los valores antes de guardar
+        TokenRecuperacion token = new TokenRecuperacion();
+        token.setCodigo(pin);
+        token.setUsuario(usuario);
+        token.setFechaExpiracion(expiracion);
+        token.setUtilizado(false);
+
         tokenRepository.save(token);
 
-        //  Salida en consola de Spring Boot para fines de prueba/demostración
-        System.out.println(" CÓDIGO DE RECUPERACIÓN GENERADO: " + pin);
-        System.out.println("USUARIA: " + usuario.getPrimerNombre() + " (" + usuario.getCorreo() + ")");
-        System.out.println(" VÁLIDO HASTA: " + expiracion);
-        
+        try {
+             emailService.enviarCodigoRecuperacion(usuario.getCorreo(), pin);
+            } catch (Exception e) {
+                    System.err.println("Error al enviar el correo vía SMTP: " + e.getMessage());
+                    throw new RuntimeException("No fue posible enviar el correo de recuperación. Verifique la conexión.");
+            }
+
+  
+    System.out.println(">>> CÓDIGO GENERADO Y ENVIADO A: " + usuario.getCorreo());
+    
 
         return pin;
     }
 
     @Transactional
     public void restablecerPassword(RestablecerPasswordDto dto) {
+        if (dto.getCodigo() == null || dto.getCodigo().trim().isEmpty()) {
+            throw new RuntimeException("El código de recuperación es obligatorio.");
+        }
+
         TokenRecuperacion token = tokenRepository.findByCodigo(dto.getCodigo().trim())
                 .orElseThrow(() -> new RuntimeException("El código de recuperación es inválido o no existe."));
+
+        if (Boolean.TRUE.equals(token.getUtilizado())) {
+            throw new RuntimeException("El código de recuperación ya ha sido utilizado.");
+        }
 
         if (token.getFechaExpiracion().isBefore(LocalDateTime.now())) {
             tokenRepository.delete(token);
@@ -76,7 +98,7 @@ public class RecuperacionService {
         usuario.setPasswordHash(passwordEncoder.encode(dto.getNuevoPassword().trim()));
         usuarioRepository.save(usuario);
 
-        // Eliminar el token usado para que no se reutilice
+        // Eliminar el token usado para asegurar un solo uso
         tokenRepository.delete(token);
     }
 }

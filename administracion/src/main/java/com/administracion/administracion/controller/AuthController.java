@@ -65,17 +65,20 @@ public class AuthController {
     @PostMapping("/solicitar-recuperacion")
     public ResponseEntity<?> solicitarRecuperacion(@RequestBody com.administracion.administracion.dto.SolicitarRecuperacionDto dto) {
         try {
+            // Se mantiene la lógica del servicio para generar y almacenar el PIN temporal
             String pin = recuperacionService.generarCodigoRecuperacion(dto);
-            // Devolvemos confirmación (e incluimos el pin en la respuesta para facilitar la prueba directa)
+            
+            // Log en consola para conocer el PIN durante las pruebas de la presentación
+            System.out.println(">>> [DEMO] CÓDIGO GENERADO PARA " + dto.getCorreo() + ": " + pin);
+
+            // Se envía únicamente el mensaje informativo al frontend
             return ResponseEntity.ok(java.util.Map.of(
-                "mensaje", "Código de recuperación generado exitosamente. Válido por 10 minutos.",
-                "codigoDemostracion", pin
+                "mensaje", "Se ha enviado un código de seguridad a su correo. Revise su bandeja de entrada."
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @PostMapping("/restablecer-password")
     public ResponseEntity<?> restablecerPassword(@RequestBody com.administracion.administracion.dto.RestablecerPasswordDto dto) {
         try {
