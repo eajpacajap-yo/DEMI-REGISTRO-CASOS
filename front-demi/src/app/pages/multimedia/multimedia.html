@@ -20,9 +20,7 @@
             <label for="modulo">Módulo destino en la PWA:</label>
             <select id="modulo" [(ngModel)]="modulo" name="modulo">
               <option value="galeria">Galería de Apoyo</option>
-              <option value="prevencion">Prevención</option>
-              <option value="ruta-denuncia">Ruta de Denuncia</option>
-              <option value="asesoria">Asesoría Legal</option>
+              
             </select>
           </div>
 
@@ -99,7 +97,7 @@
               @for (item of recursos; track item.id) {
                 <tr>
                   <td>
-                    <img [src]="'http://localhost:8080' + item.rutaAlmacenamiento" alt="Miniatura" class="miniatura-tabla" />
+                    <img [src]="'http://api.demitotonicapan.org' + item.rutaAlmacenamiento" alt="Miniatura" class="miniatura-tabla" />
                   </td>
                   <td><strong>{{ item.titulo }}</strong></td>
                   <td><span class="badge-modulo">{{ item.moduloPwa }}</span></td>

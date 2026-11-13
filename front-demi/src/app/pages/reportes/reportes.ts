@@ -1,31 +1,24 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  inject,
-  ChangeDetectorRef,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { ReporteService, ResumenReporte } from '../../services/reporte.service';
+import { CasoService } from '../../services/caso.service';
+import { Caso } from '../../models/caso';
+import { ResumenReporte } from '../../services/reporte.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { Chart, registerables } from 'chart.js';
+import Chart from 'chart.js/auto';
 
-Chart.register(...registerables);
+export type PeriodoFiltro = 'todos' | 'semana' | 'mes' | 'anio';
 
 @Component({
   selector: 'app-reportes',
   standalone: true,
-  imports: [CommonModule,],
+  imports: [CommonModule],
   templateUrl: './reportes.html',
   styleUrl: './reportes.css'
 })
-export class ReportesComponent implements OnInit, AfterViewInit {
-  private reporteService = inject(ReporteService);
+export class ReportesComponent implements OnInit {
+  private casoService = inject(CasoService);
   private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('graficaMunicipios') graficaMunicipiosRef!: ElementRef<HTMLCanvasElement>;
@@ -34,32 +27,31 @@ export class ReportesComponent implements OnInit, AfterViewInit {
   chartMunicipios?: Chart;
   chartViolencia?: Chart;
 
+  todosLosCasos: Caso[] = [];
   resumen?: ResumenReporte;
   cargando = true;
   error = false;
 
+  filtroPeriodo: PeriodoFiltro = 'todos';
+  etiquetaPeriodo: string = 'Histórico Completo';
+
   ngOnInit(): void {
-    this.cargarDatos();
+    this.cargarCasosBase();
   }
 
-  ngAfterViewInit(): void {
-    if (this.resumen) {
-      this.construirGraficas();
-    }
-  }
-
-  cargarDatos(): void {
+  cargarCasosBase(): void {
     this.cargando = true;
     this.error = false;
-    this.reporteService.obtenerResumen().subscribe({
-      next: (data) => {
-        this.resumen = data;
+    this.casoService.listarCasos().subscribe({
+      next: (casos) => {
+        this.todosLosCasos = casos;
+        this.procesarMetricas();
         this.cargando = false;
         this.cdr.detectChanges();
-        setTimeout(() => this.construirGraficas(), 100);
+        setTimeout(() => this.construirGraficas(), 80);
       },
       error: (err) => {
-        console.error('Error al obtener reporte:', err);
+        console.error('Error al cargar expedientes para reportes:', err);
         this.error = true;
         this.cargando = false;
         this.cdr.detectChanges();
@@ -67,174 +59,193 @@ export class ReportesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  cambiarFiltroPeriodo(periodo: PeriodoFiltro): void {
+    this.filtroPeriodo = periodo;
+    switch (periodo) {
+      case 'semana':
+        this.etiquetaPeriodo = 'Última Semana (Últimos 7 días)';
+        break;
+      case 'mes':
+        this.etiquetaPeriodo = 'Último Mes (Últimos 30 días)';
+        break;
+      case 'anio':
+        this.etiquetaPeriodo = 'Último Año (Últimos 365 días)';
+        break;
+      default:
+        this.etiquetaPeriodo = 'Histórico Completo';
+        break;
+    }
+
+    this.procesarMetricas();
+    this.cdr.detectChanges();
+    setTimeout(() => this.construirGraficas(), 80);
+  }
+
+   private procesarMetricas(): void {
+    const hoy = new Date();
+    // Normalizar 'hoy' a inicio del día para comparaciones precisas de fechas
+    const hoyMs = hoy.getTime();
+
+    const casosFiltrados = this.todosLosCasos.filter((caso: any) => {
+      if (this.filtroPeriodo === 'todos') return true;
+
+      // Leer directamente los nombres reales según la tabla de PostgreSQL
+      const valorFecha = caso.fechaRegistro || caso.fecha_registro || caso.creadoEn || caso.creado_en;
+
+      if (!valorFecha) {
+        return false;
+      }
+
+      // Convertir fecha (soporta formato 'YYYY-MM-DD' de tipo date y ISO de timestamp)
+      const fechaObjeto = new Date(valorFecha);
+      const fechaMs = fechaObjeto.getTime();
+
+      if (isNaN(fechaMs)) {
+        return false;
+      }
+
+      // Diferencia en días enteros
+      const diferenciaDias = (hoyMs - fechaMs) / (1000 * 60 * 60 * 24);
+
+      if (this.filtroPeriodo === 'semana') {
+        return diferenciaDias >= 0 && diferenciaDias <= 7;
+      }
+      if (this.filtroPeriodo === 'mes') {
+        return diferenciaDias >= 0 && diferenciaDias <= 30;
+      }
+      if (this.filtroPeriodo === 'anio') {
+        return diferenciaDias >= 0 && diferenciaDias <= 365;
+      }
+
+      return true;
+    });
+
+    const municipiosMap: { [key: string]: number } = {};
+    const violenciaMap: { [key: string]: number } = {};
+    const estadoMap: { [key: string]: number } = {};
+
+    casosFiltrados.forEach((c: any) => {
+      // Municipio
+      const mun = c.municipio?.nombre || c.municipio || 'No Definido';
+      municipiosMap[mun] = (municipiosMap[mun] || 0) + 1;
+
+      // Tipo de Violencia
+      const viol = c.tipoViolencia?.nombre || c.tipoViolencia || 'No Definido';
+      violenciaMap[viol] = (violenciaMap[viol] || 0) + 1;
+
+      // Estado procesal
+      const est = c.estado?.nombre || c.estado || 'Registrado';
+      estadoMap[est] = (estadoMap[est] || 0) + 1;
+    });
+
+    this.resumen = {
+      totalCasos: casosFiltrados.length,
+      casosPorMunicipio: municipiosMap,
+      casosPorTipoViolencia: violenciaMap,
+      casosPorEstado: estadoMap
+    };
+  }
+
   obtenerEntradas(obj?: { [key: string]: number }): { clave: string; valor: number }[] {
     if (!obj) return [];
     return Object.entries(obj).map(([clave, valor]) => ({ clave, valor }));
   }
 
-  private cargarImagenBase64(url: string): Promise<string> {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
-        } else {
-          resolve('');
-        }
-      };
-      img.onerror = () => resolve('');
-      img.src = url;
-    });
-  }
+  construirGraficas(): void {
+    if (!this.resumen || !this.graficaMunicipiosRef || !this.graficaViolenciaRef) return;
 
-  private construirGraficas(): void {
-    if (!this.resumen) return;
+    if (this.chartMunicipios) this.chartMunicipios.destroy();
+    if (this.chartViolencia) this.chartViolencia.destroy();
 
-    if (this.chartMunicipios) {
-      this.chartMunicipios.destroy();
-    }
-    if (this.chartViolencia) {
-      this.chartViolencia.destroy();
-    }
-
-    if (this.graficaMunicipiosRef?.nativeElement) {
-      const datosMun = this.obtenerEntradas(this.resumen.casosPorMunicipio);
-      this.chartMunicipios = new Chart(this.graficaMunicipiosRef.nativeElement, {
+    const munData = this.obtenerEntradas(this.resumen.casosPorMunicipio);
+    const ctxMun = this.graficaMunicipiosRef.nativeElement.getContext('2d');
+    if (ctxMun) {
+      this.chartMunicipios = new Chart(ctxMun, {
         type: 'bar',
         data: {
-          labels: datosMun.map((d) => d.clave),
-          datasets: [
-            {
-              label: 'Casos Registrados',
-              data: datosMun.map((d) => d.valor),
-              backgroundColor: '#1b365d',
-              borderRadius: 6
-            }
-          ]
+          labels: munData.map((d) => d.clave),
+          datasets: [{
+            label: 'Expedientes',
+            data: munData.map((d) => d.valor),
+            backgroundColor: '#0097d8'
+          }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { stepSize: 1 }
-            }
-          }
+          plugins: { legend: { display: false } }
         }
       });
     }
 
-    if (this.graficaViolenciaRef?.nativeElement) {
-      const datosVio = this.obtenerEntradas(this.resumen.casosPorTipoViolencia);
-      this.chartViolencia = new Chart(this.graficaViolenciaRef.nativeElement, {
+    const violData = this.obtenerEntradas(this.resumen.casosPorTipoViolencia);
+    const ctxViol = this.graficaViolenciaRef.nativeElement.getContext('2d');
+    if (ctxViol) {
+      this.chartViolencia = new Chart(ctxViol, {
         type: 'doughnut',
         data: {
-          labels: datosVio.map((d) => d.clave),
-          datasets: [
-            {
-              data: datosVio.map((d) => d.valor),
-              backgroundColor: ['#5c1d68', '#0097d8', '#d32f2f', '#f59e0b', '#10b981']
-            }
-          ]
+          labels: violData.map((d) => d.clave),
+          datasets: [{
+            data: violData.map((d) => d.valor),
+            backgroundColor: ['#5c1d68', '#1b365d', '#0097d8', '#f59e0b', '#10b981']
+          }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: { boxWidth: 12, padding: 10 }
-            }
-          }
+          maintainAspectRatio: false
         }
       });
     }
   }
 
-  async exportarPDF(): Promise<void> {
+  exportarPDF(): void {
     if (!this.resumen) return;
 
-    const doc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4'
-    });
-
-    const fecha = new Date().toLocaleDateString('es-GT', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const fecha = new Date().toLocaleDateString('es-GT', { year: 'numeric', month: 'long', day: 'numeric' });
     const hora = new Date().toLocaleTimeString('es-GT', { hour: '2-digit', minute: '2-digit' });
 
-    let logoBase64 = await this.cargarImagenBase64('/demiLOGO.png');
-    if (!logoBase64) {
-      logoBase64 = await this.cargarImagenBase64('/demiLOGO.PNG');
-    }
-    if (!logoBase64) {
-      logoBase64 = await this.cargarImagenBase64('assets/img/demiLOGO.png');
-    }
-
+    // Banner Superior
     doc.setFillColor(27, 54, 93);
     doc.rect(0, 0, 210, 28, 'F');
-
     doc.setFillColor(0, 151, 216);
     doc.rect(0, 28, 210, 2.5, 'F');
-
-    let textoInicioX = 14;
-
-    if (logoBase64) {
-      doc.setFillColor(255, 255, 255);
-      doc.roundedRect(14, 4, 38, 20, 2, 2, 'F');
-      doc.addImage(logoBase64, 'PNG', 15, 5, 36, 18);
-      textoInicioX = 57;
-    }
 
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
-    doc.text('DEFENSORÍA DE LA MUJER INDÍGENA — DEMI', textoInicioX, 11);
-
+    doc.text('DEFENSORÍA DE LA MUJER INDÍGENA — DEMI', 14, 11);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8);
-    doc.text('Sede Regional de Totonicapán | Sistema de Registro y Control de Casos', textoInicioX, 17);
+    doc.text('Oficina Regional de Totonicapán | Sistema de Registro y Control de Casos', 14, 17);
     doc.setFont('helvetica', 'bold');
-    doc.text('INFORME ESTADÍSTICO CONSOLIDADO', textoInicioX, 23);
+    doc.text('INFORME ESTADÍSTICO ', 14, 23);
 
+    // Metadatos
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8.5);
     doc.text(`Fecha de emisión: ${fecha} (${hora})`, 14, 37);
-    doc.text('Carácter del informe: Oficial / Administrativo', 14, 42);
+    doc.text(`Periodo analizado: ${this.etiquetaPeriodo}`, 14, 42);
 
+    // KPI Total
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(226, 232, 240);
-    doc.roundedRect(14, 46, 182, 17, 2, 2, 'FD');
-
+    doc.roundedRect(14, 48, 182, 17, 2, 2, 'FD');
     doc.setFillColor(92, 29, 104);
-    doc.rect(14, 46, 3.5, 17, 'F');
+    doc.rect(14, 48, 3.5, 17, 'F');
 
     doc.setTextColor(51, 65, 85);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9.5);
-    doc.text('TOTAL DE EXPEDIENTES Y CASOS REGISTRADOS:', 22, 57);
-
+    doc.text('TOTAL DE EXPEDIENTES EN EL PERIODO:', 22, 59);
     doc.setFontSize(14);
     doc.setTextColor(92, 29, 104);
-    doc.text(`${this.resumen.totalCasos} casos`, 190, 57, { align: 'right' });
+    doc.text(`${this.resumen.totalCasos} casos`, 190, 59, { align: 'right' });
 
-    let posFin = 70;
+    let posFin = 72;
 
+    // Tabla Municipios
     const tablaMunicipios = this.obtenerEntradas(this.resumen.casosPorMunicipio).map((i) => [
       i.clave,
       i.valor,
@@ -246,29 +257,12 @@ export class ReportesComponent implements OnInit, AfterViewInit {
       head: [['Municipio', 'Casos Atendidos', 'Porcentaje']],
       body: tablaMunicipios,
       theme: 'plain',
-      headStyles: {
-        fillColor: [27, 54, 93],
-        textColor: [255, 255, 255],
-        fontStyle: 'bold',
-        fontSize: 8.5
-      },
-      styles: {
-        fontSize: 8,
-        cellPadding: 2.5,
-        lineColor: [226, 232, 240],
-        lineWidth: 0.2
-      },
-      columnStyles: {
-        1: { halign: 'center', fontStyle: 'bold' },
-        2: { halign: 'right' }
-      },
-      alternateRowStyles: {
-        fillColor: [248, 250, 252]
-      }
+      headStyles: { fillColor: [27, 54, 93], textColor: [255, 255, 255], fontStyle: 'bold' }
     });
 
     posFin = (doc as any).lastAutoTable.finalY + 10;
 
+    // Tabla Tipología
     const tablaTipos = this.obtenerEntradas(this.resumen.casosPorTipoViolencia).map((i) => [
       i.clave,
       i.valor,
@@ -280,77 +274,10 @@ export class ReportesComponent implements OnInit, AfterViewInit {
       head: [['Tipo de Violencia', 'Total de Casos', 'Proporción']],
       body: tablaTipos,
       theme: 'plain',
-      headStyles: {
-        fillColor: [92, 29, 104],
-        textColor: [255, 255, 255],
-        fontStyle: 'bold',
-        fontSize: 8.5
-      },
-      styles: {
-        fontSize: 8,
-        cellPadding: 2.5,
-        lineColor: [226, 232, 240],
-        lineWidth: 0.2
-      },
-      columnStyles: {
-        1: { halign: 'center', fontStyle: 'bold' },
-        2: { halign: 'right' }
-      },
-      alternateRowStyles: {
-        fillColor: [253, 244, 255]
-      }
+      headStyles: { fillColor: [92, 29, 104], textColor: [255, 255, 255], fontStyle: 'bold' }
     });
 
-    posFin = (doc as any).lastAutoTable.finalY + 10;
-
-    const tablaEstados = this.obtenerEntradas(this.resumen.casosPorEstado).map((i) => [
-      i.clave,
-      i.valor
-    ]);
-
-    autoTable(doc, {
-      startY: posFin,
-      head: [['Estado Procesal', 'Total de Expedientes']],
-      body: tablaEstados,
-      theme: 'plain',
-      headStyles: {
-        fillColor: [51, 65, 85],
-        textColor: [255, 255, 255],
-        fontStyle: 'bold',
-        fontSize: 8.5
-      },
-      styles: {
-        fontSize: 8,
-        cellPadding: 2.5,
-        lineColor: [226, 232, 240],
-        lineWidth: 0.2
-      },
-      columnStyles: {
-        1: { halign: 'center', fontStyle: 'bold' }
-      },
-      alternateRowStyles: {
-        fillColor: [241, 245, 249]
-      }
-    });
-
-    const totalPaginas = (doc as any).internal.getNumberOfPages();
-    for (let i = 1; i <= totalPaginas; i++) {
-      doc.setPage(i);
-      doc.setDrawColor(203, 213, 225);
-      doc.line(14, 283, 196, 283);
-
-      doc.setFontSize(7.5);
-      doc.setTextColor(100, 116, 139);
-      doc.setFont('helvetica', 'normal');
-      doc.text(
-        'Documento de uso confidencial e institucional — Defensoría de la Mujer Indígena (DEMI)',
-        14,
-        288
-      );
-      doc.text(`Página ${i} de ${totalPaginas}`, 196, 288, { align: 'right' });
-    }
-
-    doc.save(`Reporte_DEMI_Casos_${new Date().toISOString().slice(0, 10)}.pdf`);
+    doc.save(`Reporte_DEMI_${this.filtroPeriodo}_${new Date().toISOString().slice(0, 10)}.pdf`);
   }
 
   exportarExcel(): void {
@@ -361,8 +288,9 @@ export class ReportesComponent implements OnInit, AfterViewInit {
 
     const filas = [
       ['REPORTE ESTADÍSTICO DE CASOS - DEMI TOTONICAPÁN'],
+      ['Periodo:', this.etiquetaPeriodo],
       ['Fecha de generación:', fecha],
-      ['Total general de casos:', this.resumen.totalCasos],
+      ['Total de casos:', this.resumen.totalCasos],
       [],
       ['--- CASOS POR MUNICIPIO ---'],
       ['Municipio', 'Cantidad'],
@@ -378,7 +306,7 @@ export class ReportesComponent implements OnInit, AfterViewInit {
     ];
 
     const hoja = XLSX.utils.aoa_to_sheet(filas);
-    XLSX.utils.book_append_sheet(libro, hoja, 'Resumen Estadístico');
-    XLSX.writeFile(libro, `Resumen_DEMI_${fecha.replace(/\//g, '-')}.xlsx`);
+    XLSX.utils.book_append_sheet(libro, hoja, 'Resumen');
+    XLSX.writeFile(libro, `Resumen_DEMI_${this.filtroPeriodo}_${fecha.replace(/\//g, '-')}.xlsx`);
   }
 }

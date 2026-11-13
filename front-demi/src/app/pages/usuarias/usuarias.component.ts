@@ -17,6 +17,8 @@ export class UsuariosComponent implements OnInit {
   private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
 
+  mostrarPasswordTemporal: boolean = false;
+
   usuarioActual: any = null;
   cargandoUsuarios = true;
   listaUsuarios: Usuario[] = [];
@@ -43,6 +45,10 @@ export class UsuariosComponent implements OnInit {
     { id: 1, nombre: 'Administradora (ROLE_ADMIN)' },
     { id: 2, nombre: 'Profesional de Atención (ROLE_PROFESIONAL)' }
   ];
+
+  togglePasswordTemporal(): void {
+  this.mostrarPasswordTemporal = !this.mostrarPasswordTemporal;
+}
 
   ngOnInit(): void {
     this.usuarioActual = this.authService.getUsuario();
@@ -81,7 +87,7 @@ export class UsuariosComponent implements OnInit {
       primerNombre: '', segundoNombre: '', tercerNombre: '',
       primerApellido: '', segundoApellido: '',
       correo: '', password: '', rolId: 2, activo: true,
-      profesion: ''
+      profesion: '', telefono: ''
     };
     this.errorUsuario = '';
     this.mensajeExitoUsuario = '';
@@ -94,7 +100,7 @@ export class UsuariosComponent implements OnInit {
       id: u.id,
       primerNombre: u.primerNombre, segundoNombre: u.segundoNombre, tercerNombre: u.tercerNombre,
       primerApellido: u.primerApellido, segundoApellido: u.segundoApellido,
-      correo: u.correo, password: '', rolId: u.rol?.id || 2, activo: u.activo ?? true , profesion: u.profesion
+      correo: u.correo, password: '', rolId: u.rol?.id || 2, activo: u.activo ?? true , profesion: u.profesion, telefono: u.telefono
     };
     this.errorUsuario = '';
     this.mensajeExitoUsuario = '';

@@ -14,7 +14,7 @@ export interface ResumenReporte {
 })
 export class ReporteService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/reportes';
+  private apiUrl = 'https://api.demitotonicapan.org/api/reportes';
 
   obtenerResumen(): Observable<ResumenReporte> {
     const token = localStorage.getItem('token') || localStorage.getItem('token_jwt') || '';

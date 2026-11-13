@@ -14,6 +14,7 @@ export interface Usuario {
     nombre: string;
   },
   profesion?: string;
+  telefono?: String;
 }
 
 export interface UsuarioRegistro {
@@ -28,4 +29,5 @@ export interface UsuarioRegistro {
   rolId: number;
   activo?: boolean;
   profesion?: string;
+  telefono?: String;
 }

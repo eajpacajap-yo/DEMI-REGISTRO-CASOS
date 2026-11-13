@@ -16,20 +16,33 @@
           type="email" 
           name="correo" 
           [(ngModel)]="correo" 
+          placeholder="ejemplo@demi.gob.gt"
           required 
         />
       </div>
 
       <div class="form-group">
-        <label>Contraseña</label>
+      <label>Contraseña</label>
+      <div class="password-wrapper">
         <input 
-          type="password" 
+          [type]="mostrarPasswordLogin ? 'text' : 'password'" 
           name="password" 
           [(ngModel)]="password" 
           placeholder="••••••••" 
           required 
         />
+        <button 
+          type="button" 
+          class="btn-toggle-eye" 
+          [class.ojo-activo]="mostrarPasswordLogin"
+          (click)="togglePasswordLogin()" 
+          [title]="mostrarPasswordLogin ? 'Ocultar contraseña' : 'Ver contraseña'"
+          tabindex="-1"
+        >
+          👁︎
+        </button>
       </div>
+    </div>
 
       <!-- Enlace para Recuperar Contraseña -->
       <div class="forgot-password-link">
@@ -42,24 +55,27 @@
     </form>
   </div>
 
-
-  <!-- MODAL: RECUPERACIÓN DE CONTRASEÑA POR PIN               -->
-
+  
   <div *ngIf="mostrarModalRecuperar" class="modal-backdrop">
     <div class="modal-card modal-recuperar-card">
       <div class="modal-header">
-        <h4> Recuperar Contraseña</h4>
-        <button (click)="cerrarModalRecuperar()" class="btn-close" [disabled]="cargandoRecuperacion">&times;</button>
+        <h4>Recuperar Contraseña</h4>
+        <button type="button" (click)="cerrarModalRecuperar()" class="btn-close" [disabled]="cargandoRecuperacion">&times;</button>
       </div>
 
       <div class="modal-body">
-        <div *ngIf="errorRecuperacion" class="alert-error">{{ errorRecuperacion }}</div>
-        <div *ngIf="mensajeExitoRecuperacion" class="alert-success">{{ mensajeExitoRecuperacion }}</div>
+        <!-- Alertas de Error y Éxito -->
+        <div *ngIf="errorRecuperacion" class="alert-error">
+          {{ errorRecuperacion }}
+        </div>
+        <div *ngIf="mensajeExitoRecuperacion" class="alert-success">
+          {{ mensajeExitoRecuperacion }}
+        </div>
 
-        <!-- PASO 1: Ingreso de correo -->
+        <!-- PASO 1: Ingreso de correo institucional -->
         <div *ngIf="pasoRecuperacion === 1">
           <p class="instruction-text">
-            Ingresa tu correo institucional registrado. El sistema generará un <strong>código de seguridad PIN</strong> válido por 10 minutos.
+            Ingresa tu correo institucional registrado. Se enviará un <strong>código de seguridad temporal</strong> a tu bandeja de entrada válido por 10 minutos.
           </p>
           <div class="form-group">
             <label>Correo Institucional</label>
@@ -67,7 +83,8 @@
               type="email" 
               name="correoRecuperar" 
               [(ngModel)]="correoRecuperacion" 
-               
+              placeholder="correo@demi.gob.gt"
+              [disabled]="cargandoRecuperacion"
               required 
             />
           </div>
@@ -75,54 +92,86 @@
 
         <!-- PASO 2: Ingreso de PIN y Nueva Contraseña -->
         <div *ngIf="pasoRecuperacion === 2">
-          <!-- Banner con el PIN para demostración -->
-          <div *ngIf="codigoSugeridoDemostracion" class="alert-pin">
-            <span>Código de Seguridad generado:</span>
-            <h3>{{ codigoSugeridoDemostracion }}</h3>
-            <small>Válido por 10 minutos</small>
-          </div>
+          <p class="instruction-text">
+            Revisa tu bandeja de entrada e ingresa el código de 6 dígitos recibido junto con tu nueva contraseña.
+          </p>
 
           <div class="form-group">
-            <label>Código PIN (6 dígitos)</label>
+            <label>Código de Seguridad (6 dígitos)</label>
             <input 
               type="text" 
               name="codigoPin" 
               [(ngModel)]="codigoPin" 
               placeholder="Ej. 123456" 
               maxlength="6" 
+              [disabled]="cargandoRecuperacion"
               required 
             />
           </div>
 
-          <div class="form-group">
-            <label>Nueva Contraseña</label>
-            <input 
-              type="password" 
-              name="nuevoPasswordRecuperar" 
-              [(ngModel)]="nuevoPasswordRecuperar" 
-              placeholder="Mínimo 12 caracteres" 
-              required 
-            />
-          </div>
-
-          <div class="form-group">
-            <label>Confirmar Nueva Contraseña</label>
-            <input 
-              type="password" 
-              name="confirmarPasswordRecuperar" 
-              [(ngModel)]="confirmarPasswordRecuperar" 
-              placeholder="Repite la contraseña" 
-              required 
-            />
-          </div>
-        </div>
+           <!-- Nueva Contraseña -->
+    <div class="form-group">
+      <label>Nueva Contraseña</label>
+      <div class="password-wrapper">
+        <input 
+          [type]="mostrarPasswordNueva ? 'text' : 'password'" 
+          name="nuevoPasswordRecuperar" 
+          [(ngModel)]="nuevoPasswordRecuperar" 
+          placeholder="Mínimo 12 caracteres" 
+          [disabled]="cargandoRecuperacion"
+          required 
+        />
+        <button 
+          type="button" 
+          class="btn-toggle-eye" 
+          [class.ojo-activo]="mostrarPasswordNueva"
+          (click)="togglePasswordNueva()" 
+          [title]="mostrarPasswordNueva ? 'Ocultar contraseña' : 'Ver contraseña'"
+          tabindex="-1"
+        >
+          👁︎
+        </button>
       </div>
+    </div>
 
+    <!-- Confirmar Nueva Contraseña -->
+    <div class="form-group">
+      <label>Confirmar Nueva Contraseña</label>
+      <div class="password-wrapper">
+        <input 
+          [type]="mostrarPasswordConfirmar ? 'text' : 'password'" 
+          name="confirmarPasswordRecuperar" 
+          [(ngModel)]="confirmarPasswordRecuperar" 
+          placeholder="Repite la nueva contraseña" 
+          [disabled]="cargandoRecuperacion"
+          required 
+        />
+        <button 
+          type="button" 
+          class="btn-toggle-eye" 
+          [class.ojo-activo]="mostrarPasswordConfirmar"
+          (click)="togglePasswordConfirmar()" 
+          [title]="mostrarPasswordConfirmar ? 'Ocultar contraseña' : 'Ver contraseña'"
+          tabindex="-1"
+        >
+          👁︎
+        </button>
+      </div>
+    </div>
+    </div>
+
+      <!-- BOTONES DEL MODAL -->
       <div class="modal-footer">
-        <button type="button" (click)="cerrarModalRecuperar()" class="btn-secondary" [disabled]="cargandoRecuperacion">
+        <button 
+          type="button" 
+          (click)="cerrarModalRecuperar()" 
+          class="btn-secondary" 
+          [disabled]="cargandoRecuperacion"
+        >
           Cancelar
         </button>
 
+        <!-- Botón Paso 1: Solicitar PIN -->
         <button 
           *ngIf="pasoRecuperacion === 1" 
           type="button" 
@@ -130,20 +179,18 @@
           [disabled]="cargandoRecuperacion" 
           class="btn-primary"
         >
-          {{ cargandoRecuperacion ? 'Verificando...' : 'Generar Código' }}
+          {{ cargandoRecuperacion ? 'Enviando...' : 'Enviar Código al Correo' }}
         </button>
 
+        <!-- Botón Paso 2: Restablecer Contraseña -->
         <button 
-          *ngIf="pasoRecuperacion === 2" 
-          type="button" 
-          (click)="confirmarRestablecimiento()" 
-          [disabled]="cargandoRecuperacion || !!mensajeExitoRecuperacion" 
-          class="btn-primary" 
-          [ngClass]="{'btn-success': mensajeExitoRecuperacion}"
+           *ngIf="pasoRecuperacion === 2" 
+           type="button" 
+           (click)="confirmarRestablecimiento()" 
+           [disabled]="cargandoRecuperacion" 
+          class="btn-primary"
         >
-          <span *ngIf="!cargandoRecuperacion && !mensajeExitoRecuperacion">Restablecer Contraseña</span>
-          <span *ngIf="cargandoRecuperacion">Validando PIN...</span>
-          <span *ngIf="mensajeExitoRecuperacion">¡Listo! </span>
+         <span>{{ cargandoRecuperacion ? 'Validando PIN...' : 'Restablecer Contraseña' }}</span>
         </button>
       </div>
     </div>

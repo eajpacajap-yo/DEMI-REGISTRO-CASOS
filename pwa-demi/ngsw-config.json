@@ -38,6 +38,20 @@
       }
     }
   ],
+  "dataGroups": [
+    {
+      "name": "multimedia-servidor-demi",
+      "urls": [
+        "https://api.demitotonicapan.org/uploads/**",
+        "https://api.demitotonicapan.org/api/recursos/publicos/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "30d",
+        "strategy": "freshness"
+      }
+    }
+  ],
   "navigationUrls": [
     "/**",
     "!/**/*.*",

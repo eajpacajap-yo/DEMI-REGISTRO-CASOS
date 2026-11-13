@@ -57,6 +57,7 @@ export class CasosComponent implements OnInit {
     codigoExpediente: '',
     municipioId: 1,
     localidad: '',
+    telefono: '',
     tipoViolenciaId: 1,
     estadoId: 1
   };
@@ -65,6 +66,7 @@ export class CasosComponent implements OnInit {
     codigoExpediente: '',
     municipioId: 1,
     localidad: '',
+    telefono: '',
     tipoViolenciaId: 1,
     estadoId: 1
   };
@@ -163,6 +165,7 @@ export class CasosComponent implements OnInit {
       codigoExpediente: this.generarCodigoSugerido(),
       municipioId: 1,
       localidad: '',
+      telefono: '',
       tipoViolenciaId: 1,
       estadoId: 1,
       usuarioRegistroId: this.usuario?.id
@@ -213,6 +216,7 @@ export class CasosComponent implements OnInit {
       codigoExpediente: caso.codigoExpediente,
       municipioId: caso.municipio?.id || 1,
       localidad: caso.localidad,
+      telefono: caso.telefono || '',
       tipoViolenciaId: caso.tipoViolencia?.id || 1,
       estadoId: caso.estado?.id || 1
     };

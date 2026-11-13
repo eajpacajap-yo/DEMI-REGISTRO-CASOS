@@ -26,6 +26,11 @@ export class AdminLayoutComponent implements OnInit {
   errorPassword = '';
   mensajeExitoPassword = '';
 
+  // Estados de visibilidad independientes para cada campo
+  mostrarPasswordActual: boolean = false;
+  mostrarPasswordNueva: boolean = false;
+  mostrarPasswordConfirmar: boolean = false;
+
   passwordForm = {
     passwordActual: '',
     nuevoPassword: '',
@@ -40,17 +45,36 @@ export class AdminLayoutComponent implements OnInit {
     return this.usuario?.rol === 'ROLE_ADMIN';
   }
 
+  // Alternadores de visibilidad
+  togglePasswordActual(): void {
+    this.mostrarPasswordActual = !this.mostrarPasswordActual;
+  }
+
+  togglePasswordNueva(): void {
+    this.mostrarPasswordNueva = !this.mostrarPasswordNueva;
+  }
+
+  togglePasswordConfirmar(): void {
+    this.mostrarPasswordConfirmar = !this.mostrarPasswordConfirmar;
+  }
+
   // Lógica de Contraseña
   abrirModalPassword(): void {
     this.passwordForm = { passwordActual: '', nuevoPassword: '', confirmarPassword: '' };
     this.errorPassword = '';
     this.mensajeExitoPassword = '';
+    this.mostrarPasswordActual = false;
+    this.mostrarPasswordNueva = false;
+    this.mostrarPasswordConfirmar = false;
     this.mostrarModalPassword = true;
     this.cdr.detectChanges();
   }
 
   cerrarModalPassword(): void {
     this.mostrarModalPassword = false;
+    this.mostrarPasswordActual = false;
+    this.mostrarPasswordNueva = false;
+    this.mostrarPasswordConfirmar = false;
     this.cdr.detectChanges();
   }
 

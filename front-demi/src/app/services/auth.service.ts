@@ -10,7 +10,7 @@ import { JwtResponse } from '../models/jwt-response';
 export class AuthService {
 
   // URL base de Backend en Spring Boot
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://api.demitotonicapan.org/api/auth';
 
   constructor(private http: HttpClient) { }
 
@@ -54,7 +54,7 @@ export class AuthService {
   return this.http.post(`${this.apiUrl}/solicitar-recuperacion`, { correo });
 }
 
-restablecerPassword(codigo: string, nuevoPassword: string): Observable<any> {
-  return this.http.post(`${this.apiUrl}/restablecer-password`, { codigo, nuevoPassword }, { responseType: 'text' });
+restablecerPassword(datos: { codigo: string; nuevoPassword: string }): Observable<any> {
+  return this.http.post(`${this.apiUrl}/restablecer-password`, datos, { responseType: 'text' });
 }
 }

@@ -8,7 +8,7 @@ import { SeguimientoCaso } from '../models/seguimiento';
 })
 export class SeguimientoService {
 
-  private apiUrl = 'http://localhost:8080/api/seguimientos';
+  private apiUrl = 'https://api.demitotonicapan.org/api/seguimientos';
 
   constructor(private http: HttpClient) { }
 

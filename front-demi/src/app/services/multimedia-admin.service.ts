@@ -20,7 +20,7 @@ export interface RecursoAdmin {
 })
 export class MultimediaAdminService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/recursos';
+  private apiUrl = 'https://api.demitotonicapan.org/api/recursos';
 
   private obtenerHeaders(): HttpHeaders {
     const token = localStorage.getItem('token') || localStorage.getItem('token_jwt') || '';

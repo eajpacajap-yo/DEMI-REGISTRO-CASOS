@@ -3,6 +3,7 @@ export interface Caso {
   codigoExpediente: string;
   municipioId?: number;
   localidad: string;
+  telefono?: String;
   tipoViolenciaId?: number;
   estadoId?: number;
   usuarioRegistroId?: number;
@@ -12,4 +13,5 @@ export interface Caso {
   usuarioRegistro?: { id: number; primerNombre: string; primerApellido: string };
   fechaRegistro?: string;
   creadoEn?: string;
+  
 }

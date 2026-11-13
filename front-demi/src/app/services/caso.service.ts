@@ -8,7 +8,7 @@ import { Caso } from '../models/caso';
 })
 export class CasoService {
 
-  private apiUrl = 'http://localhost:8080/api/casos';
+  private apiUrl = 'https://api.demitotonicapan.org/api/casos';
 
   constructor(private http: HttpClient) { }
 

@@ -6,6 +6,21 @@
       <p class="subtitle-text">Informes oficiales, métricas analíticas y exportación de datos</p>
     </div>
     <div class="header-buttons-group">
+
+      <div class="filtro-periodo-container">
+        <label for="selectPeriodo" class="label-filtro">Periodo:</label>
+        <select 
+          id="selectPeriodo" 
+          class="select-periodo" 
+          [value]="filtroPeriodo" 
+          (change)="cambiarFiltroPeriodo($any($event.target).value)"
+        >
+          <option value="todos">Todos los registros (Completo)</option>
+          <option value="semana">Última semana</option>
+          <option value="mes">Último mes</option>
+          <option value="anio">Último año</option>
+        </select>
+      </div>      
       <button 
         type="button" 
         class="btn-secondary-action" 

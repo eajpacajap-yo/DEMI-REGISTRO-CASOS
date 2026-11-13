@@ -51,6 +51,7 @@
           <th>Código</th>
           <th>Municipio</th>
           <th>Localidad</th>
+          <th>Teléfono</th>
           <th>Tipo Violencia</th>
           <th>Estado</th>
           <th class="text-center">Acciones</th>
@@ -61,6 +62,7 @@
           <td class="code">{{ caso.codigoExpediente }}</td>
           <td>{{ caso.municipio?.nombre }}</td>
           <td>{{ caso.localidad }}</td>
+          <td>{{ caso.telefono }}</td>
           <td>{{ caso.tipoViolencia?.nombre }}</td>
           <td>
             <span class="badge" [ngClass]="'badge-' + (caso.estado?.id || 1)">
@@ -88,10 +90,6 @@
     </table>
   </div>
 </main>
-
-<!-- ========================================== -->
-<!-- MODALES DE CASOS Y SEGUIMIENTO             -->
-<!-- ========================================== -->
 
 <!-- MODAL: CREAR EXPEDIENTE -->
 <div *ngIf="mostrarModalCrear" class="modal-backdrop">
@@ -127,7 +125,12 @@
 
         <div class="form-group">
           <label>Localidad</label>
-          <input type="text" name="localidad" [(ngModel)]="nuevoCaso.localidad" placeholder="Ej. Cantón Chiyax" required />
+          <input type="text" name="localidad" [(ngModel)]="nuevoCaso.localidad" placeholder="Ej. coloque la dirección" required />
+        </div>
+
+        <div class="form-group">
+          <label>Teléfono de Contacto</label>
+          <input type="tel"  name="telefono"  [(ngModel)]="nuevoCaso.telefono"  maxlength="8" (input)="nuevoCaso.telefono = nuevoCaso.telefono?.replace(/[^0-9]/g, '')" />
         </div>
 
         <div class="form-group">
@@ -180,6 +183,11 @@
         </div>
 
         <div class="form-group">
+          <label>Teléfono de Contacto</label>
+          <input type="tel"  name="telefono"  [(ngModel)]="nuevoCaso.telefono"  maxlength="8" (input)="nuevoCaso.telefono = nuevoCaso.telefono?.replace(/[^0-9]/g, '')" />
+        </div>
+
+        <div class="form-group">
           <label>Estado del Expediente</label>
           <select name="editEstadoId" [(ngModel)]="casoEdicion.estadoId">
             <option *ngFor="let e of estados" [value]="e.id">{{ e.nombre }}</option>
@@ -211,6 +219,13 @@
       <div class="detail-item">
         <strong>Localidad:</strong>
         <span>{{ casoSeleccionado.localidad }}</span>
+      </div>
+
+      <div class="detail-item" *ngIf="casoSeleccionado.telefono">
+        <strong>Teléfono de Contacto:</strong>
+        <span>
+            <a [href]="'tel:' + casoSeleccionado.telefono" class="link-tel"> {{ casoSeleccionado?.telefono }} </a>
+        </span>
       </div>
       <div class="detail-item">
         <strong>Tipo de Violencia:</strong>

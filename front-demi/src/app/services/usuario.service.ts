@@ -9,7 +9,7 @@ import { Usuario, UsuarioRegistro } from '../models/usuario';
 export class UsuarioService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/usuarios';
+  private apiUrl = 'https://api.demitotonicapan.org/api/usuarios';
 
   listarUsuarios(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(this.apiUrl);

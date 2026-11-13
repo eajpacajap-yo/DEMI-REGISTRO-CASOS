@@ -27,7 +27,8 @@ export class Galeria implements OnInit {
   }
 
   cargarGaleria(): void {
-    const urlApiPublica = 'http://localhost:8080/api/recursos/publicos/galeria';
+    const baseUrl = 'https://api.demitotonicapan.org';
+  const urlApiPublica = `${baseUrl}/api/recursos/publicos/galeria`;
 
     // 1. Si el dispositivo tiene red, consulta las imágenes publicadas por administración
     if (navigator.onLine) {
@@ -39,7 +40,7 @@ export class Galeria implements OnInit {
               id: r.id,
               titulo: { es: r.titulo, quc: r.titulo },
               descripcion: { es: r.descripcionEs || '', quc: r.descripcionQuc || '' },
-              imagen_url: `http://localhost:8080${r.rutaAlmacenamiento}`,
+              imagen_url: `${baseUrl}${r.rutaAlmacenamiento}`,
               categoria: r.moduloPwa
             }));
           } else {
